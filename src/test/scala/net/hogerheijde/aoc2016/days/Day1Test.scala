@@ -1,6 +1,6 @@
 package net.hogerheijde.aoc2016.days
 
-import net.hogerheijde.aoc2016.model.Coordinates
+import net.hogerheijde.aoc2016.model.Coordinate
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 import net.hogerheijde.aoc2016.model.GoLeft
@@ -49,25 +49,25 @@ class Day1Test extends FlatSpec with Matchers {
 
     // SETUP
     val instructions1 = IndexedSeq(GoRight(2), GoLeft(3))
-    val expectedCoordinates1 = Coordinates(3, 2)
+    val expectedCoordinates1 = Coordinate(3, 2)
 
     val instructions2 = IndexedSeq(GoRight(2), GoRight(2), GoRight(2))
-    val expectedCoordinates2 = Coordinates(-2, 0)
+    val expectedCoordinates2 = Coordinate(-2, 0)
 
     val instructions3 = IndexedSeq(GoRight(5), GoLeft(5), GoRight(5), GoRight(3))
-    val expectedCoordinates3 = Coordinates(2, 10)
+    val expectedCoordinates3 = Coordinate(2, 10)
 //      R5, L5, R5, R3
 
     // CALL
-    val result1 = new Day1(instructions1).processInstructions()
-    val result2 = new Day1(instructions2).processInstructions()
-    val result3 = new Day1(instructions3).processInstructions()
+    val result1 = Day1.processInstructions(instructions1)
+    val result2 = Day1.processInstructions(instructions2)
+    val result3 = Day1.processInstructions(instructions3)
 
 
     // VERIFY
-    result1 should be (expectedCoordinates1)
-    result2 should be (expectedCoordinates2)
-    result3 should be (expectedCoordinates3)
+    result1.last should be (expectedCoordinates1)
+    result2.last should be (expectedCoordinates2)
+    result3.last should be (expectedCoordinates3)
   }
 
 }

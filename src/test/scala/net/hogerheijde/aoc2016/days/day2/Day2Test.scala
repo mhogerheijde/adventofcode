@@ -1,13 +1,14 @@
 package net.hogerheijde.aoc2016.days.day2
 
-import net.hogerheijde.aoc2016.days.day2.model.Eight
-import net.hogerheijde.aoc2016.days.day2.model.Five
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare.Eight
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare.Five
 import net.hogerheijde.aoc2016.days.day2.model.GoDown
 import net.hogerheijde.aoc2016.days.day2.model.GoLeft
 import net.hogerheijde.aoc2016.days.day2.model.GoRight
 import net.hogerheijde.aoc2016.days.day2.model.GoUp
-import net.hogerheijde.aoc2016.days.day2.model.Nine
-import net.hogerheijde.aoc2016.days.day2.model.One
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare.Nine
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare.One
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 
@@ -25,7 +26,7 @@ class Day2Test extends FlatSpec with Matchers {
     val expected = "1985"
 
     // CALL
-    val result = Day2.process(input)
+    val result = Day2.process(input, KeyPadSquare.Five)
 
     result should be(expected)
 
@@ -60,7 +61,7 @@ class Day2Test extends FlatSpec with Matchers {
     val expect = IndexedSeq(One, Nine, Eight, Five)
 
     // CALL
-    val result = Day2.processInstructions(instructions)
+    val result = Day2.processInstructions(instructions, KeyPadSquare.Five)
 
     // VERIFY
     result should be(expect)

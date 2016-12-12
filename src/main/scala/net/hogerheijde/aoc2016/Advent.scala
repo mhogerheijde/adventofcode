@@ -2,6 +2,8 @@ package net.hogerheijde.aoc2016
 
 import net.hogerheijde.aoc2016.days.day1.Day1
 import net.hogerheijde.aoc2016.days.day2.Day2
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadStar
 
 object Advent {
 
@@ -23,14 +25,16 @@ object Advent {
     val distance1 = Day1.build(instructions).run()
     println(s"Day 1 - pt1: $distance1 (expect 279)")
     val distance2 = Day1.build(instructions).runPart2()
-    println(s"Day 1 - pt1: $distance2 (expect 163)")
+    println(s"Day 1 - pt2: $distance2 (expect 163)")
 
   }
 
   def runDay2(): Unit = {
-    val input = Util.readFile("net/hogerheijde/aoc2016/days/day2/day2.input")
-    val code = Day2.process(input)
-    println(s"Day 2 - pt1: $code")
+    val input = Util.readFile("net/hogerheijde/aoc2016/days/day2.input")
+    val code = Day2.process(input, KeyPadSquare.Five)
+    println(s"Day 2 - pt1: $code (expect 53255)")
+    val code2 = Day2.process(input, KeyPadStar.Five)
+    println(s"Day 2 - pt2: $code2 (expect 7423A)")
   }
 
 

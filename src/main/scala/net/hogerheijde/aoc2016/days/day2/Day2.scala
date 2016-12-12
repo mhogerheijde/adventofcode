@@ -1,6 +1,6 @@
 package net.hogerheijde.aoc2016.days.day2
 
-import net.hogerheijde.aoc2016.days.day2.model.Five
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare.Five
 import net.hogerheijde.aoc2016.days.day2.model.Instruction
 import net.hogerheijde.aoc2016.days.day2.model.Key
 
@@ -12,16 +12,16 @@ object Day2 {
   type Code = IndexedSeq[Key]
   type CodeWithHistory = IndexedSeq[(Key, IndexedSeq[Key])]
 
-  def process(input: String): String = {
+  def process(input: String, defaultKey: Key): String = {
     val instructions = parseInstructions(input)
-    val code = processInstructions(instructions)
-    code.map(_.prettyString).mkString("")
+    val code = processInstructions(instructions, defaultKey)
+    code.map(_.prettyString()).mkString("")
   }
 
-  def processInstructions(instructions: Instructions): Code = {
+  def processInstructions(instructions: Instructions, defaultKey: Key): Code = {
     val keys: Code = IndexedSeq()
     instructions.foldLeft( keys ) { case (accKeys, instructionLine) =>
-      val startKey = accKeys.lastOption.getOrElse(Five)
+      val startKey = accKeys.lastOption.getOrElse(defaultKey)
       val newKey = instructionLine.foldLeft(startKey) { case (key, nextInstruction) =>
           key.update(nextInstruction)
       }

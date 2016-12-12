@@ -1,5 +1,15 @@
 package net.hogerheijde.aoc2016.days.day2.model
 
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare.One
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare.Two
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare.Three
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare.Four
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare.Five
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare.Six
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare.Seven
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare.Eight
+import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare.Nine
+
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 

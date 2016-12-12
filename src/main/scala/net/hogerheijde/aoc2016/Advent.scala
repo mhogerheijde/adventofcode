@@ -1,6 +1,6 @@
 package net.hogerheijde.aoc2016
 
-import net.hogerheijde.aoc2016.days.Day1
+import net.hogerheijde.aoc2016.days.day1.Day1
 
 object Advent {
 

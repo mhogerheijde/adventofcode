@@ -1,4 +1,4 @@
-package net.hogerheijde.aoc2016.model
+package net.hogerheijde.aoc2016.days.day1.model
 
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers

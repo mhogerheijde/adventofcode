@@ -1,4 +1,4 @@
-package net.hogerheijde.aoc2016.model
+package net.hogerheijde.aoc2016.days.day1.model
 
 case class Coordinate(x: Int, y: Int) {
   def update(instruction: Direction, amount: Int): Coordinate = {

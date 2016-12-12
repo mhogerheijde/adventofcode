@@ -1,6 +1,6 @@
 package net.hogerheijde.aoc2016
 
-import net.hogerheijde.aoc2016.model.Coordinate
+import net.hogerheijde.aoc2016.days.day1.model.Coordinate
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 

@@ -1,4 +1,4 @@
-package net.hogerheijde.aoc2016.model
+package net.hogerheijde.aoc2016.days.day1.model
 
 sealed trait Direction
 case object North extends Direction

@@ -1,10 +1,10 @@
-package net.hogerheijde.aoc2016.days
+package net.hogerheijde.aoc2016.days.day1
 
-import net.hogerheijde.aoc2016.model.Coordinate
+import net.hogerheijde.aoc2016.days.day1.model.Coordinate
+import net.hogerheijde.aoc2016.days.day1.model.GoLeft
+import net.hogerheijde.aoc2016.days.day1.model.GoRight
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
-import net.hogerheijde.aoc2016.model.GoLeft
-import net.hogerheijde.aoc2016.model.GoRight
 
 import scala.collection.immutable.IndexedSeq
 

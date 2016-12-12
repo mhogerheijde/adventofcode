@@ -30,6 +30,10 @@ object Util {
 //
 //  }
 
+  def readFile(filename: String): String = {
+    scala.io.Source.fromResource(filename).getLines().mkString("\n")
+  }
+
   @tailrec
   def getFirstDupe[A](list: IndexedSeq[A]): Option[A] = {
     if (list.isEmpty) {

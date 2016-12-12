@@ -1,13 +1,14 @@
 package net.hogerheijde.aoc2016
 
 import net.hogerheijde.aoc2016.days.day1.Day1
+import net.hogerheijde.aoc2016.days.day2.Day2
 
 object Advent {
 
   def main(args: Array[String]): Unit = {
     printHeader()
     runDay1()
-
+    runDay2()
   }
 
 
@@ -24,6 +25,12 @@ object Advent {
     val distance2 = Day1.build(instructions).runPart2()
     println(s"Day 1 - pt1: $distance2 (expect 163)")
 
+  }
+
+  def runDay2(): Unit = {
+    val input = Util.readFile("net/hogerheijde/aoc2016/days/day2/day2.input")
+    val code = Day2.process(input)
+    println(s"Day 2 - pt1: $code")
   }
 
 

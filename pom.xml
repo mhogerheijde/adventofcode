@@ -12,7 +12,7 @@
 
   <properties>
     <scala.version>2.12.1</scala.version>
-    <scala.binary.version>2.11</scala.binary.version>
+    <scala.binary.version>2.12</scala.binary.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
@@ -33,31 +33,25 @@
     </dependency>
 
     <dependency>
-      <groupId>org.scala-lang</groupId>
-      <artifactId>scala-library</artifactId>
-      <version>${scala.version}</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.scalactic</groupId>
-      <artifactId>scalactic_2.12</artifactId>
+      <artifactId>scalactic_${scala.binary.version}</artifactId>
       <version>3.0.1</version>
       <exclusions>
         <exclusion>
           <groupId>org.scala-lang</groupId>
-          <artifactId>scala-lang</artifactId>
+          <artifactId>scala-library</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.scalatest</groupId>
-      <artifactId>scalatest_2.12</artifactId>
+      <artifactId>scalatest_${scala.binary.version}</artifactId>
       <version>3.0.1</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
           <groupId>org.scala-lang</groupId>
-          <artifactId>scala-lang</artifactId>
+          <artifactId>scala-library</artifactId>
         </exclusion>
       </exclusions>
     </dependency>

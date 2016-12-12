@@ -35,12 +35,56 @@ class Day3Test extends FlatSpec with Matchers {
     """.stripMargin
 
 
-    Day3.parse(input) should be (IndexedSeq(
+    Day3.parseRows(input) should be (IndexedSeq(
       IndexedSeq(566, 477, 376),
       IndexedSeq(575, 488, 365),
       IndexedSeq(50, 18, 156),
       IndexedSeq(558, 673, 498),
       IndexedSeq(133, 112, 510)
+    ))
+
+  }
+
+  it should "parse columns correctly" in {
+    val input = """
+      |  101 301 501
+      |  102 302 502
+      |  103 303 503
+      |  201 401 601
+      |  202 402 602
+      |  203 403 603
+      |
+    """.stripMargin
+
+    Day3.parseColumns(input) should be (IndexedSeq(
+      IndexedSeq(101, 102, 103),
+      IndexedSeq(301, 302, 303),
+      IndexedSeq(501, 502, 503),
+      IndexedSeq(201, 202, 203),
+      IndexedSeq(401, 402, 403),
+      IndexedSeq(601, 602, 603)
+    ))
+
+  }
+
+  it should "create correct triangles for columns" in {
+    val input = """
+      |  102 302 502
+      |  102 302 502
+      |  103 303 503
+      |  202 402 602
+      |  202 402 602
+      |  203 403 603
+      |
+    """.stripMargin
+
+    Day3.processAsColumns(input) should be (IndexedSeq(
+      Triangle(102, 102, 103),
+      Triangle(302, 302, 303),
+      Triangle(502, 502, 503),
+      Triangle(202, 202, 203),
+      Triangle(402, 402, 403),
+      Triangle(602, 602, 603)
     ))
 
   }

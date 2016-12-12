@@ -35,10 +35,10 @@ object Advent {
 
   def runDay3(): Unit = {
     val input = Util.readFile("net/hogerheijde/aoc2016/days/day3.input")
-    val triangles = Day3.process(input)
-    println(s"Day 3 - pt1: ${triangles.length} (expect ???)")
-//    val code2 = Day2.process(input, KeyPadStar.Five)
-//    println(s"Day 2 - pt2: $code2 (expect 7423A)")
+    val triangles1 = Day3.processAsRows(input)
+    println(s"Day 3 - pt1: ${triangles1.length} (expect 1050)")
+    val triangles2 = Day3.processAsColumns(input)
+    println(s"Day 3 - pt1: ${triangles2.length} (expect 1921)")
   }
 
 

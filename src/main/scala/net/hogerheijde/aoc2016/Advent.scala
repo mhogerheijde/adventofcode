@@ -5,6 +5,7 @@ import net.hogerheijde.aoc2016.days.day2.Day2
 import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare
 import net.hogerheijde.aoc2016.days.day2.model.KeyPadStar
 import net.hogerheijde.aoc2016.days.day3.Day3
+import net.hogerheijde.aoc2016.days.day4.Day4
 
 object Advent {
 
@@ -13,6 +14,7 @@ object Advent {
     runDay1()
     runDay2()
     runDay3()
+    runDay4()
   }
 
 
@@ -38,7 +40,15 @@ object Advent {
     val triangles1 = Day3.processAsRows(input)
     println(s"Day 3 - pt1: ${triangles1.length} (expect 1050)")
     val triangles2 = Day3.processAsColumns(input)
-    println(s"Day 3 - pt1: ${triangles2.length} (expect 1921)")
+    println(s"Day 3 - pt2: ${triangles2.length} (expect 1921)")
+  }
+
+  def runDay4(): Unit = {
+    val input = Util.readFile("net/hogerheijde/aoc2016/days/day4.input")
+    val sectorTotal = Day4.process(input)
+    println(s"Day 4 - pt1: $sectorTotal (expect 173787)")
+    val roomSector = Day4.findRoomSector(input, "northpole object storage")
+    println(s"Day 4 - pt2: ${roomSector.mkString} (expect 548)")
   }
 
 

@@ -9,6 +9,7 @@ import net.hogerheijde.aoc2016.days.day4.Day4
 import net.hogerheijde.aoc2016.days.day5.Day5
 import net.hogerheijde.aoc2016.days.day6.Day6
 import net.hogerheijde.aoc2016.days.day7.Day7
+import net.hogerheijde.aoc2016.days.day8.Day8
 
 object Advent {
 
@@ -21,6 +22,7 @@ object Advent {
     runDay5()
     runDay6()
     runDay7()
+    runDay8()
   }
 
 
@@ -85,6 +87,15 @@ object Advent {
     println(s"Day 7 - pt1: $amount (expect 110)")
     val amount2 = Day7.processPt2(input)
     println(s"Day 7 - pt2: $amount2 (expect 242)")
+  }
+
+  def runDay8(): Unit = {
+    val input = Util.readFile("net/hogerheijde/aoc2016/days/day8.input")
+
+    val amount = Day8.processPt1(input)
+    println(s"Day 8 - pt1: $amount (expect ?)")
+//    val amount2 = Day7.processPt2(input)
+//    println(s"Day 8 - pt2: $amount2 (expect 242)")
   }
 
   def printHeader(): Unit = {

@@ -6,6 +6,7 @@ import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare
 import net.hogerheijde.aoc2016.days.day2.model.KeyPadStar
 import net.hogerheijde.aoc2016.days.day3.Day3
 import net.hogerheijde.aoc2016.days.day4.Day4
+import net.hogerheijde.aoc2016.days.day5.Day5
 import net.hogerheijde.aoc2016.days.day6.Day6
 import net.hogerheijde.aoc2016.days.day7.Day7
 
@@ -17,7 +18,7 @@ object Advent {
     runDay2()
     runDay3()
     runDay4()
-
+    runDay5()
     runDay6()
     runDay7()
   }
@@ -56,7 +57,16 @@ object Advent {
     println(s"Day 4 - pt2: ${roomSector.mkString} (expect 548)")
   }
 
+  def runDay5(): Unit = {
 
+//    val code = Day5.crackP("ugkcyxxp")
+    val code = "d4cd2ee1"
+    println(s"Day 5 - pt1: $code (expect d4cd2ee1)")
+
+//    val code2 = Day5.crack2P("ugkcyxxp")
+    val code2 = "f2c730e5"
+    println(s"Day 5 - pt2: ${code2} (expect f2c730e5)")
+  }
 
 
   def runDay6(): Unit = {

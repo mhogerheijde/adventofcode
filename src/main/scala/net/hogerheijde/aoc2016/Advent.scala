@@ -7,6 +7,7 @@ import net.hogerheijde.aoc2016.days.day2.model.KeyPadStar
 import net.hogerheijde.aoc2016.days.day3.Day3
 import net.hogerheijde.aoc2016.days.day4.Day4
 import net.hogerheijde.aoc2016.days.day6.Day6
+import net.hogerheijde.aoc2016.days.day7.Day7
 
 object Advent {
 
@@ -18,6 +19,7 @@ object Advent {
     runDay4()
 
     runDay6()
+    runDay7()
   }
 
 
@@ -63,7 +65,16 @@ object Advent {
     val fixed = Day6.process(input)
     println(s"Day 6 - pt1: $fixed (expect dzqckwsd)")
     val fixed2 = Day6.process2(input)
-    println(s"Day 4 - pt2: $fixed2 (expect lragovly)")
+    println(s"Day 6 - pt2: $fixed2 (expect lragovly)")
+  }
+
+  def runDay7(): Unit = {
+    val input = Util.readFile("net/hogerheijde/aoc2016/days/day7.input")
+
+    val amount = Day7.processPt1(input)
+    println(s"Day 7 - pt1: $amount (expect 110)")
+    val amount2 = Day7.processPt2(input)
+    println(s"Day 7 - pt2: $amount2 (expect 242)")
   }
 
   def printHeader(): Unit = {

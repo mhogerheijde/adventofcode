@@ -7,10 +7,15 @@ object Day12 {
 
 
   def processPt1(input: String): Int = {
-
     val cpu = Cpu.load(parse(input))
     val result = run(cpu)
+    result.state.registers(A)
+  }
 
+  def processPt2(input: String): Int = {
+
+    val cpu = Cpu.withRegisters(Map(C -> 1)).load(parse(input))
+    val result = run(cpu)
     result.state.registers(A)
   }
 
@@ -18,8 +23,8 @@ object Day12 {
   def run(cpu: Cpu): Cpu = {
     cpu match {
       case _: RunningCpu =>
-        cpu.step()
-        run(cpu)
+        val newCpu = cpu.step()
+        run(newCpu)
       case _: HaltedCpu =>
         cpu
     }
@@ -33,7 +38,8 @@ object Day12 {
   val copyInt = """cpy (-?[0-9]+) ([abcd])""".r
   val inc = """inc ([abcd])""".r
   val dec = """dec ([abcd])""".r
-  val jnz = """jnz ([abcd]) (-?[0-9]+)""".r
+  val jnzRegister = """jnz ([abcd]) (-?[0-9]+)""".r
+  val jnzInt = """jnz (-?[0-9]+) (-?[0-9]+)""".r
 
   def parseLine(input: String): Instruction = {
     input match {
@@ -41,7 +47,8 @@ object Day12 {
       case copyInt(source, target) => Copy(Left(source.toInt), Register.fromString(target))
       case inc(r) => Inc(Register.fromString(r))
       case dec(r) => Dec(Register.fromString(r))
-      case jnz(r, jmp) => Jnz(Register.fromString(r), jmp.toInt)
+      case jnzRegister(r, jmp) => Jnz(Right(Register.fromString(r)), jmp.toInt)
+      case jnzInt(i, jmp) => Jnz(Left(i.toInt), jmp.toInt)
     }
   }
 

@@ -55,7 +55,7 @@ class CpuTest extends FlatSpec with Matchers {
 
   it should "jump to correct PC when register is not zero" in {
     val next1 = Cpu.withRegisters(Map(A -> 1)).load(IndexedSeq(
-      Jnz(A, 2),
+      Jnz(Right(A), 2),
       Copy(Left(42), A)
     )).step()
 
@@ -64,7 +64,7 @@ class CpuTest extends FlatSpec with Matchers {
     val cpu = Cpu.withRegisters(Map(A -> 1)).withPc(1)
     val next2 = cpu.load(IndexedSeq(
       Nop,
-      Jnz(A, 3)
+      Jnz(Right(A), 3)
     )).step()
 
     next2.state.pc should be (4)
@@ -72,7 +72,7 @@ class CpuTest extends FlatSpec with Matchers {
     val next3 = Cpu.withRegisters(Map(A -> 1)).withPc(2).load(IndexedSeq(
       Nop,
       Nop,
-      Jnz(A, -1)
+      Jnz(Right(A), -1)
     )).step()
 
     next3.state.pc should be (1)
@@ -82,7 +82,7 @@ class CpuTest extends FlatSpec with Matchers {
 
   it should "jump to correct PC when register is zero" in {
     val next1 = Cpu.load(IndexedSeq(
-      Jnz(A, 2),
+      Jnz(Right(A), 2),
       Nop
     )).step()
 
@@ -91,7 +91,7 @@ class CpuTest extends FlatSpec with Matchers {
     val cpu = Cpu.withPc(1)
     val next2 = cpu.load(IndexedSeq(
       Nop,
-      Jnz(A, 3)
+      Jnz(Right(A), 3)
     )).step()
 
     next2.state.pc should be (2)
@@ -99,7 +99,7 @@ class CpuTest extends FlatSpec with Matchers {
     val next3 = Cpu.withPc(2).load(IndexedSeq(
       Nop,
       Nop,
-      Jnz(A, -1)
+      Jnz(Right(A), -1)
     )).step()
 
     next3.state.pc should be (3)
@@ -118,7 +118,7 @@ class CpuTest extends FlatSpec with Matchers {
     val next = Cpu.withRegisters(Map(A -> 1)).withPc(2).load(IndexedSeq(
       Nop,
       Nop,
-      Jnz(A, 5),
+      Jnz(Right(A), 5),
       Nop,
       Nop
     )).step().step()

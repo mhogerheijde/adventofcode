@@ -37,11 +37,11 @@ class Day4Test extends FlatSpec with Matchers {
   }
 
   it should "split input into tuple correctly" in  {
-    Day4.parse("fubrjhqlf-edvnhw-dftxlvlwlrq-803[wjvzd]") should be( ("fubrjhqlfedvnhwdftxlvlwlrq", 803, "wjvzd") )
-    Day4.parse("kzgwomvqk-rmttgjmiv-lmxizbumvb-902[zmnji]") should be( ("kzgwomvqkrmttgjmivlmxizbumvb", 902, "zmnji") )
-    Day4.parse("dkqjcbctfqwu-dwppa-fgukip-596[syiua]") should be( ("dkqjcbctfqwudwppafgukip", 596, "syiua") )
-    Day4.parse("xjinphzm-bmvyz-ytz-gjbdnodxn-135[nzbdj]") should be( ("xjinphzmbmvyzytzgjbdnodxn", 135, "nzbdj") )
-    Day4.parse("uwtojhynqj-hfsid-xytwflj-177[ztsqu]") should be( ("uwtojhynqjhfsidxytwflj", 177, "ztsqu") )
+    Day4.parse("fubrjhqlf-edvnhw-dftxlvlwlrq-803[wjvzd]") should be( ("fubrjhqlf-edvnhw-dftxlvlwlrq", 803, "wjvzd") )
+    Day4.parse("kzgwomvqk-rmttgjmiv-lmxizbumvb-902[zmnji]") should be( ("kzgwomvqk-rmttgjmiv-lmxizbumvb", 902, "zmnji") )
+    Day4.parse("dkqjcbctfqwu-dwppa-fgukip-596[syiua]") should be( ("dkqjcbctfqwu-dwppa-fgukip", 596, "syiua") )
+    Day4.parse("xjinphzm-bmvyz-ytz-gjbdnodxn-135[nzbdj]") should be( ("xjinphzm-bmvyz-ytz-gjbdnodxn", 135, "nzbdj") )
+    Day4.parse("uwtojhynqj-hfsid-xytwflj-177[ztsqu]") should be( ("uwtojhynqj-hfsid-xytwflj", 177, "ztsqu") )
   }
 
   it should "create a checksum" in {

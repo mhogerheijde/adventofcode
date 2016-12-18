@@ -47,7 +47,17 @@ class Day12Test extends FlatSpec with Matchers {
     line = s"jnz $register $jump"
   } yield {
     it should s"parse instruction `jnz $register $jump`" in {
-      Day12.parseLine(line) should be(Jnz(register, jump))
+      Day12.parseLine(line) should be(Jnz(Right(register), jump))
+    }
+  }
+
+  for {
+    value <- Range.inclusive(-10, 10) // negative double digits to positive double digits in order to check not only 1 character pos. is parsed
+    jump <- Range.inclusive(-10, 10) // negative double digits to positive double digits in order to check not only 1 character pos. is parsed
+    line = s"jnz $value $jump"
+  } yield {
+    it should s"parse instruction `jnz $value $jump`" in {
+      Day12.parseLine(line) should be(Jnz(Left(value), jump))
     }
   }
 

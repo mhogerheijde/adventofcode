@@ -1,11 +1,21 @@
 package net.hogerheijde.aoc2016.days.day12
 
+import net.hogerheijde.aoc2016.days.day12.Instruction.Source
 import net.hogerheijde.aoc2016.days.day12.RunningCpu.CpuBuilder
 
 import scala.collection.immutable.Map
 import scala.collection.immutable.IndexedSeq
 
-case class State(registers: Map[Register, Int], instructions: IndexedSeq[Instruction], pc: Int)
+case class State(registers: Map[Register, Int], instructions: IndexedSeq[Instruction], pc: Int) {
+  override def toString: String = {
+    val a = registers(A).toString.reverse.padTo(7, ' ').reverse
+    val b = registers(B).toString.reverse.padTo(7, ' ').reverse
+    val c = registers(C).toString.reverse.padTo(7, ' ').reverse
+    val d = registers(D).toString.reverse.padTo(7, ' ').reverse
+
+    s"$pc: [A: $a, B: $b, C: $c, D: $d]"
+  }
+}
 
 trait Cpu {
   def state: State
@@ -33,15 +43,13 @@ class RunningCpu private(val state: State) extends Cpu {
           State(state.registers.updated(target, state.registers(source)), state.instructions, state.pc + 1)
         case Nop =>
           state.copy(pc = state.pc + 1)
-        case Jnz(r, jmp) =>
-          state.registers(r) match {
-            case 0 =>
-              state.copy(pc = state.pc + 1)
-            case _ =>
-              state.copy(pc = state.pc + jmp)
+        case Jnz(source, jmp) =>
+          val testValue = source.fold(value => value, r => state.registers(r))
+          testValue match {
+            case 0 => state.copy(pc = state.pc + 1)
+            case _ => state.copy(pc = state.pc + jmp)
           }
       }
-
       new RunningCpu(newState)
     }
   }
@@ -85,8 +93,11 @@ case object D extends Register { override def toString = "d" }
 
 
 trait Instruction
-case class Copy(source: Either[Int, Register], target: Register) extends Instruction
+object Instruction {
+  type Source = Either[Int, Register]
+}
+case class Copy(source: Source, target: Register) extends Instruction
 case class Inc(r: Register) extends Instruction
 case class Dec(r: Register) extends Instruction
-case class Jnz(r: Register, jump: Int) extends Instruction
+case class Jnz(source: Source, jump: Int) extends Instruction
 case object Nop extends Instruction // Not officially supported; added for testability

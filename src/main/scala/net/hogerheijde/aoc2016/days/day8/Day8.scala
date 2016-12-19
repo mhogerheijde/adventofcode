@@ -19,23 +19,16 @@ object Day8 {
     }
   }
 
-  def processPt1(input: String): Int = {
+  def processPt1(input: String): Screen = {
     val screen = new Screen(Grid(50, 6))
     val commands = parse(input)
-
-    val result = commands.foldLeft(screen) { case (screen, command) =>
-      val s = command match {
+    commands.foldLeft(screen) { case (screen, command) =>
+      command match {
         case Rect(width, height) => screen.rect(width, height)
         case RotateColumn(column, shift) => screen.rotateColumn(column, shift)
         case RotateRow(row, shift) => screen.rotateRow(row, shift)
       }
-//      println(s)
-//      println("------------------------------------------------------------")
-
-      s
     }
-    println(result)
-    result.count
   }
 
   def parse(input: String): IndexedSeq[Command] = {

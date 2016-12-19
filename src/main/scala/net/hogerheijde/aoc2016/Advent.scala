@@ -10,6 +10,7 @@ import net.hogerheijde.aoc2016.days.day4.Day4
 import net.hogerheijde.aoc2016.days.day5.Day5
 import net.hogerheijde.aoc2016.days.day6.Day6
 import net.hogerheijde.aoc2016.days.day7.Day7
+import net.hogerheijde.aoc2016.days.day8.Alphabet
 import net.hogerheijde.aoc2016.days.day8.Day8
 import net.hogerheijde.aoc2016.days.day9.Day9
 
@@ -97,10 +98,11 @@ object Advent {
   def runDay8(): Unit = {
     val input = Util.readFile("net/hogerheijde/aoc2016/days/day8.input")
 
-    val amount = Day8.processPt1(input)
-    println(s"Day 8 - pt1: $amount (expect ?)")
-//    val amount2 = Day7.processPt2(input)
-//    println(s"Day 8 - pt2: $amount2 (expect 242)")
+    val screen = Day8.processPt1(input)
+    println(s"Day 08 - pt1: ${screen.count} (expect 115)")
+    val code = Alphabet.resolve(screen.toString)
+    println(s"Day 08 - pt2: $code (expect EFEYKFRFIJ")
+
   }
 
   def runDay9(): Unit = {
@@ -119,7 +121,7 @@ object Advent {
     val result = Day12.processPt1(input)
     println(s"Day 12 - pt1: $result (expect 318020)")
     val result2 = Day12.processPt2(input)
-    println(s"Day 12 - pt1: $result2 (expect ?)")
+    println(s"Day 12 - pt1: $result2 (expect 9227674)")
   }
 
   def printHeader(): Unit = {

@@ -1,8 +1,17 @@
 package net.hogerheijde.aoc2016.days.day5
 
+import net.hogerheijde.aoc2016.days.RunnableDay
+
 import scala.annotation.tailrec
 
-object Day5 {
+object Day5 extends RunnableDay {
+
+  def run(): Unit = {
+    val code = Day5.crackP("ugkcyxxp")
+    println(s"Day 05 - pt1: $code (expect d4cd2ee1)")
+    val code2 = Day5.crack2P("ugkcyxxp")
+    println(s"Day 05 - pt2: $code2 (expect f2c730e5)")
+  }
 
   def crack(doorId: String): String = {
     val start = ("", 0)

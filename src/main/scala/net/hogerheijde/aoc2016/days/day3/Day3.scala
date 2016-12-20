@@ -1,10 +1,20 @@
 package net.hogerheijde.aoc2016.days.day3
 
+import net.hogerheijde.aoc2016.Util
+import net.hogerheijde.aoc2016.days.RunnableDay
 import net.hogerheijde.aoc2016.days.day3.model.Triangle
 
 import scala.util.Try
 
-object Day3 {
+object Day3 extends RunnableDay {
+
+  def run(): Unit = {
+    val input = Util.readFile("net/hogerheijde/aoc2016/days/day3.input")
+    val triangles1 = Day3.processAsRows(input)
+    println(s"Day 03 - pt1: ${triangles1.length} (expect 1050)")
+    val triangles2 = Day3.processAsColumns(input)
+    println(s"Day 03 - pt2: ${triangles2.length} (expect 1921)")
+  }
 
 
   def processAsRows(input: String): IndexedSeq[Triangle] = {

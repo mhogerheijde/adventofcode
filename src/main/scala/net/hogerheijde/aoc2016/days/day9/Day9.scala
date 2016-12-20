@@ -1,6 +1,21 @@
 package net.hogerheijde.aoc2016.days.day9
 
-object Day9 {
+import net.hogerheijde.aoc2016.Util
+import net.hogerheijde.aoc2016.days.RunnableDay
+
+object Day9 extends RunnableDay {
+
+
+
+  def run(): Unit = {
+    val input = Util.readFile("net/hogerheijde/aoc2016/days/day9.input")
+
+    val result = Day9.processPt1(input)
+    println(s"Day 09 - pt1: $result (expect 120765)")
+    val result2 = Day9.processPt2(input)
+    println(s"Day 09 - pt2: $result2 (expect 11658395076)")
+  }
+
 
   def processPt1(input: String): Int = {
     lengthOf(input.iterator)

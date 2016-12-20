@@ -26,10 +26,10 @@ class Day8Test extends FlatSpec with Matchers {
   }
 
   it should "parse rotate row command correctly" in {
-    Day8.parseCommand("rotate row x=0 by 1") should be(Some(RotateRow(0, 1)))
-    Day8.parseCommand("rotate row x=0 by 2") should be(Some(RotateRow(0, 2)))
-    Day8.parseCommand("rotate row x=1 by 1") should be(Some(RotateRow(1, 1)))
-    Day8.parseCommand("rotate row x=10 by 20") should be(Some(RotateRow(10, 20)))
+    Day8.parseCommand("rotate row y=0 by 1") should be(Some(RotateRow(0, 1)))
+    Day8.parseCommand("rotate row y=0 by 2") should be(Some(RotateRow(0, 2)))
+    Day8.parseCommand("rotate row y=1 by 1") should be(Some(RotateRow(1, 1)))
+    Day8.parseCommand("rotate row y=10 by 20") should be(Some(RotateRow(10, 20)))
   }
 
   it should "parse a list of command correctly" in {

@@ -1,8 +1,19 @@
 package net.hogerheijde.aoc2016.days.day4
 
+import net.hogerheijde.aoc2016.Util
+import net.hogerheijde.aoc2016.days.RunnableDay
+
 import scala.collection.immutable.Map
 
-object Day4 {
+object Day4 extends RunnableDay {
+
+  def run(): Unit = {
+    val input = Util.readFile("net/hogerheijde/aoc2016/days/day4.input")
+    val sectorTotal = Day4.process(input)
+    println(s"Day 04 - pt1: $sectorTotal (expect 173787)")
+    val roomSector = Day4.findRoomSector(input, "northpole object storage")
+    println(s"Day 04 - pt2: ${roomSector.mkString} (expect 548)")
+  }
 
   type Code = String
   type SectorId = Int

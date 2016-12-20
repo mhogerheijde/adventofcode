@@ -1,6 +1,7 @@
 package net.hogerheijde.aoc2016.days.day1
 
 import net.hogerheijde.aoc2016.Util
+import net.hogerheijde.aoc2016.days.RunnableDay
 import net.hogerheijde.aoc2016.days.day1.model.Coordinate
 import net.hogerheijde.aoc2016.days.day1.model.Direction
 import net.hogerheijde.aoc2016.days.day1.model.East
@@ -33,7 +34,16 @@ class Day1(instructions: IndexedSeq[Instruction]) {
   }
 }
 
-object Day1 {
+object Day1 extends RunnableDay {
+
+  def run(): Unit = {
+    val instructions = Util.readFile("net/hogerheijde/aoc2016/days/day1.input")
+    val distance1 = Day1.build(instructions).run()
+    println(s"Day 01 - pt1: $distance1 (expect 279)")
+    val distance2 = Day1.build(instructions).runPart2()
+    println(s"Day 01 - pt2: $distance2 (expect 163)")
+
+  }
 
   def build(instruction: String): Day1 = new Day1(parse(instruction))
 

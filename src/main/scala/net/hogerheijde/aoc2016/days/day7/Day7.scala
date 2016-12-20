@@ -1,7 +1,19 @@
 package net.hogerheijde.aoc2016.days.day7
+import net.hogerheijde.aoc2016.Util
+import net.hogerheijde.aoc2016.days.RunnableDay
+
 import scala.collection.immutable.IndexedSeq
 
-object Day7 {
+object Day7 extends RunnableDay {
+
+  def run(): Unit = {
+    val input = Util.readFile("net/hogerheijde/aoc2016/days/day7.input")
+
+    val amount = Day7.processPt1(input)
+    println(s"Day 07 - pt1: $amount (expect 110)")
+    val amount2 = Day7.processPt2(input)
+    println(s"Day 07 - pt2: $amount2 (expect 242)")
+  }
 
   type IP = (IndexedSeq[String], IndexedSeq[String])
   val IP = scala.Tuple2

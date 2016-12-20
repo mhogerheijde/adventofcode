@@ -1,8 +1,20 @@
 package net.hogerheijde.aoc2016.days.day6
 
+import net.hogerheijde.aoc2016.Util
+import net.hogerheijde.aoc2016.days.RunnableDay
+
 import scala.collection.immutable.IndexedSeq
 
-object Day6 {
+object Day6 extends RunnableDay {
+
+  def run(): Unit = {
+    val input = Util.readFile("net/hogerheijde/aoc2016/days/day6.input")
+
+    val fixed = Day6.process(input)
+    println(s"Day 06 - pt1: $fixed (expect dzqckwsd)")
+    val fixed2 = Day6.process2(input)
+    println(s"Day 06 - pt2: $fixed2 (expect lragovly)")
+  }
 
   type Histogram = IndexedSeq[Map[Char, Int]]
   val Histogram = scala.collection.immutable.IndexedSeq

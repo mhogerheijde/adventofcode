@@ -1,6 +1,7 @@
 package net.hogerheijde.aoc2016
 
 import net.hogerheijde.aoc2016.days.day1.Day1
+import net.hogerheijde.aoc2016.days.day10.Day10
 import net.hogerheijde.aoc2016.days.day12.Day12
 import net.hogerheijde.aoc2016.days.day2.Day2
 import net.hogerheijde.aoc2016.days.day2.model.KeyPadSquare
@@ -28,6 +29,7 @@ object Advent {
     Day9.run()
     Day8.run()
     Day9.run()
+    Day10.run()
     Day12.run()
   }
 

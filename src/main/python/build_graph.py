@@ -9,14 +9,22 @@ def parse_input(line):
     return line
 
 #Reads in the data
-with open("../resources/net/hogerheijde/aoc2016/days/day10.input", "r") as input_file:
-    data = map(parse_input, input_file.readlines())
+def buildGraph():
+    with open("../resources/net/hogerheijde/aoc2016/days/day10.input", "r") as input_file:
+        data = map(parse_input, input_file.readlines())
 
-print("digraph robots {")
-for line in data:
-    if line[0] == "give":
-        print("bot{} -> {}{} [label = low];".format(line[1],line[2][0],line[2][1]))
-        print("bot{} -> {}{} [label = high];".format(line[1],line[3][0],line[3][1]))
-    elif line[0] == "value":
-        print("input{} -> bot{};".format(line[2],line[1]))
-print("}")
+    graph = "digraph robots {\n"
+    for line in data:
+        if line[0] == "give":
+            graph = graph  + "  \"Bot({})\" -> \"{}({})\" [label = low];\n".format(line[1],line[2][0].title(),line[2][1])
+            graph = graph  + "  \"Bot({})\" -> \"{}({})\" [label = high];\n".format(line[1],line[3][0].title(),line[3][1])
+        elif line[0] == "value":
+            graph = graph + "  \"Microchip({})\" [shape = box, color = blue];\n".format(line[2])
+            graph = graph  + "  \"Microchip({})\" -> \"Bot({})\";\n".format(line[2],line[1])
+    graph = graph  + "}\n"
+
+    return graph
+
+with open("./graph.dot", "w") as output_file:
+    output_file.write(buildGraph())
+

@@ -17,6 +17,8 @@ object Day10 extends RunnableDay {
 
   def processPt1(input: String): Option[Bot] = {
     val proc = parse(input).resolve
+    println(proc.state.toDot())
+
 //    val result = Processor.resolve(proc.state, IndexedSeq())
 
     val x = proc.states.flatMap(state => state.bots filter {

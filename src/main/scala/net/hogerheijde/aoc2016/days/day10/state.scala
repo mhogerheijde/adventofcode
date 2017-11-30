@@ -109,6 +109,18 @@ case class State(targets: Set[Target]) {
     }
   }
 
+  def toDot(): String = {
+     val botArcs = bots map { case (id, bot) =>
+      s"""  "Bot(${id.id})" -> "${bot.low}" [label = low];\n""" +
+        s"""  "Bot(${id.id})" -> "${bot.high}" [label = high];\n"""
+    }
+
+    s"""digraph robots {
+      |${botArcs.mkString}
+      |}
+    """.stripMargin
+  }
+
 }
 
 case class Microchip(value: Int)
@@ -119,9 +131,11 @@ trait TargetId {
 }
 case class BotId(id: Int) extends TargetId {
   override def createNew: PartialBot = Bot(id)
+  override def toString(): String = s"Bot($id)"
 }
 case class OutputId(id: Int) extends TargetId {
   override def createNew: Output = Output(id)
+  override def toString(): String = s"Output($id)"
 }
 
 
@@ -141,6 +155,8 @@ object Output {
 
 trait Bot extends Target {
   override def id: BotId
+  def low: TargetId
+  def high: TargetId
   def history: IndexedSeq[Set[Microchip]]
 }
 object Bot {
@@ -153,6 +169,9 @@ case class PartialBot(id: BotId,
                       instruction: Option[Instruction],
                       chip: Option[Microchip],
                       history: IndexedSeq[Set[Microchip]]) extends Bot with OpenSlot  {
+
+  def low: TargetId = instruction.get.low
+  def high: TargetId = instruction.get.high
 
   def addChip(chip: Microchip): Bot = {
     this match {
@@ -168,6 +187,10 @@ case class FullBot(id: BotId,
                    slot1: Microchip,
                    slot2: Microchip,
                    history: IndexedSeq[Set[Microchip]]) extends Bot {
+
+  def low: TargetId = instruction.get.low
+  def high: TargetId = instruction.get.high
+
 
   def collect: (Microchip, Microchip, PartialBot) = {
     val bot = PartialBot(id, instruction, None, history :+ Set(slot1, slot2))

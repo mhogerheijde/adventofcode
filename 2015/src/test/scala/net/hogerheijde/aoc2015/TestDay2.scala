@@ -1,7 +1,7 @@
 package net.hogerheijde.aoc2015
 
+import net.hogerheijde.aoc2015.day2.Box
 import net.hogerheijde.aoc2015.day2.Day2
-import net.hogerheijde.aoc2015.day2.Day2.Box
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 

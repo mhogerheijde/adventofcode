@@ -1,5 +1,7 @@
 package net.hogerheijde.aoc2015.day1
 
+import net.hogerheijde.aoc2015.util.Day
+
 import scala.io.Source
 
 
@@ -35,18 +37,12 @@ import scala.io.Source
   *
   * What is the position of the character that causes Santa to first enter the basement?
   */
-object Day1 {
+object Day1 extends Day[String, Int, Option[Int]]{
+  def main(args: Array[String]): Unit = run()
 
-  def main(args: Array[String]): Unit = {
-    val input = Source.fromResource("net/hogerheijde/aoc2015/day1.txt").mkString
+  override def name: String = "Day 1"
+  override def parse: String => String = identity
 
-    val result1 = part1(input)
-    println(s"Day 1; part 1: $result1")
-    val result2 = part2(input)
-    println(s"Day 1; part 2: ${result2.getOrElse("OH NOES!")}")
-
-
-  }
 
   def part1(input: String): Int = {
     input.foldLeft(0) { (total, currentChar) =>
@@ -75,5 +71,6 @@ object Day1 {
       }
     }._1
   }
+
 
 }

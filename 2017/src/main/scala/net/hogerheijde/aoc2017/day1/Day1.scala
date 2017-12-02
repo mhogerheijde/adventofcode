@@ -1,21 +1,12 @@
 package net.hogerheijde.aoc2017.day1
 
-import scala.io.Source
+import net.hogerheijde.aoc2017.Day
 
-object Day1 {
+object Day1 extends Day[String, Int, Int]{
+  def main(args: Array[String]): Unit = run()
 
-
-
-  def main(args: Array[String]): Unit = {
-    val input = Source.fromResource("net/hogerheijde/aoc2017/day1.input").mkString.trim
-
-    val result1 = part1(input)
-    println(s"Day 1; part 1: $result1")
-    val result2 = part2(input)
-    println(s"Day 1; part 2: $result2")
-
-
-  }
+  override def name: String = "Day 1"
+  override def parse: String => String = identity
 
   def part1(input: String): Int = {
     (input + input.charAt(0)).toSeq.sliding(2).foldLeft(0) { case (total, chars) =>
@@ -28,9 +19,6 @@ object Day1 {
     str.zip(rotated).foldLeft(0) { case (total, (char1, char2)) =>
       if (char1 == char2) { total + Integer.parseInt(char1.toString, 10) } else { total }
     }
-
-
   }
-
 
 }

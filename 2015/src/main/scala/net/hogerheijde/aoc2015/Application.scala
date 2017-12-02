@@ -1,9 +1,21 @@
 package net.hogerheijde.aoc2015
 
+import net.hogerheijde.aoc2015.day1.Day1
+import net.hogerheijde.aoc2015.day2.Day2
+import net.hogerheijde.aoc2015.day3.Day3
+import net.hogerheijde.aoc2015.day4.Day4
+import net.hogerheijde.aoc2015.day5.Day5
+
 object Application {
 
   def main(args: Array[String]): Unit = {
     printHeader()
+
+    Day1.run()
+    Day2.run()
+    Day3.run()
+    Day4.run()
+    Day5.run()
 
   }
 

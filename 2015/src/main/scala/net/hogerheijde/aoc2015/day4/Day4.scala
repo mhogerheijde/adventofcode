@@ -27,8 +27,6 @@ object Day4 extends Day[String, Int, Int] {
       map("%02x".format(_)).
       mkString
 
-    println(s"Hashing $toHash: $result")
-
     result
   }
 }

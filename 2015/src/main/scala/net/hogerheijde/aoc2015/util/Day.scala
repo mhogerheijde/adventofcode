@@ -28,11 +28,13 @@ trait Day[Model, Result1, Result2] {
   def run(): Unit = {
     val input = Source.fromResource(s"net/hogerheijde/aoc2015/${name.toLowerCase.replace(" ", "")}.txt").mkString.trim
 
+    println(s"$name:")
     val boxes = parse(input)
 
+
     val result1 = part1(boxes)
-    println(s"Day 1; part 1: $result1")
+    println(s" - part 1: $result1")
     val result2 = part2(boxes)
-    println(s"Day 1; part 2: $result2")
+    println(s" - part 2: $result2")
   }
 }

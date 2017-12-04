@@ -1,1 +1,0 @@
-Seq(1, 2, 3).toSet.subsets(2).toIndexedSeq

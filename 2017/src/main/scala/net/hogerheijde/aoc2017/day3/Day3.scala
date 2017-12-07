@@ -2,6 +2,8 @@ package net.hogerheijde.aoc2017.day3
 
 import net.hogerheijde.aoc2017.Day
 
+import scala.annotation.tailrec
+
 object Day3 extends Day[Int, Int, Int]{
 
 
@@ -12,15 +14,40 @@ object Day3 extends Day[Int, Int, Int]{
 
   override def part1(input: Int): Int = {
     val c = coordinateOf(input)
-    c._1 + c._2 // Manhattan distance of a coordinate
+    c.horizontal + c.vertical // Manhattan distance of a coordinate
   }
 
 
-  override def part2(input: Int): Int = ???
+  override def part2(input: Int): Int = {
 
-  def coordinateOf(input: Int): (Int, Int) = {
-    if (input == 1) { (0,0) } else {
-      (ringOf(input), positionOf(input))
+    val start = Map(Coordinate.Center -> 1)
+
+    recurse((start, Coordinate.Center), input)
+
+  }
+
+  @tailrec
+  def recurse(state: (Map[Coordinate, Int], Coordinate), input: Int): Int = {
+    val nextGrid = increase(state._1, state._2)
+    val currentValue = nextGrid._1(nextGrid._2)
+    if (currentValue > input) {
+      currentValue
+    } else {
+      recurse(nextGrid, input)
+    }
+  }
+
+  def increase(grid: Map[Coordinate, Int], currentCoordinate: Coordinate): (Map[Coordinate, Int], Coordinate) = {
+    val nextCoordinate = currentCoordinate.next
+    val nextValue = nextCoordinate.neigbors.flatMap(grid.get).sum
+    (grid.updated(nextCoordinate, nextValue), nextCoordinate)
+  }
+
+
+
+  def coordinateOf(input: Int): Coordinate = {
+    if (input == 1) { Coordinate.Center } else {
+      Coordinate(ringOf(input), positionOf(input))
     }
   }
 
@@ -39,4 +66,33 @@ object Day3 extends Day[Int, Int, Int]{
   def ringOf(input: Int): Int = {
     (ringPower(input)/ 2.0).floor.toInt
   }
+//
+//  def nextCoordinate(coordinate: Coordinate): Coordinate = {
+//
+//    direction match {
+//      case Up => {
+//        val newCoordinate = coordinate.copy(vertical = coordinate.vertical + 1)
+//        if (newCoordinate.isCorner) {
+//          (newCoordinate, Left)
+//        } else {
+//
+//        }
+//      }
+//      case Down => ???
+//      case Right => ???
+//      case Left => ???
+//    }
+//
+//  }
+
+
+
+//  trait Direction
+//  case object Up extends Direction
+//  case object Down extends Direction
+//  case object Left extends Direction
+//  case object Right extends Direction
+
+
+
 }

@@ -1,13 +1,18 @@
 package net.hogerheijde.aoc2017.day7
 
 import net.hogerheijde.aoc2017.Day
+import net.hogerheijde.aoc2017.day7.Disc.DiscsByName
+import net.hogerheijde.aoc2017.day7.Disc.TowersByDisc
 
 import scala.collection.immutable.IndexedSeq
 
-object Day7 extends Day[Map[Disc, IndexedSeq[Disc]], String, Unit] {
+object Day7 extends Day[ (TowersByDisc, DiscsByName), String, Int] {
   def main(args: Array[String]): Unit = run()
   override def name: String = "Day 7"
-  override def parse: String => Map[Disc, IndexedSeq[Disc]] = { input =>
+
+
+
+  override def parse: String => (TowersByDisc, DiscsByName) = { input =>
     val pass1 = input.lines.map { line =>
       val parts = line.split(" -> ")
       val disc: Disc = Disc.fromString(parts(0))
@@ -21,16 +26,19 @@ object Day7 extends Day[Map[Disc, IndexedSeq[Disc]], String, Unit] {
 
     val disksByName = pass1.map { case (disc, _) => (disc.name, disc) }.toMap
 
-    pass1.map { case (disc, carrying) =>
+    val towersByDisc = pass1.map { case (disc, carrying) =>
       val discsMapped = carrying.map { name =>
         disksByName(name)
       }
       (disc, discsMapped)
     }.toMap
-  }
-  override def part1(input: Map[Disc, IndexedSeq[Disc]]): String = {
 
-    val outgoingRelationships = input.foldLeft(Set.empty[(String, String)]) { case (relations, (disc, carrying)) =>
+    (towersByDisc, disksByName)
+
+  }
+  override def part1(input: (TowersByDisc, DiscsByName)): String = {
+
+    val outgoingRelationships = input._1.foldLeft(Set.empty[(String, String)]) { case (relations, (disc, carrying)) =>
         val currentRelations = carrying.map( carried => (disc.name, carried.name) ).toSet
         relations ++ currentRelations
     }
@@ -47,15 +55,54 @@ object Day7 extends Day[Map[Disc, IndexedSeq[Disc]], String, Unit] {
 
 
   }
-  override def part2(input: Map[Disc, IndexedSeq[Disc]]): Unit = ???
-}
+  override def part2(input: (TowersByDisc, DiscsByName)): Int = {
+    val root = part1(input)
 
-case class Disc(name: String, weight: Int)
+    val rootDisc = input._2(root)
 
-object Disc {
-  def fromString(string: String): Disc = {
-    val parts = string.trim.split(" ")
-    val weight = Integer.parseInt(parts(1).drop(1).dropRight(1))
-    Disc(name = parts(0), weight = weight)
+    val result = getBalance(input._1)(rootDisc)
+
+    result match {
+      case Left(inbalance) => inbalance._1.weight + inbalance._2
+      case _ => throw new RuntimeException("There was no inbalance?")
+    }
+  }
+
+
+  def getWeight(towersByDisc: TowersByDisc)(root: Disc): Int = {
+    towersByDisc(root).map(getWeight(towersByDisc)).sum + root.weight
+  }
+
+
+  def getBalance(towersByDisc: TowersByDisc)(root: Disc): Either[(Disc, Int), (Disc, Int)] = {
+
+    val towers = towersByDisc(root)
+
+    towers match {
+      case IndexedSeq() => Right((root, root.weight))
+      case _ =>
+        val recursive = towers.map(getBalance(towersByDisc))
+
+        val nonBalance = recursive.collect {  case Left(i) => i }
+        val balance = recursive.collect { case Right(i) => i }
+
+        if (balance.map(_._2).distinct.length == 1 && nonBalance.isEmpty) {
+          val towerWeight = balance.foldLeft(0) { (t, d) => t + d._2 } + root.weight
+          val result = Right((root, towerWeight))
+          result
+        } else if (nonBalance.nonEmpty) {
+          val result = Left(nonBalance.head)
+          result
+        } else {
+          val groupedByWeight = balance.groupBy(_._2)
+          val oddOneOut = groupedByWeight.find(things => things._2.length == 1 ).get
+          val consensus = groupedByWeight.find(things => things._2.length != 1 ).get
+          val result = Left( (oddOneOut._2.head._1, consensus._1 - oddOneOut._1 ) )
+          result
+        }
+    }
   }
 }
+
+
+

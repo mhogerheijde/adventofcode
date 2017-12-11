@@ -5,6 +5,7 @@ import net.hogerheijde.aoc2017.day2.Day2
 import net.hogerheijde.aoc2017.day3.Day3
 import net.hogerheijde.aoc2017.day4.Day4
 import net.hogerheijde.aoc2017.day5.Day5
+import net.hogerheijde.aoc2017.day5.Day5Stub
 import net.hogerheijde.aoc2017.day6.Day6
 import net.hogerheijde.aoc2017.day7.Day7
 import net.hogerheijde.aoc2017.day8.Day8
@@ -16,7 +17,7 @@ object Application {
     Day2.run()
     Day3.run()
     Day4.run()
-    Day5.run()
+    Day5Stub.run()
     Day6.run()
     Day7.run()
     Day8.run()
@@ -30,7 +31,7 @@ object Application {
               | /(__)\  )(_) )\  /  )__)  )  (   )(     )(_)(  )__)   ( (__  )(_)(  )(_) ))__)
               |(__)(__)(____/  \/  (____)(_)\_) (__)   (_____)(__)     \___)(_____)(____/(____)
               |
-              | 2015
+              | 2017
               |""".stripMargin)
     println()
   }

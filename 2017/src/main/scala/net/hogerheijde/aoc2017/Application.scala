@@ -1,6 +1,7 @@
 package net.hogerheijde.aoc2017
 
 import net.hogerheijde.aoc2017.day1.Day1
+import net.hogerheijde.aoc2017.day11.Day11
 import net.hogerheijde.aoc2017.day2.Day2
 import net.hogerheijde.aoc2017.day3.Day3
 import net.hogerheijde.aoc2017.day4.Day4
@@ -9,6 +10,7 @@ import net.hogerheijde.aoc2017.day5.Day5Stub
 import net.hogerheijde.aoc2017.day6.Day6
 import net.hogerheijde.aoc2017.day7.Day7
 import net.hogerheijde.aoc2017.day8.Day8
+import net.hogerheijde.aoc2017.day9.Day9
 
 object Application {
   def main(args: Array[String]): Unit = {
@@ -21,6 +23,8 @@ object Application {
     Day6.run()
     Day7.run()
     Day8.run()
+    Day9.run()
+    Day11.run()
   }
 
 

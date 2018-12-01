@@ -1,10 +1,10 @@
 package net.hogerheijde.aoc2017.day11
 
-import net.hogerheijde.aoc2017.Day
-
 import scala.math.max
 
-object Day11 extends Day[IndexedSeq[Direction], Int, Int] {
+import net.hogerheijde.aoc2017.Day2017
+
+object Day11 extends Day2017[IndexedSeq[Direction], Int, Int] {
   def main(args: Array[String]): Unit = run()
   override def name: String = "Day 11"
   override def parse: String => IndexedSeq[Direction] = input => input.split(",").map(Direction.fromString).toIndexedSeq

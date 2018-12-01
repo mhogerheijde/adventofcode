@@ -1,6 +1,9 @@
-package net.hogerheijde.aoc2017
+package net.hogerheijde.aoc.util
 
 import scala.io.Source
+import scala.util.Failure
+import scala.util.Success
+import scala.util.Try
 
 /***
   *
@@ -9,6 +12,8 @@ import scala.io.Source
   * @tparam Result2 The result type of part 2
   */
 trait Day[Model, Result1, Result2] {
+
+  def year: String
 
   /**
     * The name of the day
@@ -27,11 +32,14 @@ trait Day[Model, Result1, Result2] {
 
   def run(): Unit = {
     val input = {
-      Option(Source.fromResource(s"net/hogerheijde/aoc2017/${name.toLowerCase.replace(" ", "")}.input")) match {
-        case Some(source) => source.mkString.trim
-        case None => throw new RuntimeException("Did you forget to place the puzzle input in the resources folder?")
+      val resourceName = s"net/hogerheijde/$year/${name.toLowerCase.replace(" ", "")}.input"
+      Try {
+        val source = Source.fromResource(resourceName)
+        source.mkString.trim
+      } match {
+        case Success(string) => string
+        case Failure(t) => throw new RuntimeException(s"Did you forget to place the puzzle input in the resources folder? Trying to read $resourceName", t)
       }
-
     }
 
     println(s"$name:")

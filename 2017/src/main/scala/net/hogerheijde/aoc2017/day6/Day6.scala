@@ -1,11 +1,11 @@
 package net.hogerheijde.aoc2017.day6
 
-import net.hogerheijde.aoc2017.Day
-
 import scala.annotation.tailrec
 import scala.collection.immutable.IndexedSeq
 
-object Day6 extends Day[State, Int, Int] {
+import net.hogerheijde.aoc2017.Day2017
+
+object Day6 extends Day2017[State, Int, Int] {
   def main(args: Array[String]): Unit = run()
   override def name: String = "Day 6"
 

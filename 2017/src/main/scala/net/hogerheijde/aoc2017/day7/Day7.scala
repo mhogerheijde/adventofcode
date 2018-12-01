@@ -1,12 +1,12 @@
 package net.hogerheijde.aoc2017.day7
 
-import net.hogerheijde.aoc2017.Day
 import net.hogerheijde.aoc2017.day7.Disc.DiscsByName
 import net.hogerheijde.aoc2017.day7.Disc.TowersByDisc
-
 import scala.collection.immutable.IndexedSeq
 
-object Day7 extends Day[ (TowersByDisc, DiscsByName), String, Int] {
+import net.hogerheijde.aoc2017.Day2017
+
+object Day7 extends Day2017[ (TowersByDisc, DiscsByName), String, Int] {
   def main(args: Array[String]): Unit = run()
   override def name: String = "Day 7"
 

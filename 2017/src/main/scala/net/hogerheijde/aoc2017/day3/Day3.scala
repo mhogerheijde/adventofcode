@@ -1,10 +1,10 @@
 package net.hogerheijde.aoc2017.day3
 
-import net.hogerheijde.aoc2017.Day
-
 import scala.annotation.tailrec
 
-object Day3 extends Day[Int, Int, Int]{
+import net.hogerheijde.aoc2017.Day2017
+
+object Day3 extends Day2017[Int, Int, Int]{
 
 
   def main(args: Array[String]): Unit = run()

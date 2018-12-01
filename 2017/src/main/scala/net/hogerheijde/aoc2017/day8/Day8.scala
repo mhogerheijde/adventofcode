@@ -1,11 +1,11 @@
 package net.hogerheijde.aoc2017.day8
 
-import net.hogerheijde.aoc2017.Day
 import net.hogerheijde.aoc2017.day8.Cpu.Instruction
-
 import scala.annotation.tailrec
 
-object Day8 extends Day[State, Int, Int] {
+import net.hogerheijde.aoc2017.Day2017
+
+object Day8 extends Day2017[State, Int, Int] {
   def main(args: Array[String]): Unit = run()
   override def name: String = "Day 8"
   override def parse: String => State = { input =>

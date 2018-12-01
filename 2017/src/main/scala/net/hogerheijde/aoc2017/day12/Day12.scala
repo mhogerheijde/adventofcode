@@ -1,10 +1,10 @@
 package net.hogerheijde.aoc2017.day12
 
-import net.hogerheijde.aoc2017.Day
-
 import scala.annotation.tailrec
 
-object Day12 extends Day[Map[Int, Set[Int]], Int, Int] {
+import net.hogerheijde.aoc2017.Day2017
+
+object Day12 extends Day2017[Map[Int, Set[Int]], Int, Int] {
   def main(args: Array[String]): Unit = run()
   override def name: String = "Day 12"
 

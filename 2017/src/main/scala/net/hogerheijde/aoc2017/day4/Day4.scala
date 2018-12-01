@@ -1,11 +1,11 @@
 package net.hogerheijde.aoc2017.day4
 
-import net.hogerheijde.aoc2017.Day
-
 import scala.collection.immutable
 import scala.collection.immutable.IndexedSeq
 
-object Day4 extends Day[IndexedSeq[String], Int, Int]{
+import net.hogerheijde.aoc2017.Day2017
+
+object Day4 extends Day2017[IndexedSeq[String], Int, Int]{
   def main(args: Array[String]): Unit = run()
   override def name: String = "Day 4"
   override def parse: String => IndexedSeq[String] = input => input.trim.lines.toIndexedSeq

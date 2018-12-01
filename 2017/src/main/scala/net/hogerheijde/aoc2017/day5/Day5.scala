@@ -1,11 +1,11 @@
 package net.hogerheijde.aoc2017.day5
 
-import net.hogerheijde.aoc2017.Day
-
 import scala.annotation.tailrec
 import scala.collection.immutable.IndexedSeq
 
-object Day5 extends Day[IndexedSeq[Int], Int, Int]{
+import net.hogerheijde.aoc2017.Day2017
+
+object Day5 extends Day2017[IndexedSeq[Int], Int, Int]{
   def main(args: Array[String]): Unit = run()
   override def name: String = "Day 5"
   override def parse: String => IndexedSeq[Int] = _.lines.map(Integer.parseInt).toIndexedSeq

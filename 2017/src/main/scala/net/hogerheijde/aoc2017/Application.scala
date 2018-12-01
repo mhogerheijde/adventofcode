@@ -3,6 +3,7 @@ package net.hogerheijde.aoc2017
 import net.hogerheijde.aoc2017.day1.Day1
 import net.hogerheijde.aoc2017.day11.Day11
 import net.hogerheijde.aoc2017.day12.Day12
+import net.hogerheijde.aoc2017.day13.Day13
 import net.hogerheijde.aoc2017.day2.Day2
 import net.hogerheijde.aoc2017.day3.Day3
 import net.hogerheijde.aoc2017.day4.Day4
@@ -27,6 +28,7 @@ object Application {
     Day9.run()
     Day11.run()
     Day12.run()
+    Day13.run()
   }
 
 

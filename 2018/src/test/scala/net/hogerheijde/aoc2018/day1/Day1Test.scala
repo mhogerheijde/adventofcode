@@ -1,4 +1,4 @@
-package net.hogerheijde.aco2018.day1
+package net.hogerheijde.aoc2018.day1
 
 import net.hogerheijde.aoc2018.day1.Day1
 import net.hogerheijde.aoc2018.day1.Day1

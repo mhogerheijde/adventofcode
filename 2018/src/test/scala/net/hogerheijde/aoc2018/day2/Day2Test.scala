@@ -1,6 +1,5 @@
-package net.hogerheijde.aco2018.day2
+package net.hogerheijde.aoc2018.day2
 
-import net.hogerheijde.aoc2018.day2.Day2
 import org.scalatest.Matchers
 import org.scalatest.WordSpec
 
@@ -45,6 +44,26 @@ class Day2Test extends WordSpec with Matchers {
     "calculate checksum" in {
       Day2.part1(exampleInput) should be (12)
     }
+
+    "find candiate" in {
+      Day2.candidate("abcde", "axcye") should be (false)
+      Day2.candidate("fghij", "fguij") should be (true)
+    }
+
+
+    "solve part 2" in {
+      Day2.part2(IndexedSeq(
+        "abcde",
+        "fghij",
+        "klmno",
+        "pqrst",
+        "fguij",
+        "axcye",
+        "wvxyz",
+      )) should be ("fgij")
+    }
+
+
   }
 
 }

@@ -8,7 +8,7 @@ import net.hogerheijde.aoc2017.Day2017
 object Day4 extends Day2017[IndexedSeq[String], Int, Int]{
   def main(args: Array[String]): Unit = run()
   override def name: String = "Day 4"
-  override def parse: String => IndexedSeq[String] = input => input.trim.lines.toIndexedSeq
+  override def parse(input: String): IndexedSeq[String] = input.trim.lines.toIndexedSeq
 
   override def part1(input: IndexedSeq[String]): Int = {
     input.foldLeft(0) { (validPhrases, phrase) =>

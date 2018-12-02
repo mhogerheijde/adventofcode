@@ -6,13 +6,13 @@ import scala.collection.immutable.IndexedSeq
 
 import net.hogerheijde.aoc2017.Day2017
 
-object Day7 extends Day2017[ (TowersByDisc, DiscsByName), String, Int] {
+object Day7 extends Day2017[(TowersByDisc, DiscsByName), String, Int] {
   def main(args: Array[String]): Unit = run()
   override def name: String = "Day 7"
 
 
 
-  override def parse: String => (TowersByDisc, DiscsByName) = { input =>
+  override def parse(input: String): (TowersByDisc, DiscsByName) = {
     val pass1 = input.lines.map { line =>
       val parts = line.split(" -> ")
       val disc: Disc = Disc.fromString(parts(0))

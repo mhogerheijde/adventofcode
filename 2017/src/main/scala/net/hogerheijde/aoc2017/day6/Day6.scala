@@ -9,7 +9,7 @@ object Day6 extends Day2017[State, Int, Int] {
   def main(args: Array[String]): Unit = run()
   override def name: String = "Day 6"
 
-  override def parse: String => State = { input =>
+  override def parse(input: String): State = {
     State.from(input.trim.split("\t").map(Integer.parseInt).toIndexedSeq)
   }
 

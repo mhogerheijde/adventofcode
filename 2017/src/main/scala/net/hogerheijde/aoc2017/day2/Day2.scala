@@ -6,7 +6,7 @@ object Day2 extends Day2017[Sheet, Int, Int]{
   def main(args: Array[String]): Unit = run()
   override def name: String = "Day 2"
 
-  override def parse: String => Sheet = { input =>
+  override def parse(input: String): Sheet = {
     Sheet(input.lines.toIndexedSeq.map(Row.fromLine))
   }
 

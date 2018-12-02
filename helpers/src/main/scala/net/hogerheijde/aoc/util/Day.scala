@@ -25,7 +25,7 @@ trait Day[Model, Result1, Result2] {
     * Parses the string of the puzzle input to the model type
     * @return
     */
-  def parse: String => Model
+  def parse(input: String): Model
 
   def part1(input: Model): Result1
   def part2(input: Model): Result2
@@ -43,12 +43,11 @@ trait Day[Model, Result1, Result2] {
     }
 
     println(s"$name:")
-    val boxes = parse(input)
+    val parsedInput = parse(input)
 
-
-    val result1 = part1(boxes)
+    val result1 = part1(parsedInput)
     println(s" - part 1: $result1")
-    val result2 = part2(boxes)
+    val result2 = part2(parsedInput)
     println(s" - part 2: $result2")
   }
 }

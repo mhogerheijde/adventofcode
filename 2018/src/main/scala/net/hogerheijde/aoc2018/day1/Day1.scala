@@ -15,13 +15,14 @@ object Day1 extends Day2018[Model, Int, Int] {
 
   override def name: String = "Day 1"
 
-  override def parse: String => Model = { in =>
+  override def parse(in: String): Model = {
     Parse.standardLineSplit(in).map { drift =>
       val s = Sign(drift.take(1).toCharArray.head)
       val a = drift.drop(1).toInt
       Drift(s, a)
     }
   }
+
   override def part1(input: Model): Int = {
     input.foldLeft(0) { case (result, drift) =>
       result + drift.signed

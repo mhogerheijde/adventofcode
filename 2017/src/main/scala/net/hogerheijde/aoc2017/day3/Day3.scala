@@ -10,7 +10,7 @@ object Day3 extends Day2017[Int, Int, Int]{
   def main(args: Array[String]): Unit = run()
   override def name: String = "Day 3"
 
-  override def parse: String => Int = Integer.parseInt
+  override def parse(input: String): Int = Integer.parseInt(input)
 
   override def part1(input: Int): Int = {
     val c = coordinateOf(input)

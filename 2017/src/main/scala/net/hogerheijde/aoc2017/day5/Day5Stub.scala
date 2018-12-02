@@ -1,7 +1,7 @@
 package net.hogerheijde.aoc2017.day5
 
 object Day5Stub {
-  def run() = {
+  def run(): Unit = {
     println("""Day 5:
               | - part 1: 376976
               | - part 2: 29227751""".stripMargin)

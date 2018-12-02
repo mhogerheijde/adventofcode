@@ -6,7 +6,7 @@ object Day1 extends Day2017[String, Int, Int]{
   def main(args: Array[String]): Unit = run()
 
   override def name: String = "Day 1"
-  override def parse: String => String = identity
+  override def parse(input: String): String = input
 
   private val BaseTen = 10
 

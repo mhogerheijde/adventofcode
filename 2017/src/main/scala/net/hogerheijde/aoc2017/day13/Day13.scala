@@ -6,7 +6,7 @@ object Day13 extends Day2017[Firewall, Int, Unit]{
   def main(args: Array[String]): Unit = run()
   override def name: String = "Day 13"
 
-  override def parse: String => Firewall = { input =>
+  override def parse(input: String): Firewall = {
     val layers = input.trim.lines.map { layer =>
       val layerparts = layer.split(":")
       (layerparts(0).trim.toInt, ActiveLayer(layerparts(1).trim.toInt))

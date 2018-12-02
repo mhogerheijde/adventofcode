@@ -8,7 +8,7 @@ object Day12 extends Day2017[Map[Int, Set[Int]], Int, Int] {
   def main(args: Array[String]): Unit = run()
   override def name: String = "Day 12"
 
-  override def parse: String => Map[Int, Set[Int]] = input => {
+  override def parse(input: String): Map[Int, Set[Int]] = {
     input.lines.foldLeft(Map.empty[Int, Set[Int]]) { (result, currentLine) =>
       val parts = currentLine.trim.split(" <-> ")
 

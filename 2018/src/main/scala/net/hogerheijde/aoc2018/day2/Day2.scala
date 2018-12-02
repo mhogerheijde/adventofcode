@@ -1,0 +1,43 @@
+package net.hogerheijde.aoc2018.day2
+
+import net.hogerheijde.aoc2018.Day2018
+import scala.collection.immutable.IndexedSeq
+
+import net.hogerheijde.aoc.util.Parse
+
+object Day2 extends Day2018[IndexedSeq[String], Int, Unit]{
+
+  override def name: String = "Day 2"
+  override def parse(in: String): IndexedSeq[String] = Parse.standardLineSplit(in)
+  override def part1(input: IndexedSeq[String]): Int = {
+    countDoubles(input) * countTriplets(input)
+
+  }
+  override def part2(input: IndexedSeq[String]): Unit = ???
+
+  def histogram(s: String): Map[Char, Int] = {
+    s.groupBy(c => c).mapValues(_.length)
+  }
+
+
+  def countDoubles(list: IndexedSeq[String]): Int = {
+    list.foldLeft(0) { case (count, nextItem) =>
+      val hasDoubles = histogram(nextItem).filter(_._2 == 2).nonEmpty
+      if(hasDoubles) {
+        count + 1
+      } else {
+        count
+      }
+    }
+  }
+  def countTriplets(list: IndexedSeq[String]): Int = {
+    list.foldLeft(0) { case (count, nextItem) =>
+      val hasTriplets = histogram(nextItem).filter(_._2 == 3).nonEmpty
+      if(hasTriplets) {
+        count + 1
+      } else {
+        count
+      }
+    }
+  }
+}

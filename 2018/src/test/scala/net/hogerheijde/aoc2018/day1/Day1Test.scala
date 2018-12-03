@@ -1,7 +1,5 @@
 package net.hogerheijde.aoc2018.day1
 
-import net.hogerheijde.aoc2018.day1.Day1
-import net.hogerheijde.aoc2018.day1.Day1
 import net.hogerheijde.aoc2018.day1.day1.Drift
 import net.hogerheijde.aoc2018.day1.day1.Minus
 import net.hogerheijde.aoc2018.day1.day1.Plus

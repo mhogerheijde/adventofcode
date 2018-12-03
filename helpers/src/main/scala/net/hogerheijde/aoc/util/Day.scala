@@ -45,9 +45,9 @@ trait Day[Model, Result1, Result2] {
     println(s"$name:")
     val parsedInput = parse(input)
 
-    val result1 = part1(parsedInput)
+    val result1 = Timer(part1(parsedInput))
     println(s" - part 1: $result1")
-    val result2 = part2(parsedInput)
+    val result2 = Timer(part2(parsedInput))
     println(s" - part 2: $result2")
   }
 }

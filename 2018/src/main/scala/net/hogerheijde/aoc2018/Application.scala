@@ -2,13 +2,14 @@ package net.hogerheijde.aoc2018
 
 import net.hogerheijde.aoc2018.day1.Day1
 import net.hogerheijde.aoc2018.day2.Day2
+import net.hogerheijde.aoc2018.day3.Day3
 
 object Application {
   def main(args: Array[String]): Unit = {
     printHeader()
     Day1.run()
     Day2.run()
-//    Day3.run()
+    Day3.run()
 //    Day4.run()
 //    Day6.run()
 //    Day7.run()

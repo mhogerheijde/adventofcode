@@ -4,7 +4,10 @@ import Dependencies._
 ThisBuild / organization := "net.hogerheijde.aoc"
 ThisBuild / version      := "0.1.0-SNAPSHOT"
 ThisBuild / scalaVersion := "2.12.7"
-ThisBuild / libraryDependencies += scalaTest % Test
+ThisBuild / libraryDependencies ++= Seq(
+  fastParse,
+  scalaTest % Test,
+)
 
 lazy val helpers = project
 

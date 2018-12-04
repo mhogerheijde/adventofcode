@@ -83,8 +83,6 @@ object Model {
 
 
   private def parseInt[_: P]: P[Int] = P(CharIn("0-9").rep(1).!.map(_.toInt))
-  private def parseId[_: P]: P[Int] = P("#" ~ parseInt)
-
   private def parseCoordinates[_: P]: P[Point] = P((parseInt ~ "," ~ parseInt).map(t => Point(t._1, t._2)))
   private def parseSize[_: P]: P[(Int, Int)] = P(parseInt ~ "x" ~ parseInt)
 

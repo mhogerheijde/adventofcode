@@ -60,9 +60,9 @@ class Day9Test extends WordSpec with Matchers {
       Day9.part1(Day9.parse("{{<a!>},{<a!>},{<a!>},{<ab>}}")) should be (3)
     }
 
-    "solve part 2" in {
-      Day9.part2(parse1) should be ( () )
-    }
+//    "solve part 2" in {
+//      Day9.part2(parse1) should be ( () )
+//    }
 
   }
 

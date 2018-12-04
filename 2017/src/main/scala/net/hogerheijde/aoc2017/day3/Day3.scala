@@ -6,8 +6,6 @@ import net.hogerheijde.aoc2017.Day2017
 
 object Day3 extends Day2017[Int, Int, Int]{
 
-
-  def main(args: Array[String]): Unit = run()
   override def name: String = "Day 3"
 
   override def parse(input: String): Int = Integer.parseInt(input)

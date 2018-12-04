@@ -1,6 +1,6 @@
 package net.hogerheijde.aoc.util
 
-import scala.concurrent.duration.Duration
+import java.time.Duration
 
 object Timer {
 
@@ -11,7 +11,7 @@ object Timer {
     val start = System.nanoTime
     val t = f
     val end = System.nanoTime
-    TimedResult(t, Duration.fromNanos(end - start))
+    TimedResult(t, Duration.ofNanos(end - start))
   }
 
 }

@@ -10,6 +10,11 @@ ThisBuild / libraryDependencies ++= Seq(
 )
 
 lazy val helpers = project
+//  .settings(
+//    libraryDependencies ++= Seq(
+//      reflections
+//    )
+//  )
 
 lazy val aoc2017 = project
   .in(file("2017"))

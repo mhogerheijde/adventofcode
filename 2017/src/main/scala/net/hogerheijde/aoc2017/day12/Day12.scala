@@ -5,7 +5,6 @@ import scala.annotation.tailrec
 import net.hogerheijde.aoc2017.Day2017
 
 object Day12 extends Day2017[Map[Int, Set[Int]], Int, Int] {
-  def main(args: Array[String]): Unit = run()
   override def name: String = "Day 12"
 
   override def parse(input: String): Map[Int, Set[Int]] = {

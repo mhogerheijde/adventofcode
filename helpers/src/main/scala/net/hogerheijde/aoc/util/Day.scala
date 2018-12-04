@@ -11,7 +11,7 @@ import scala.util.Try
   * @tparam Result1 The result type of part 1
   * @tparam Result2 The result type of part 2
   */
-trait Day[Model, Result1, Result2] {
+trait Day[Model, Result1, Result2] extends Runnable {
 
   def year: String
 
@@ -30,7 +30,8 @@ trait Day[Model, Result1, Result2] {
   def part1(input: Model): Result1
   def part2(input: Model): Result2
 
-  def run(): Unit = {
+  final def main(args: Array[String]): Unit = run
+  final def run: Unit = {
     val input = {
       val resourceName = s"net/hogerheijde/$year/${name.toLowerCase.replace(" ", "")}.input"
       Try {

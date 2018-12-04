@@ -8,7 +8,6 @@ import net.hogerheijde.aoc2017.Day2017
 
 
 object Day9 extends Day2017[Group, Int, Int] {
-  def main(args: Array[String]): Unit = run()
   override def name: String = "Day 9"
   override def parse(i: String): Group = {
     consumeThing(i.split("").toList.map(_.head), 1)._1.get.asInstanceOf[Group]

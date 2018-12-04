@@ -64,7 +64,7 @@ class Day6Test extends WordSpec with Matchers {
 
     }
 
-    "resolve state" in {
+    "resolve state 2" in {
       val state = State.from(0, 2, 7, 0)
       Day6.part2(state) should be (4)
 

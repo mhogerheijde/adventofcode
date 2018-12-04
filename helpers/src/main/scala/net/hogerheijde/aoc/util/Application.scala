@@ -1,25 +1,16 @@
-package net.hogerheijde.aoc2018
+package net.hogerheijde.aoc.util
 
-import net.hogerheijde.aoc2018.day1.Day1
-import net.hogerheijde.aoc2018.day2.Day2
-import net.hogerheijde.aoc2018.day3.Day3
+trait Application {
+  def year: String
 
-object Application {
+  // FIXME figure out how to do reflection....
+  def days: Seq[Runnable]
+
   def main(args: Array[String]): Unit = {
     printHeader()
-    Day1.run()
-    Day2.run()
-    Day3.run()
-//    Day4.run()
-//    Day6.run()
-//    Day7.run()
-//    Day8.run()
-//    Day9.run()
-//    Day11.run()
-//    Day12.run()
-//    Day13.run()
-  }
 
+    days.foreach(_.run)
+  }
 
   def printHeader(): Unit = {
     println("""
@@ -27,9 +18,7 @@ object Application {
               |  /__\  (  _ \( \/ )( ___)( \( )(_  _)  (  _  )( ___)   / __)(  _  )(  _ \( ___)
               | /(__)\  )(_) )\  /  )__)  )  (   )(     )(_)(  )__)   ( (__  )(_)(  )(_) ))__)
               |(__)(__)(____/  \/  (____)(_)\_) (__)   (_____)(__)     \___)(_____)(____/(____)
-              |
-              | 2017
-              |""".stripMargin)
+              |""".stripMargin + s"\n $year")
     println()
   }
 }

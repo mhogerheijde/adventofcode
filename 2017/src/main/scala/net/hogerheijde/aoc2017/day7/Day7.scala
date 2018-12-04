@@ -7,7 +7,6 @@ import scala.collection.immutable.IndexedSeq
 import net.hogerheijde.aoc2017.Day2017
 
 object Day7 extends Day2017[(TowersByDisc, DiscsByName), String, Int] {
-  def main(args: Array[String]): Unit = run()
   override def name: String = "Day 7"
 
 

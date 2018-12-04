@@ -6,7 +6,6 @@ import scala.collection.immutable.IndexedSeq
 import net.hogerheijde.aoc2017.Day2017
 
 object Day6 extends Day2017[State, Int, Int] {
-  def main(args: Array[String]): Unit = run()
   override def name: String = "Day 6"
 
   override def parse(input: String): State = {

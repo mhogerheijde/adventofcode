@@ -15,11 +15,18 @@ object Day3 extends Day2018[Fabric, Int, Option[Int]] {
     input.toString.count(_ == 'X')
   }
   override def part2(input: Fabric): Option[Int] = {
-    val combinations = input.squares.toSeq.combinations(2).toSeq
 
-    combinations.find(pairs =>
-      pairs(0).doesNotIntersect(pairs(1))
-    ).map(_(1).id) // Cheating, it wasn't the left one, so it must be the right one.
+    val asSeq = input.squares.toSeq
+
+    val combinations = asSeq.map ( square =>
+      (square, input.squares.filterNot(_ == square))
+    ).toMap
+
+    val r = combinations.find { case (squareUnderTest, listToTestFor) =>
+      listToTestFor.forall(test => squareUnderTest.doesNotIntersect(test))
+    }
+
+    r.map(_._1.id)
   }
 }
 

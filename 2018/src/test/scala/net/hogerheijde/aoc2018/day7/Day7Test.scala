@@ -3,6 +3,8 @@ package net.hogerheijde.aoc2018.day7
 import org.scalatest.Matchers
 import org.scalatest.WordSpec
 
+import scala.collection.immutable.IndexedSeq
+
 class Day7Test extends WordSpec with Matchers {
 
 
@@ -34,8 +36,42 @@ class Day7Test extends WordSpec with Matchers {
 
 
   "Graph" should {
-    "find its root" in {
-      exampleGraph.root should be (IndexedSeq('C'))
+    "find its sources" in {
+      exampleGraph.source should be (IndexedSeq('C'))
     }
+
+    "find its sinks" in {
+      exampleGraph.sink should be (IndexedSeq('E'))
+    }
+    "find children" in {
+      exampleGraph.childrenOf('C') should be (IndexedSeq('A', 'F'))
+      exampleGraph.childrenOf('A') should be (IndexedSeq('B', 'D'))
+      exampleGraph.childrenOf('F') should be (IndexedSeq('E'))
+    }
+
+    "find next available things" in {
+      exampleGraph.work(IndexedSeq(), IndexedSeq('C')) should be(
+        (IndexedSeq('C'), IndexedSeq('A', 'F')))
+
+      exampleGraph.work(IndexedSeq('C'), IndexedSeq('A', 'F')) should be(
+        (IndexedSeq('C', 'A'), IndexedSeq('B', 'D', 'F')))
+
+      exampleGraph.work(IndexedSeq('C', 'A'), IndexedSeq('B', 'D', 'F')) should be(
+        IndexedSeq('C', 'A', 'B'), IndexedSeq('D', 'F'))
+
+      exampleGraph.work(IndexedSeq('C', 'A', 'B'), IndexedSeq('D', 'F', 'E')) should be(
+        IndexedSeq('C', 'A', 'B', 'D'), IndexedSeq('F'))
+
+      exampleGraph.work(IndexedSeq('C', 'A', 'B', 'D'), IndexedSeq('F')) should be(
+        IndexedSeq('C', 'A', 'B', 'D', 'F'), IndexedSeq('E'))
+
+      exampleGraph.work(IndexedSeq('C', 'A', 'B', 'D', 'F'), IndexedSeq('E')) should be(
+        IndexedSeq('C', 'A', 'B', 'D', 'F', 'E'), IndexedSeq())
+    }
+
+    "find sequence" in {
+      exampleGraph.sequence should be ("CABDFE")
+    }
+
   }
 }

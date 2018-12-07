@@ -104,7 +104,6 @@ class Day3Test extends WordSpec with Matchers {
     "print nicely" in {
 
       val fabric = Fabric(Set(exampleSquare1, exampleSquare2, exampleSquare3, exampleSquare4))
-      println(fabric)
 
       fabric.toString should be (
         """....4444.

@@ -3,12 +3,12 @@ package net.hogerheijde.aoc2018.day2
 import net.hogerheijde.aoc2018.Day2018
 import scala.collection.immutable.IndexedSeq
 
-import net.hogerheijde.aoc.util.Parse
+import net.hogerheijde.aoc.util.Parser
 
 object Day2 extends Day2018[IndexedSeq[String], Int, String]{
 
   override def name: String = "Day 2"
-  override def parse(in: String): IndexedSeq[String] = Parse.standardLineSplit(in)
+  override def parse(in: String): IndexedSeq[String] = Parser.standardLineSplit(in)
   override def part1(input: IndexedSeq[String]): Int = {
     countDoubles(input) * countTriplets(input)
 

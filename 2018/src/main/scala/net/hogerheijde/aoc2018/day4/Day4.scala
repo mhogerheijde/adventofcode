@@ -3,7 +3,7 @@ package net.hogerheijde.aoc2018.day4
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
-import net.hogerheijde.aoc.util.Parse
+import net.hogerheijde.aoc.util.Parser
 import net.hogerheijde.aoc2018.Day2018
 import net.hogerheijde.aoc2018.day4.Model.Event
 import net.hogerheijde.aoc2018.day4.Model.FallsAsleep
@@ -18,7 +18,7 @@ object Day4 extends Day2018[NightshiftMapping, Int, Int] {
 
   override def name: String = "Day 4"
   override def parse(input: String): NightshiftMapping = {
-    val eventStream = Parse.standardLineSplit(input)
+    val eventStream = Parser.standardLineSplit(input)
       .flatMap(a => Event.parse(a))
       .sortBy(_._1.toEpochSecond(ZoneOffset.UTC))
 

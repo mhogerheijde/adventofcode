@@ -1,6 +1,6 @@
 package net.hogerheijde.aoc2018.day3
 
-import net.hogerheijde.aoc.util.Parse
+import net.hogerheijde.aoc.util.Parser
 import net.hogerheijde.aoc2018.Day2018
 import net.hogerheijde.aoc2018.day3.Model.Fabric
 import net.hogerheijde.aoc2018.day3.Model.Square
@@ -8,7 +8,7 @@ import net.hogerheijde.aoc2018.day3.Model.Square
 object Day3 extends Day2018[Fabric, Int, Option[Int]] {
   override def name: String = "Day 3"
   override def parse(input: String): Fabric = {
-    Fabric(Parse.standardLineSplit(input).flatMap(Square.parse).toSet)
+    Fabric(Parser.standardLineSplit(input).flatMap(Square.parse).toSet)
   }
 
   override def part1(input: Fabric): Int = {

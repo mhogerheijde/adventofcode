@@ -4,7 +4,7 @@ import scala.collection.mutable
 
 import net.hogerheijde.aoc.util.CircularBuffer
 import net.hogerheijde.aoc.util.CircularBuffer.NonEmptyCircularBuffer
-import net.hogerheijde.aoc.util.Parse
+import net.hogerheijde.aoc.util.Parser
 import net.hogerheijde.aoc2018.Day2018
 import net.hogerheijde.aoc2018.day1.day1._
 
@@ -16,7 +16,7 @@ object Day1 extends Day2018[Model, Int, Int] {
   override def name: String = "Day 1"
 
   override def parse(in: String): Model = {
-    Parse.standardLineSplit(in).map { drift =>
+    Parser.standardLineSplit(in).map { drift =>
       val s = Sign(drift.take(1).toCharArray.head)
       val a = drift.drop(1).toInt
       Drift(s, a)

@@ -1,9 +1,5 @@
 package net.hogerheijde.aoc2018.day4
 
-import java.time.Duration
-
-import net.hogerheijde.aoc2018.day3.Model.Point
-import net.hogerheijde.aoc2018.day4.Model.Interval
 import net.hogerheijde.aoc2018.day4.Model.Interval
 import net.hogerheijde.aoc2018.day4.Model.Nightshift
 import org.scalatest.Matchers

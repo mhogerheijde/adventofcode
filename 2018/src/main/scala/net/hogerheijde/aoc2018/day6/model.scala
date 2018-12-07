@@ -33,7 +33,7 @@ trait GridLike {
           .get(pointToDraw).map(Some(_))
           .getOrElse(coordinatesByCoordinate.get(pointToDraw))
         val charToPrint = maybeCoordinate.map(_.id).getOrElse('.')
-        resultString + charToPrint
+        resultString + " " + charToPrint
       }
 
     }.mkString("\n")

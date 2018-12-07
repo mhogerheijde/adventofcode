@@ -22,32 +22,32 @@ class Day6Test extends WordSpec with Matchers {
 
     "have a nice toString" in {
       exampleInput.toString should be (
-        """..........
-          |.A........
-          |..........
-          |........C.
-          |...D......
-          |.....E....
-          |.B........
-          |..........
-          |..........
-          |........F.
-          |..........""".stripMargin)
+        """ . . . . . . . . . .
+          | . A . . . . . . . .
+          | . . . . . . . . . .
+          | . . . . . . . . C .
+          | . . . D . . . . . .
+          | . . . . . E . . . .
+          | . B . . . . . . . .
+          | . . . . . . . . . .
+          | . . . . . . . . . .
+          | . . . . . . . . F .
+          | . . . . . . . . . .""".stripMargin)
     }
 
     "processes example" in {
       exampleProcessed.toString should be(
-        """aaaaa.cccc
-          |aAaaa.cccc
-          |aaaddecccc
-          |aadddeccCc
-          |..dDdeeccc
-          |bb.deEeecc
-          |bBb.eeee..
-          |bbb.eeefff
-          |bbb.eeffff
-          |bbb.ffffFf
-          |bbb.ffffff""".stripMargin)
+        """ a a a a a . c c c c
+          | a A a a a . c c c c
+          | a a a d d e c c c c
+          | a a d d d e c c C c
+          | . . d D d e e c c c
+          | b b . d e E e e c c
+          | b B b . e e e e . .
+          | b b b . e e e f f f
+          | b b b . e e f f f f
+          | b b b . f f f f F f
+          | b b b . f f f f f f""".stripMargin)
     }
 
     "find left" in {
@@ -81,17 +81,17 @@ class Day6Test extends WordSpec with Matchers {
     "find region" in {
 
       gridWithRegion.toString should be (
-        """..........
-          |.A........
-          |..........
-          |...###..C.
-          |..#D###...
-          |..###E#...
-          |.B.###....
-          |..........
-          |..........
-          |........F.
-          |..........""".stripMargin)
+        """ . . . . . . . . . .
+          | . A . . . . . . . .
+          | . . . . . . . . . .
+          | . . . # # # . . C .
+          | . . # D # # # . . .
+          | . . # # # E # . . .
+          | . B . # # # . . . .
+          | . . . . . . . . . .
+          | . . . . . . . . . .
+          | . . . . . . . . F .
+          | . . . . . . . . . .""".stripMargin)
     }
 
     "find region size" in {

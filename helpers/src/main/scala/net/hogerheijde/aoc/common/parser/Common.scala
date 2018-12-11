@@ -10,6 +10,6 @@ object Common {
 
   def intSeq[_: P]: P[IndexedSeq[Int]] = P((int ~ " ".rep.?).rep).map(_.toIndexedSeq)
 
-  def int[_: P]: P[Int] = P(CharIn("0-9").rep(1).!.map(_.toInt))
+  def int[_: P]: P[Int] = P(("-".? ~ CharIn("0-9").rep(1)).!.map(_.toInt))
   def coordinate[_: P]: P[Coordinate] = P((int ~ "," ~ " ".rep ~ int).map(t => Coordinate(t._1, t._2)))
 }

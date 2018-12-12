@@ -1,6 +1,8 @@
 package net.hogerheijde.aoc2018.day11
 
 import net.hogerheijde.aoc.common.model.Coordinate
+import net.hogerheijde.aoc.util.Timer
+import net.hogerheijde.aoc.util.Timer.TimedResult
 import net.hogerheijde.aoc2018.Day2018
 
 object Day11 extends Day2018[Grid, String, String] {
@@ -9,33 +11,30 @@ object Day11 extends Day2018[Grid, String, String] {
   override def parse(input: String): Grid = Grid.build(input.toInt, 300)
 
   override def part1(input: Grid): String = {
-    val grids = Range(1, 300 - 2).foldLeft(Map.empty[Coordinate, Grid]) { case (totalGrids, y) =>
-      Range(1, 300-2).foldLeft(totalGrids) { case (grids, x) =>
-        val coord = Coordinate(x, y)
-        grids.updated(coord, input.subgrid(coord, 3))
-      }
-    }
-
-    val x = grids.maxBy(_._2.power)
-
-    x.toString()
+    val grids = input.allSubgridPowerssOfSize(3)
+    val bestGrid = grids.maxBy(_._2)
+    bestGrid.toString()
   }
 
   override def part2(input: Grid): String = {
 
-    val grids = Range.inclusive(1, 300).foldLeft(Map.empty[(Coordinate, Int), Grid]) { case (totalOuterGrids, size) =>
-      Range.inclusive(1, 300 - size).foldLeft(totalOuterGrids) { case (totalGrids, y) =>
-        Range.inclusive(1, 300 - size).foldLeft(totalGrids) { case (grids, x) =>
-          val coord = Coordinate(x, y)
-          grids.updated((coord, size), input.subgrid(coord, size))
-        }
+
+//    val TimedResult(_, time1) = Timer { input.subgrid(Coordinate(1, 1), 200) }
+//    val TimedResult(_, time2) = Timer { input.subgridPower(Coordinate(1, 1), 200) }
+
+
+    val grids = Range.inclusive(1, 300).par.map { size =>
+      val TimedResult(maxGrid, time) = Timer {
+        val grids = input.allSubgridPowerssOfSize(size)
+        val maxGrid = grids.maxBy(_._2)
+        (maxGrid._1, size, maxGrid._2)
       }
+      println(s"Finding max for size $size took $time")
+      maxGrid
     }
 
-    val x = grids.maxBy(_._2.power)
-
-    x.toString()
-
+    val maxGrid = grids.maxBy(_._3)
+    maxGrid.toString()
   }
 }
 
@@ -44,6 +43,33 @@ object Day11 extends Day2018[Grid, String, String] {
 case class Grid(cells: Map[Coordinate, Int]) {
 
   def power: Int = cells.values.sum
+
+  def allSubgridsOfSize(size: Int): Map[Coordinate, Grid] = {
+    Range.inclusive(1, 300 - size).foldLeft(Map.empty[Coordinate, Grid]) { case (totalGrids, y) =>
+      Range.inclusive(1, 300 - size).foldLeft(totalGrids) { case (grids, x) =>
+        val coord = Coordinate(x, y)
+        grids.updated(coord, this.subgrid(coord, size))
+      }
+    }
+  }
+
+  def allSubgridPowerssOfSize(size: Int): Map[Coordinate, Int] = {
+    Range.inclusive(1, 300 - size).foldLeft(Map.empty[Coordinate, Int]) { case (totalGrids, y) =>
+      Range.inclusive(1, 300 - size).foldLeft(totalGrids) { case (grids, x) =>
+        val coord = Coordinate(x, y)
+        grids.updated(coord, this.subgridPower(coord, size))
+      }
+    }
+  }
+
+  def subgridPower(corner: Coordinate, size: Int): Int = {
+    val powers = Range(corner.y, corner.y + size).flatMap { y: Int =>
+      Range(corner.x, corner.x + size).map { x =>
+        cells(Coordinate(x, y))
+      }
+    }
+    powers.sum
+  }
 
   def subgrid(corner: Coordinate, size: Int): Grid = {
     val coordinates = Range(corner.y, corner.y + size).foldLeft(Map.empty[Coordinate, Int]) { case (totalCells, y) =>

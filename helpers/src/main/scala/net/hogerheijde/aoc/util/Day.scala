@@ -5,6 +5,8 @@ import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
 
+import net.hogerheijde.aoc.util.Timer.TimedResult
+
 /***
   *
   * @tparam Model The model type for this day. Represents the puzzle-input after parsing
@@ -44,7 +46,8 @@ trait Day[Model, Result1, Result2] extends Runnable {
     }
 
     println(s"$name:")
-    val parsedInput = parse(input)
+    val TimedResult(parsedInput, parseTime) = Timer(parse(input))
+    println(s"Parsing: $parseTime")
 
     val result1 = Timer(part1(parsedInput))
     println(s" - part 1: $result1")

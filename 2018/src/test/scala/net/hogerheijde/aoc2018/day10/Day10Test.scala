@@ -51,7 +51,7 @@ class Day10Test extends WordSpec with Matchers {
           Point(Coordinate(9, 1), Velocity(0, 2)),
           Point(Coordinate(7, 0), Velocity(-1, 0)),
           Point(Coordinate(3, -2), Velocity(-1, 1)),
-        ))
+        ).groupBy(_.velocity))
       )
     }
 
@@ -107,17 +107,19 @@ class Day10Test extends WordSpec with Matchers {
        val second1 = exampleInput.advance
        val second2 = second1.advance
        val second3 = second2.advance
-       exampleInput.showsMessage should be(false)
-       second1.showsMessage should be(false)
-       second2.showsMessage should be(false)
-       second3.showsMessage should be(true)
+       val second4 = second3.advance
+       exampleInput.height should be(15)
+       second1.height should be(11)
+       second2.height should be(9)
+       second3.height should be(7)
+       second4.height should be(10)
     }
 
   }
 
   "Day 10" should {
     "solve example input" in {
-      Day10.part1(exampleInput) should be (
+      Day10.solve(exampleInput)._1.pretty should be (
         """#...#..###
           |#...#...#.
           |#...#...#.
@@ -127,6 +129,10 @@ class Day10Test extends WordSpec with Matchers {
           |#...#...#.
           |#...#..###""".stripMargin
       )
+    }
+
+    "solve duration" in {
+      Day10.solve(exampleInput)._2 should be (3)
     }
   }
 

@@ -14,17 +14,18 @@ case class Point(coordinate: Coordinate, velocity: Velocity) {
   def advance: Point = this.copy(coordinate = Coordinate(coordinate.x + velocity.x, coordinate.y + velocity.y))
 }
 
-case class Field(points: IndexedSeq[Point]) {
+case class Field(pointsByVelocity: Map[Velocity, IndexedSeq[Point]]) {
 
+  val points = pointsByVelocity.values.flatten
   val hiPoint: Int =     points.minBy(_.coordinate.y).coordinate.y
   val lowPoint: Int =    points.maxBy(_.coordinate.y).coordinate.y
   def leftPoint: Int  =  points.minBy(_.coordinate.x).coordinate.x
   def rightPoint: Int  = points.maxBy(_.coordinate.x).coordinate.x
 
 
-  val showsMessage: Boolean = lowPoint - hiPoint == 7
+  val height: Int = lowPoint - hiPoint
 
-  def advance: Field = { Field(points.map(_.advance)) }
+  def advance: Field = { Field(pointsByVelocity.map(ps => (ps._1, ps._2.map(_.advance)))) }
 
   def pretty: String = {
     val b = new StringBuilder()
@@ -47,32 +48,33 @@ object Field {
   def parse(input: String): Field = {
     Field(input.trim.lines.flatMap(line =>
       Parser.parse(point(_))(line)
-    ).toIndexedSeq)
+    ).toIndexedSeq.groupBy(p => p.velocity))
   }
 }
 
-object Day10 extends Day2018[Field, String, String]{
+object Day10 extends Day2018[(Field, Int), String, Int]{
   override def name: String = "Day 10"
 
-  override def parse(input: String): Field = {
-    Field.parse(input)
+  override def parse(input: String): (Field, Int) = {
+    val initialField = Field.parse(input)
+    solve(initialField)
   }
 
-  override def part1(input: Field): String = {
-
-    @tailrec
-    def solve(f: Field, i: Int = 0): Field = {
-//      if (i%100==0) {print(".")}
-      if (i%10000==0) {println(f.pretty + "\n\n\n") }
-
-      if (f.showsMessage) { f } else { solve(f.advance, i + 1) }
-    }
-
-    val solved = solve(input)
-
-    solved.pretty
-
+  def solve(f: Field): (Field, Int) = {
+    solve(f.advance, f, 1)
   }
 
-  override def part2(input: Field): String = ???
+  @tailrec
+  private def solve(f: Field, previous: Field, i: Int): (Field, Int) = {
+    val advance = f.advance
+    if (f.height < advance.height) { (f, i) } else { solve(advance, f, i + 1) }
+  }
+
+  override def part1(input: (Field, Int)): String = {
+    "\n" + input._1.pretty
+  }
+
+  override def part2(input: (Field, Int)): Int = {
+    input._2
+  }
 }

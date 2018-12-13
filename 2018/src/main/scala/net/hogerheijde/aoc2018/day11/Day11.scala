@@ -17,19 +17,13 @@ object Day11 extends Day2018[Grid, String, String] {
   }
 
   override def part2(input: Grid): String = {
-
-
-//    val TimedResult(_, time1) = Timer { input.subgrid(Coordinate(1, 1), 200) }
-//    val TimedResult(_, time2) = Timer { input.subgridPower(Coordinate(1, 1), 200) }
-
-
     val grids = Range.inclusive(1, 300).par.map { size =>
       val TimedResult(maxGrid, time) = Timer {
         val grids = input.allSubgridPowerssOfSize(size)
         val maxGrid = grids.maxBy(_._2)
         (maxGrid._1, size, maxGrid._2)
       }
-      println(s"Finding max for size $size took $time")
+      println(s"Finding max for size $size : $maxGrid, took $time")
       maxGrid
     }
 
@@ -45,8 +39,8 @@ case class Grid(cells: Map[Coordinate, Int]) {
   def power: Int = cells.values.sum
 
   def allSubgridsOfSize(size: Int): Map[Coordinate, Grid] = {
-    Range.inclusive(1, 300 - size).foldLeft(Map.empty[Coordinate, Grid]) { case (totalGrids, y) =>
-      Range.inclusive(1, 300 - size).foldLeft(totalGrids) { case (grids, x) =>
+    Range.inclusive(1, 301 - size).foldLeft(Map.empty[Coordinate, Grid]) { case (totalGrids, y) =>
+      Range.inclusive(1, 301 - size).foldLeft(totalGrids) { case (grids, x) =>
         val coord = Coordinate(x, y)
         grids.updated(coord, this.subgrid(coord, size))
       }
@@ -54,8 +48,8 @@ case class Grid(cells: Map[Coordinate, Int]) {
   }
 
   def allSubgridPowerssOfSize(size: Int): Map[Coordinate, Int] = {
-    Range.inclusive(1, 300 - size).foldLeft(Map.empty[Coordinate, Int]) { case (totalGrids, y) =>
-      Range.inclusive(1, 300 - size).foldLeft(totalGrids) { case (grids, x) =>
+    Range.inclusive(1, 301 - size).foldLeft(Map.empty[Coordinate, Int]) { case (totalGrids, y) =>
+      Range.inclusive(1, 301 - size).foldLeft(totalGrids) { case (grids, x) =>
         val coord = Coordinate(x, y)
         grids.updated(coord, this.subgridPower(coord, size))
       }

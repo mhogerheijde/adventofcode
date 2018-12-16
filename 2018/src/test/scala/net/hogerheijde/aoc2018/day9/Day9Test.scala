@@ -23,8 +23,10 @@ class Day9Test extends WordSpec with Matchers {
       )
     }
     "add marbles to board with 2 marbles" in {
-      Marbles(IndexedSeq(0, 1), 1).addMarble(2)._1 should be (
-        Marbles(IndexedSeq(0, 2, 1), 1)
+      val startMarbles = Marbles(IndexedSeq(0, 1), 1)
+      val expectMarbles = Marbles(List(2, 0), List(1))
+      startMarbles.addMarble(2)._1 should be (
+        expectMarbles
       )
     }
 
@@ -35,12 +37,14 @@ class Day9Test extends WordSpec with Matchers {
     }
 
     "add marbles with many marbles, mid board" in {
-      Marbles(IndexedSeq(0, 16, 8, 17, 4, 18, 9, 19, 2, 20, 10, 21, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15), 11).addMarble(22)._1 should be(
-        Marbles(IndexedSeq(
-          0, 16, 8, 17, 4, 18, 9, 19, 2, 20, 10, 21, 5,
-          22, // Added here!
-          11, 1, 12, 6, 13, 3, 14, 7, 15), 13)
-      )
+      // 0 16  8 17  4 18  9 19  2 20 10(21) 5 11  1 12  6 13  3 14  7 15
+      val start = Marbles(IndexedSeq(0, 16, 8, 17, 4, 18, 9, 19, 2, 20, 10, 21, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15), 11)
+
+      val expected = Marbles(
+        List(0, 16, 8, 17, 4, 18, 9, 19, 2, 20, 10, 21, 5, 22).reverse,
+        List(11, 1, 12, 6, 13, 3, 14, 7, 15))
+
+      start.addMarble(22)._1 should be(expected)
     }
 
     "add marbles with many marbles, at the end" in {
@@ -60,14 +64,19 @@ class Day9Test extends WordSpec with Matchers {
     }
 
     "calculate score" in {
-      Marbles(IndexedSeq(0, 16, 8, 17, 4, 18, 9, 19, 2, 20, 10, 21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15), 13).addMarble(23) should be(
-        (
-          Marbles(IndexedSeq(0, 16, 8, 17, 4, 18,
+      val start = Marbles(
+        List(0, 16, 8, 17, 4, 18, 9, 19, 2, 20, 10, 21, 5, 22).reverse,
+        List(11, 1, 12, 6, 13, 3, 14, 7, 15))
+
+
+      val expectedScore = (
+        Marbles(
+          List(0, 16, 8, 17, 4, 18, 19).reverse
             // 9 removed
-            19, 2, 20, 10, 21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15), 6),
-          32 // The score
-        )
+            , List(2, 20, 10, 21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15)),
+        32 // The score
       )
+      start.addMarble(23) should be(expectedScore)
     }
 
   }

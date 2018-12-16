@@ -6,7 +6,7 @@ import net.hogerheijde.aoc.common.parser.Common.int
 import net.hogerheijde.aoc.util.Parser
 import net.hogerheijde.aoc2018.Day2018
 
-object Day9 extends Day2018[Game, Int, Unit]{
+object Day9 extends Day2018[Game, Int, Int]{
   override def name: String = "Day 9"
 
 
@@ -20,13 +20,11 @@ object Day9 extends Day2018[Game, Int, Unit]{
   }
 
   override def part1(input: Game): Int = {
-    println(input)
     val result = input.solve
-    println(result)
     result.hiScore
   }
 
-  override def part2(input: Game): Unit = {
+  override def part2(input: Game): Int = {
     val result = input.copy(noOfMarbles = input.noOfMarbles * 100).solve
     result.hiScore
   }

@@ -71,7 +71,10 @@ class Day12Test extends WordSpec with Matchers {
         Rule(Pattern(Plant, Plant, Plant, Pot, Plant), Plant),
         Rule(Pattern(Plant, Plant, Plant, Plant, Pot), Plant),
       )
-      Farm.parse(example) should be  (
+
+
+      val resultFarm = Farm.parse(example)
+      resultFarm should be  (
         Farm(
           expectedState,
           expectedRules
@@ -82,7 +85,19 @@ class Day12Test extends WordSpec with Matchers {
     }
 
     "calculate next state" in {
-      exampleFarm.next.state.toString should be ("....#...#....#.....#..#..#..#....")
+      val gen1 = exampleFarm.next
+      val gen2 = gen1.next
+      val gen3 = gen2.next
+      gen1.state.toString should be (".....(#)...#....#.....#..#..#..#.....")
+      gen2.state.toString should be (".....(#)#..##...##....#..#..#..##.....")
+      gen3.state.toString should be (".....#(.)#...#..#.#....#..#..#...#.....")
+
+      val gen20 = exampleFarm.next(20)
+      gen20.state.toString should be (".....#.(.)..##....#####...#######....#.#..##.....")
+    }
+
+    "calculate plant value" in {
+      exampleFarm.next(20).value should be (325)
     }
 
   }

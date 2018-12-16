@@ -1,5 +1,6 @@
 package net.hogerheijde.aoc2018.day12
 
+import scala.annotation.tailrec
 import scala.collection.immutable.IndexedSeq
 
 import fastparse.NoWhitespace._
@@ -7,30 +8,55 @@ import fastparse._
 import net.hogerheijde.aoc.util.Implicits._
 import net.hogerheijde.aoc.util.Parser
 import net.hogerheijde.aoc2018.Day2018
+import net.hogerheijde.aoc2018.day12.Farm.nextState
 import net.hogerheijde.aoc2018.day12.State.withPadding
 
-object Day12 extends Day2018[Farm, Int, String]{
+object Day12 extends Day2018[Farm, Int, Int]{
   override def name: String = "Day 12"
 
   override def parse(input: String): Farm = Farm.parse(input)
 
-  override def part1(input: Farm): Int = ???
+  override def part1(input: Farm): Int = input.next(20).value
 
-  override def part2(input: Farm): String = ???
+  override def part2(input: Farm): Int = input.next(50000000000L).value
 }
 
 case class Farm(state: State, rules: Map[Pattern, Space]) {
+  def value: Int = state.value
 
+  @tailrec
+  final def next(generations: Long): Farm = {
+    assert(generations > 0)
 
-  def next: Farm = {
-    val newState = state.slideWith(rules.withDefaultValue(Pot))
-    this.copy(state = newState)
+    def innerNext(gens: Int): Farm = {
+      val r = Range(0, gens).foldLeft(this) { case (farm, gen) => {
+        if (gen % 1000 == 999) { print (".")}
+        if (gen % 100000 == 99999) { println }
+        nextState(farm)
+      } }
+      r
+    }
+
+    if (generations > Int.MaxValue) {
+      val leftOver = generations - Int.MaxValue
+      innerNext(Int.MaxValue).next(leftOver)
+    } else {
+      innerNext(generations.toInt)
+    }
   }
 
-  override def toString: String = s"$state\n${rules.values.mkString("\n")}"
+  def next: Farm = next(1)
+
+  override def toString: String = s"$state\n${rules.toIndexedSeq.map(p => s"${p._1} -> ${p._2}").sorted.mkString("\n")}"
 }
 
 object Farm {
+
+  private def nextState(farm: Farm): Farm = {
+    val newState = farm.state.slideWith(farm.rules.withDefaultValue(Pot))
+    farm.copy(state = newState)
+  }
+
   private def space[_: P]: P[Space] = P("#".! | ".".!).map { _ match {
     case "#" => Plant
     case "." => Pot
@@ -84,7 +110,10 @@ case class Rule(pattern: Pattern, result: Space) {
   override def toString: String = s"$pattern => $result"
 }
 
-class State private(spaces: List[(Int, Space)]) {
+class State private(state: List[(Int, Space)]) {
+  private val spaces = state
+
+  def value: Int = spaces.filter(_._2 == Plant).map(_._1).sum
 
   def slideWith(f: Pattern => Space): State = {
     val result = spaces.sliding(5).foldLeft (List.empty[(Int, Space)]) { case (newSpaces, pattern) =>
@@ -97,15 +126,24 @@ class State private(spaces: List[(Int, Space)]) {
   }
 
   override def toString: String = {
-    spaces.map(_._2).mkString("")
+    spaces.map(space => if(space._1 == 0) {s"(${space._2})"} else {s"${space._2}"}).mkString("")
   }
+
+  override def hashCode(): Int = spaces.hashCode()
+  override def equals(obj: Any): Boolean = {
+    obj match {
+      case other: State => other.spaces == this.spaces
+      case _ => false
+    }
+  }
+
 }
 
 object State {
 
   private def withPadding(spaces: List[(Int, Space)]): List[(Int, Space)] = {
-    val amountToPrepend = 5 - spaces.take(5).count(_._2 == Pot)
-    val amountToPostpend = 5 - spaces.reverse.take(5).count(_._2 == Pot)
+    val amountToPrepend = 5 - spaces.takeWhile(_._2 == Pot).length
+    val amountToPostpend = 5 - spaces.reverse.takeWhile(_._2 == Pot).length
 
     val min = spaces.head._1
     val max = spaces.last._1

@@ -38,7 +38,7 @@ trait Day[Model, Result1, Result2] extends Runnable {
       val resourceName = s"net/hogerheijde/$year/${name.toLowerCase.replace(" ", "")}.input"
       Try {
         val source = Source.fromResource(resourceName)
-        source.mkString.trim
+        source.mkString
       } match {
         case Success(string) => string
         case Failure(t) => throw new RuntimeException(s"Did you forget to place the puzzle input in the resources folder? Trying to read $resourceName", t)

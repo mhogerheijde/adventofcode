@@ -11,27 +11,49 @@ import net.hogerheijde.aoc2018.Day2018
 import net.hogerheijde.aoc2018.day12.Farm.nextState
 import net.hogerheijde.aoc2018.day12.State.withPadding
 
-object Day12 extends Day2018[Farm, Int, Int]{
+object Day12 extends Day2018[Farm, Long, Long]{
   override def name: String = "Day 12"
 
   override def parse(input: String): Farm = Farm.parse(input)
 
-  override def part1(input: Farm): Int = input.next(20).value
+  override def part1(input: Farm): Long = {
+    println(s"0: ${input.state}")
+    val result = input.next(20)
+    println(s"19: ${result.state}")
 
-  override def part2(input: Farm): Int = input.next(50000000000L).value
+    result.value
+  }
+
+  override def part2(input: Farm): Long = input.next2(50000000000L).value
 }
 
 case class Farm(state: State, rules: Map[Pattern, Space]) {
-  def value: Int = state.value
+
+
+  def value: Long = state.value
+
+  def shiftBy(l: Long): Farm = {
+    this.copy(state = this.state.shiftBy(l))
+  }
+
+  final def next2(generations: Long): Farm = {
+    println(s"0: ${this.state}")
+    val finalPattern = Stream.iterate((this, 0)) { case (farm, generation) =>
+      (farm.next, generation + 1)
+    }.dropWhile { case (farm, _) => !farm.state.samePattern(farm.next.state) }.head
+
+    val r = finalPattern._1.shiftBy(generations - finalPattern._2)
+    println(s"${finalPattern._2}: ${r.state}")
+    r
+  }
+
 
   @tailrec
   final def next(generations: Long): Farm = {
     assert(generations > 0)
 
     def innerNext(gens: Int): Farm = {
-      val r = Range(0, gens).foldLeft(this) { case (farm, gen) => {
-        if (gen % 1000 == 999) { print (".")}
-        if (gen % 100000 == 99999) { println }
+      val r = Range(0, gens).foldLeft(this) { case (farm, _) => {
         nextState(farm)
       } }
       r
@@ -100,7 +122,7 @@ case class Pattern(_1: Space, _2: Space, _3: Space, _4: Space, _5: Space) {
   override def toString: String = s"${_1}${_2}${_3}${_4}${_5}"
 }
 object Pattern {
-  def fromList(spaces: List[(Int, Space)]): Pattern = {
+  def fromList(spaces: List[(Long, Space)]): Pattern = {
     require(spaces.size == 5, "Length of pattern must be 5")
     Pattern(spaces(0)._2, spaces(1)._2, spaces(2)._2, spaces(3)._2, spaces(4)._2)
   }
@@ -110,13 +132,19 @@ case class Rule(pattern: Pattern, result: Space) {
   override def toString: String = s"$pattern => $result"
 }
 
-class State private(state: List[(Int, Space)]) {
+class State private(state: List[(Long, Space)]) {
+
   private val spaces = state
 
-  def value: Int = spaces.filter(_._2 == Plant).map(_._1).sum
+  def shiftBy(l: Long): State = {
+    new State(state.map { case (no, space) => (no + l, space)} )
+  }
+
+
+  def value: Long = spaces.filter(_._2 == Plant).map(_._1).sum
 
   def slideWith(f: Pattern => Space): State = {
-    val result = spaces.sliding(5).foldLeft (List.empty[(Int, Space)]) { case (newSpaces, pattern) =>
+    val result = spaces.sliding(5).foldLeft (List.empty[(Long, Space)]) { case (newSpaces, pattern) =>
       val spaceNo = pattern(2)._1
       val p = Pattern.fromList(pattern)
       val newSpace = (spaceNo, f(p))
@@ -125,8 +153,12 @@ class State private(state: List[(Int, Space)]) {
     new State(withPadding(result.reverse))
   }
 
+  def samePattern(other: State): Boolean = {
+    spaces.map(_._2) == other.spaces.map(_._2)
+  }
+
   override def toString: String = {
-    spaces.map(space => if(space._1 == 0) {s"(${space._2})"} else {s"${space._2}"}).mkString("")
+    spaces.head._1 + spaces.map(_._2).mkString("")
   }
 
   override def hashCode(): Int = spaces.hashCode()
@@ -141,21 +173,21 @@ class State private(state: List[(Int, Space)]) {
 
 object State {
 
-  private def withPadding(spaces: List[(Int, Space)]): List[(Int, Space)] = {
+  private def withPadding(spaces: List[(Long, Space)]): List[(Long, Space)] = {
     val amountToPrepend = 5 - spaces.takeWhile(_._2 == Pot).length
     val amountToPostpend = 5 - spaces.reverse.takeWhile(_._2 == Pot).length
 
     val min = spaces.head._1
     val max = spaces.last._1
-    val prefix = Range(min - amountToPrepend, min) map { i => (i, Pot) }
-    val postfix = Range.inclusive(max + 1, max + amountToPostpend) map { i => (i, Pot) }
+    val prefix = Range(-amountToPrepend, 0) map { i => (i + min, Pot) }
+    val postfix = Range.inclusive(1, amountToPostpend) map { i => (i + max, Pot) }
 
     prefix.toList ++ spaces ++ postfix
   }
 
 
   def apply(spaces: IndexedSeq[Space]): State = {
-    val indexed = spaces.zipWithIndex.map(_.swap).toList
+    val indexed = spaces.zipWithIndex.map(_.swap).map { case (index, space) => (index.toLong, space)}.toList
     new State(withPadding(indexed))
   }
 }

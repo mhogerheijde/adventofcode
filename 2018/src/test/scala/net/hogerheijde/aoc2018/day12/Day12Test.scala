@@ -88,12 +88,12 @@ class Day12Test extends WordSpec with Matchers {
       val gen1 = exampleFarm.next
       val gen2 = gen1.next
       val gen3 = gen2.next
-      gen1.state.toString should be (".....(#)...#....#.....#..#..#..#.....")
-      gen2.state.toString should be (".....(#)#..##...##....#..#..#..##.....")
-      gen3.state.toString should be (".....#(.)#...#..#.#....#..#..#...#.....")
+      gen1.state.toString should be ("-5.....#...#....#.....#..#..#..#.....")
+      gen2.state.toString should be ("-5.....##..##...##....#..#..#..##.....")
+      gen3.state.toString should be ("-6.....#.#...#..#.#....#..#..#...#.....")
 
       val gen20 = exampleFarm.next(20)
-      gen20.state.toString should be (".....#.(.)..##....#####...#######....#.#..##.....")
+      gen20.state.toString should be ("-7.....#....##....#####...#######....#.#..##.....")
     }
 
     "calculate plant value" in {

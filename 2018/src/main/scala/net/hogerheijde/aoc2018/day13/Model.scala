@@ -119,42 +119,65 @@ object Model {
 
     def safeNext: Grid = {
       sortedCarts.foldLeft(this) { (grid, cart) =>
-        val track = tracks(cart.nextCoordinate)
 
-        if (track == Space) {
-          throw new RuntimeException(s"We've got a derailing for ${cart}! \n\n ${this.toString}")
-        }
+        if (!grid.carts.contains(cart.coordinate)) {
+          println("Working on cart that was removed?! Continue!")
+          grid
+        } else {
 
-        val (direction, choice) = track match {
-          case Crossing => {
-            cart.lastChoice.next match {
-              case Left => (cart.direction.rotateLeft, Left)
-              case Right => (cart.direction.rotateRight, Right)
-              case Straight => (cart.direction, Straight)
-            }
-          }
-          case other => {
-            val r = other match {
-              case TopLeft => if (cart.direction == South) { West } else { North }
-              case TopRight => if (cart.direction == South) { East } else { North }
-              case BottomLeft => if (cart.direction == North) { West } else { South }
-              case BottomRight => if (cart.direction == North) { East} else { South }
-              case _ => cart.direction
-            }
-            (r, cart.lastChoice)
+          val track = tracks(cart.nextCoordinate)
+
+          if (track == Space) {
+            throw new RuntimeException(s"We've got a derailing for ${cart}! \n\n ${this.toString}")
           }
 
-        }
+          val (direction, choice) = track match {
+            case Crossing => {
+              cart.lastChoice.next match {
+                case Left => (cart.direction.rotateLeft, Left)
+                case Right => (cart.direction.rotateRight, Right)
+                case Straight => (cart.direction, Straight)
+              }
+            }
+            case other => {
+              val r = other match {
+                case TopLeft => if (cart.direction == South) {
+                  West
+                } else {
+                  North
+                }
+                case TopRight => if (cart.direction == South) {
+                  East
+                } else {
+                  North
+                }
+                case BottomLeft => if (cart.direction == North) {
+                  West
+                } else {
+                  South
+                }
+                case BottomRight => if (cart.direction == North) {
+                  East
+                } else {
+                  South
+                }
+                case _ => cart.direction
+              }
+              (r, cart.lastChoice)
+            }
 
-        grid.carts.get(cart.nextCoordinate) match {
-          case Some(_) =>
-            val newCarts2 = grid.carts - cart.coordinate - cart.nextCoordinate
-            grid.copy(carts = newCarts2)
-          case None =>
-            val newCart = Cart(cart.nextCoordinate, direction, choice)
-            val newCarts = grid.carts.updated(cart.nextCoordinate, newCart)
-            val newCarts2 = newCarts - cart.coordinate
-            grid.copy(carts = newCarts2)
+          }
+
+          grid.carts.get(cart.nextCoordinate) match {
+            case Some(_) =>
+              val newCarts2 = grid.carts - cart.coordinate - cart.nextCoordinate
+              grid.copy(carts = newCarts2)
+            case None =>
+              val newCart = Cart(cart.nextCoordinate, direction, choice)
+              val newCarts = grid.carts.updated(cart.nextCoordinate, newCart)
+              val newCarts2 = newCarts - cart.coordinate
+              grid.copy(carts = newCarts2)
+          }
         }
       }
     }

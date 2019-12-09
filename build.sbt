@@ -3,7 +3,7 @@ import Dependencies._
 
 ThisBuild / organization := "net.hogerheijde.aoc"
 ThisBuild / version      := "0.1.0-SNAPSHOT"
-ThisBuild / scalaVersion := "2.12.7"
+ThisBuild / scalaVersion := "2.12.10"
 ThisBuild / libraryDependencies ++= Seq(
   fastParse,
   scalaTest % Test,
@@ -29,3 +29,10 @@ lazy val aoc2018 = project
   .settings(
     name := "2018"
   )
+
+lazy val aoc2019 = project
+    .in(file("2019"))
+    .dependsOn(helpers)
+    .settings(
+      name := "2019"
+    )

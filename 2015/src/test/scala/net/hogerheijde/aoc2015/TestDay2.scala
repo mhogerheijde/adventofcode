@@ -2,10 +2,10 @@ package net.hogerheijde.aoc2015
 
 import net.hogerheijde.aoc2015.day2.Box
 import net.hogerheijde.aoc2015.day2.Day2
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.flatspec.AnyFlatSpec
 
-class TestDay2 extends FlatSpec with Matchers {
+class TestDay2 extends AnyFlatSpec with Matchers {
 
 
   "Day 2 parser" should "parse Boxes" in {

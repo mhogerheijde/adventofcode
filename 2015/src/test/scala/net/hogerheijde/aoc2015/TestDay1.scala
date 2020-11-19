@@ -1,10 +1,10 @@
 package net.hogerheijde.aoc2015
 
 import net.hogerheijde.aoc2015.day1.Day1
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.flatspec.AnyFlatSpec
 
-class TestDay1 extends FlatSpec with Matchers {
+class TestDay1 extends AnyFlatSpec with Matchers {
 
   "Day 1; part 1" should "return 0" in {
     Day1.part1("(())") should be (0)

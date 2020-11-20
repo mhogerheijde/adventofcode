@@ -37,8 +37,8 @@ import scala.io.Source
   *
   * What is the position of the character that causes Santa to first enter the basement?
   */
-object Day1 extends Day[String, Int, Option[Int]]{
-  def main(args: Array[String]): Unit = run()
+object Day1 extends Day[Int, Option[Int]]{
+  type Model = String
 
   override def name: String = "Day 1"
   override def parse: String => String = identity

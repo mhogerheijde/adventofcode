@@ -5,8 +5,8 @@ import net.hogerheijde.aoc2015.util.Day
 
 import scala.collection.immutable.IndexedSeq
 
-object Day2 extends Day[IndexedSeq[Box], Int, Int] {
-  def main(args: Array[String]): Unit = run()
+object Day2 extends Day[Int, Int] {
+  type Model = IndexedSeq[Box]
 
   override def name: String = "Day 2"
   override def parse: String => IndexedSeq[Box] = { input =>

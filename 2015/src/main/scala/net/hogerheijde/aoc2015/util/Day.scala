@@ -8,8 +8,9 @@ import scala.io.Source
   * @tparam Result1 The result type of part 1
   * @tparam Result2 The result type of part 2
   */
-trait Day[Model, Result1, Result2] {
+trait Day[Result1, Result2] {
 
+  type Model
   /**
     * The name of the day
     * @return
@@ -24,6 +25,8 @@ trait Day[Model, Result1, Result2] {
 
   def part1(input: Model): Result1
   def part2(input: Model): Result2
+
+  def main(args: Array[String]): Unit = run()
 
   def run(): Unit = {
     val input = Source.fromResource(s"net/hogerheijde/aoc2015/${name.toLowerCase.replace(" ", "")}.txt").mkString.trim

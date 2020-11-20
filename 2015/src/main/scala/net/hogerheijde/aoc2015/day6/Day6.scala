@@ -141,11 +141,11 @@ object Grid2 {
 }
 
 
-object Day6 extends Day[Seq[Instruction], Int, Int] {
-  def main(args: Array[String]): Unit = run()
+object Day6 extends Day[Int, Int] {
+  type Model = Seq[Instruction]
 
   override def name: String = "Day 6"
-  override def parse: String => Seq[Instruction] = in => {
+  override def parse: String => Model = in => {
     in.linesIterator.toSeq.map { line => line match {
         case Instruction(i) => i
         case s => throw new Exception(s"Could not parse $s")
@@ -153,7 +153,7 @@ object Day6 extends Day[Seq[Instruction], Int, Int] {
     }
   }
 
-  override def part1(input: Seq[Instruction]): Int = {
+  override def part1(input: Model): Int = {
     val result = input.foldLeft(Grid()) { case (grid, instruction) =>
       instruction.range.iterator.foldLeft(grid) { (grid, coordinate) =>
         grid.update(coordinate, instruction)
@@ -163,7 +163,7 @@ object Day6 extends Day[Seq[Instruction], Int, Int] {
     result.count()
   }
 
-  override def part2(input: Seq[Instruction]): Int = {
+  override def part2(input: Model): Int = {
       val result = input.foldLeft(Grid2()) { case (grid, instruction) =>
         instruction.range.iterator.foldLeft(grid) { (grid, coordinate) =>
           grid.update(coordinate, instruction)

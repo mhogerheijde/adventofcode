@@ -1,11 +1,13 @@
-package net.hogerheijde.aoc2020.day1
+package net.hogerheijde.aoc2020
+
+import scala.collection.immutable.Seq
 
 import net.hogerheijde.aoc.util.Day
-import scala.collection.immutable.Seq
 
 object Day1 extends Day[Int, Int] {
 
   type Model = Seq[Int]
+
   override def name: String = "Day 1"
 
   override def parse(input: String): Model = {

@@ -23,13 +23,18 @@ trait Day[Result1, Result2] extends Runnable {
       .find(_.startsWith("aoc"))
       .getOrElse("")
 
+  private val guessedName = "Day " + getClass
+      .getSimpleName
+      .stripPrefix("Day")
+      .stripSuffix("$") // objects have a runtime name of "Name$" when the class is called "Name" (assuming top level classes)
+
   def year: String = guessedYear
 
   /**
     * The name of the day
     * @return
     */
-  def name: String
+  def name: String = guessedName
 
   /**
     * Parses the string of the puzzle input to the model type

@@ -25,4 +25,8 @@ object Implicits {
 
   }
 
+  implicit class BooleanHelper(a: Boolean) {
+    def xor(b: Boolean): Boolean = (a || b) && !(a && b)
+  }
+
 }

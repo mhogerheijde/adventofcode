@@ -1,16 +1,14 @@
 package net.hogerheijde.aoc2019.day1
 
-import org.scalatest.Matchers
-import org.scalatest.WordSpec
+import net.hogerheijde.aoc2019.Day1
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 
-
-class Day1Test extends WordSpec with Matchers {
+class Day1Test extends AnyWordSpec with Matchers {
 
 
   "Day1" should {
-
-
     "run example of part2" in {
       Day1.part2(Day1.parse("1969")) should be (966)
       Day1.part2(Day1.parse("100756")) should be (50346)

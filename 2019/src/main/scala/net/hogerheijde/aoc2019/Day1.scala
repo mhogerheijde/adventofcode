@@ -1,12 +1,12 @@
-package net.hogerheijde.aoc2019.day1
+package net.hogerheijde.aoc2019
 
+import scala.collection.immutable.IndexedSeq
+
+import net.hogerheijde.aoc.util.Day
 import net.hogerheijde.aoc.util.Parser
-import net.hogerheijde.aoc2019.Day2019
 
-
-object Day1 extends Day2019[Model, Int, Int] {
-
-  override def name: String = "Day 1"
+object Day1 extends Day[Int, Int] {
+  type Model = IndexedSeq[Int]
 
   override def parse(in: String): Model = {
     Parser.standardLineSplit(in).map(_.toInt)
@@ -18,9 +18,10 @@ object Day1 extends Day2019[Model, Int, Int] {
 
   override def part1(input: Model): Int = {
     input.foldLeft(0) { case (totalFuel, nextModuleMass) =>
-        fuelForModule(nextModuleMass) + totalFuel
+      fuelForModule(nextModuleMass) + totalFuel
     }
   }
+
   override def part2(input: Model): Int = {
     input.foldLeft(0) { case (totalFuel, nextModuleMass) =>
       val initFuel = fuelForModule(nextModuleMass)

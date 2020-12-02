@@ -1,12 +1,12 @@
-package net.hogerheijde.aoc2019.day2
+package net.hogerheijde.aoc2019
 
 import scala.annotation.tailrec
+import scala.collection.immutable.IndexedSeq
 
-import net.hogerheijde.aoc.util.Parser
-import net.hogerheijde.aoc2019.Day2019
+import net.hogerheijde.aoc.util.Day
 
-
-object Day2 extends Day2019[Model, Int, Int] {
+object Day2 extends Day[Int, Int] {
+  type Model = IndexedSeq[Int]
 
   override def name: String = "Day 2"
 
@@ -19,7 +19,6 @@ object Day2 extends Day2019[Model, Int, Int] {
     val result = iterate(0, actualInput)
 
     result(0)
-
 
   }
 

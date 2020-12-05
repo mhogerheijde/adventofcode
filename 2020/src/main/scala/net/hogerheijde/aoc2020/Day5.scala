@@ -9,21 +9,13 @@ object Day5 extends Day[Int, Int] {
   override def parse(input: String): Day5.Model = input
     .linesIterator
     .map { line =>
-      (
-        line
-          .take(7)
-          .replace("F", "0")
-          .replace("B", "1"),
-        line
-          .drop(7)
-          .replace("L", "0")
-          .replace("R", "1"),
-      )
+      line
+        .replace("F", "0")
+        .replace("B", "1")
+        .replace("L", "0")
+        .replace("R", "1")
     }
-    .map { ident =>
-      (Integer.parseInt(ident._1, 2) * 8) +
-        Integer.parseInt(ident._2, 2)
-    }
+    .map { ident => Integer.parseInt(ident, 2) }
     .toSeq
 
   override def part1(input: Day5.Model): Int = input.max

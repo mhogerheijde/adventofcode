@@ -29,4 +29,8 @@ object Implicits {
     def xor(b: Boolean): Boolean = (a || b) && !(a && b)
   }
 
+  implicit class IntHelpers(i: Int) {
+    def betweenInclusive(min: Int, max: Int): Boolean = i >= min && i <= max
+  }
+
 }

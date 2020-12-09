@@ -1,5 +1,7 @@
 import Dependencies._
 
+ThisBuild / resolvers += "Artima Maven Repository" at "https://repo.artima.com/releases"
+
 lazy val root = (project in file("."))
   .settings(
     inThisBuild(List(
@@ -9,6 +11,7 @@ lazy val root = (project in file("."))
     )),
     name := "Advent of Code 2020",
     scalastyleConfig := file("../scalastyle-config.xml"),
+
     libraryDependencies ++= Seq(
       "net.hogerheijde.aoc" %% "aoc-helpers" % "2020-SNAPSHOT",
 

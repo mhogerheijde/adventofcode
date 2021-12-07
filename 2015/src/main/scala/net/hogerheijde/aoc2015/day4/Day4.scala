@@ -4,8 +4,8 @@ import java.security.MessageDigest
 
 import net.hogerheijde.aoc2015.util.Day
 
-object Day4 extends Day[String, Int, Int] {
-  def main(args: Array[String]): Unit = run()
+object Day4 extends Day[Int, Int] {
+  type Model = String
 
   override def name: String = "Day 4"
   override def parse: String => String = identity

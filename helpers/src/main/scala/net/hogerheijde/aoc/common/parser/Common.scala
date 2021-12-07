@@ -8,6 +8,10 @@ import scala.collection.immutable.IndexedSeq
 
 object Common {
 
+  def number[_: P]: P[Int] = P(CharIn("0-9").rep(1).!).map(_.toInt)
+  def alphaLower[_: P]: P[String] = P(CharIn("a-z").rep(1).!)
+
+
   def intSeq[_: P]: P[IndexedSeq[Int]] = P((int ~ ("," | ";").? ~ " ".rep.?).rep).map(_.toIndexedSeq)
 
   def int[_: P]: P[Int] = P(("-".? ~ CharIn("0-9").rep(1)).!.map(_.toInt))

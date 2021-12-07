@@ -1,11 +1,11 @@
 package net.hogerheijde.aoc.util
 
-import org.scalatest.Matchers
-import org.scalatest.WordSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 // scalastyle:off magic.number
 
-class CircularBufferTest extends WordSpec with Matchers {
+class CircularBufferTest extends AnyWordSpec with Matchers {
 
 
   "Empty CircularBuffer" should {

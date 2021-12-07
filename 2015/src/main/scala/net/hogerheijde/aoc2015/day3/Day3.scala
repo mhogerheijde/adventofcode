@@ -4,8 +4,8 @@ import net.hogerheijde.aoc2015.util.Day
 
 import scala.collection.immutable.IndexedSeq
 
-object Day3 extends Day[IndexedSeq[Direction], Int, Int] {
-  def main(args: Array[String]): Unit = run()
+object Day3 extends Day[Int, Int] {
+  type Model = IndexedSeq[Direction]
 
   override def name: String = "Day 3"
   override def parse: String => IndexedSeq[Direction] = _.map(Direction(_))

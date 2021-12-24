@@ -1,9 +1,9 @@
 import Dependencies._
 
 
-ThisBuild / organization := "net.hogerheijde.aoc"
-ThisBuild / version      := "2020-SNAPSHOT"
-ThisBuild / scalaVersion := "2.13.3"
+ThisBuild / organization  := "net.hogerheijde.aoc"
+ThisBuild / version       := "2020"
+ThisBuild / scalaVersion  := "2.13.3"
 ThisBuild / libraryDependencies ++= Seq(
   fastParse,
   scalaTest % Test,
@@ -22,5 +22,6 @@ scalacOptions ++= Seq(
 
 lazy val helpers = project.withId("helpers").in(file("."))
     .settings(
-      name := "AoC helpers"
+      name := "AoC helpers",
+      mimaPreviousArtifacts := Set ("net.hogerheijde.aoc" %% "aoc-helpers" % "2020re"),
     )

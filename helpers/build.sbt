@@ -2,7 +2,7 @@ import Dependencies._
 
 
 ThisBuild / organization  := "net.hogerheijde.aoc"
-ThisBuild / version       := "2020"
+ThisBuild / version       := "2021-SNAPSHOT"
 ThisBuild / scalaVersion  := "2.13.3"
 ThisBuild / libraryDependencies ++= Seq(
   fastParse,

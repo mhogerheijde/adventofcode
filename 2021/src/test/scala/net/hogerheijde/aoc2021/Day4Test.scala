@@ -1,5 +1,5 @@
 
-package net.hogerheijde.aoc2020
+package net.hogerheijde.aoc2021
 
 import fastparse.NoWhitespace._
 import fastparse.CharIn

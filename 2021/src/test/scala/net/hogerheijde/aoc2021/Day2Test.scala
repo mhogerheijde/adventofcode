@@ -1,4 +1,4 @@
-package net.hogerheijde.aoc2020
+package net.hogerheijde.aoc2021
 
 import net.hogerheijde.aoc2021.Day2
 import org.scalatest.matchers.should.Matchers

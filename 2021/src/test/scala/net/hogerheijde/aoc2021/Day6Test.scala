@@ -12,13 +12,6 @@ class Day6Test extends AnyWordSpec with Matchers {
     Day6.parse(input)
   }
 
-//  "Day 6 - model" should {
-//    "toString horivert" in {
-//
-//    }
-//  }
-
-
   "Day 6 performance" should {
     "know single 1 fish iterations" in  {
       Day6.calculateDays(Seq(1), 1) should be (Seq(0).length)

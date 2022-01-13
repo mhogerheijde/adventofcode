@@ -1,16 +1,17 @@
 package net.hogerheijde.aoc2021
 
 import net.hogerheijde.aoc.common.model.Coordinate
-import net.hogerheijde.aoc.common.model.DigitGrid
-import net.hogerheijde.aoc.common.parser.DigitGrid.grid
+import net.hogerheijde.aoc.common.model.Grid
+import net.hogerheijde.aoc.common.parser.Grid.grid
 import net.hogerheijde.aoc.text.AnsiHelpers._
 import net.hogerheijde.aoc.util.Day
 import net.hogerheijde.aoc.util.Parser
 
 object Day11 extends Day[Int, Int] {
-  type Model = DigitGrid
+  type Model = Grid[Byte]
+  val Model = Grid
 
-  implicit class DigitGridHelper(g: DigitGrid) {
+  implicit class DigitGridHelper(g: Model) {
     private def expand(coordinate: Coordinate): Set[Coordinate] = {
       Set(
         coordinate.transpose.leftUp,
@@ -57,15 +58,15 @@ object Day11 extends Day[Int, Int] {
       sb.toString()
     }
 
-    def step(amount: Int): (DigitGrid, Int) = {
+    def step(amount: Int): (Model, Int) = {
       Range(0, amount).foldLeft((g ,0)) { case ((grid, total), _) =>
         val (newGrid, count) = grid.step
         (newGrid, count + total)
       }
     }
 
-    def step: (DigitGrid, Int) = {
-      def flash(grid: DigitGrid, currentFlashCount: Int) = {
+    def step: (Model, Int) = {
+      def flash(grid: Model, currentFlashCount: Int) = {
         val flashed = grid.values.filter(_._2 >= 10).keys.toSet
         val energizeList = flashed.toSeq.flatMap(expand)
         val flashedGrid = flashed.foldLeft(grid) { case (newGrid, nextCoordinate) =>
@@ -74,15 +75,15 @@ object Day11 extends Day[Int, Int] {
         if (energizeList.nonEmpty) {
           energize(flashedGrid, energizeList, currentFlashCount + flashed.size)
         } else {
-          val reset = DigitGrid(flashedGrid.values.view.mapValues(v => if (v < 0) { 0.toByte } else { v }).toMap)
+          val reset = Model(flashedGrid.values.view.mapValues(v => if (v < 0) { 0.toByte } else { v }).toMap)
           (reset, currentFlashCount)
         }
       }
       def energize(
-          grid: DigitGrid,
+          grid: Model,
           energize: Iterable[Coordinate],
           currentCount: Int,
-      ): (DigitGrid, Int) = {
+      ): (Model, Int) = {
         val energizedGrid = energize.foldLeft(grid) { case (newGrid, nextCoordinate) =>
           // Updated with keeps empty coordinates emtpy if we return None for the update
           newGrid.copy(values =

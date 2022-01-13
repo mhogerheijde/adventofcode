@@ -2,17 +2,23 @@ package net.hogerheijde.aoc.common.model
 
 import java.lang.Math._
 
-case class Coordinate(x: Int, y: Int) {
-  val √ = sqrt(_)
+import scala.math.Ordered.orderingToOrdered
+
+case class Coordinate(x: Int, y: Int) extends Ordered[Coordinate] {
+  private val √ = sqrt(_)
   def distance(other: Coordinate): Double = √(
     pow(x - other.x, 2.0) + pow(y - other.y, 2.0)
   )
 
   val transpose = new CoordinateTranslation(this)
+
   override def toString: String = s"$x,$y"
+  override def compare(c: Coordinate): Int = Coordinate.ordering.compare(this, c)
 }
 object Coordinate {
   def apply(t: (Int, Int)): Coordinate = Coordinate(t._1, t._2)
+
+  private val ordering = Ordering.by[Coordinate, Int](_.y).orElseBy(_.x)
 }
 
 class CoordinateTranslation(underlaying: Coordinate) {

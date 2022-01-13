@@ -2,7 +2,7 @@
 package net.hogerheijde.aoc2021
 
 import net.hogerheijde.aoc.common.model.Coordinate
-import net.hogerheijde.aoc.common.model.DigitGrid
+import net.hogerheijde.aoc.common.model.Grid
 import net.hogerheijde.aoc2021.Day11.DigitGridHelper
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -33,7 +33,7 @@ class Day11Test extends AnyWordSpec with Matchers {
           |""".stripMargin
       val model = Day11.parse(input)
 
-      model.step._1 should be (DigitGrid(Map(
+      model.step._1 should be (Grid[Byte](Map(
         Coordinate(0, 0) -> 2,
         Coordinate(1, 0) -> 3,
         Coordinate(0, 1) -> 4,
@@ -47,7 +47,7 @@ class Day11Test extends AnyWordSpec with Matchers {
           |""".stripMargin
       val model = Day11.parse(input)
 
-      model.step._1 should be(DigitGrid(Map(
+      model.step._1 should be(Grid[Byte](Map(
         Coordinate(0, 0) -> 3,
         Coordinate(1, 0) -> 4,
         Coordinate(0, 1) -> 5,
@@ -129,7 +129,7 @@ class Day11Test extends AnyWordSpec with Matchers {
 
     "do 10 steps on the larger example" in {
       val (newGrid, count) = exampleInput.step(10)
-//      count should be (204)
+      count should be (204)
       newGrid should be (Day11.parse(
         """0481112976
           |0031112009

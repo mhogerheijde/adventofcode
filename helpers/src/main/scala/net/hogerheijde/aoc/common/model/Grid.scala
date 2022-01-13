@@ -1,6 +1,6 @@
 package net.hogerheijde.aoc.common.model
 
-case class DigitGrid(values: Map[Coordinate, Byte]) {
+case class Grid[T](values: Map[Coordinate, T]) {
   override def toString: String = {
     val sorted = values.toSeq.sortBy { case (c, _) => (c.y, c.x) }
     val sb = new StringBuilder

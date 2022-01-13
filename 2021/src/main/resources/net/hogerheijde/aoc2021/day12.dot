@@ -1,0 +1,27 @@
+graph caves {
+    qi -- UD;
+    jt -- br;
+    wb -- TF;
+    VO -- aa;
+    UD -- aa;
+    br -- end;
+    qi -- br;
+    br -- HA;
+    UD -- start;
+    TF -- qi;
+    br -- hf;
+    VO -- hf;
+    hf -- HA;
+    hf -- UD;
+    aa -- hf;
+    TF -- hf;
+    VO -- start;
+    wb -- aa;
+    UD -- wb;
+    KX -- wb;
+    qi -- VO;
+    br -- TF;
+    end -- HA;
+    start -- qi;
+    end -- aa;
+}

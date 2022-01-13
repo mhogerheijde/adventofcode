@@ -1,0 +1,20 @@
+graph caves {
+    DX -- he;
+    DX -- pj;
+    DX -- start;
+    DX -- fs;
+    RW -- zg;
+    RW -- start;
+    RW -- pj;
+    RW -- he;
+    WI -- he;
+    end -- zg;
+    end -- fs;
+    fs -- he;
+    fs -- pj;
+    he -- zg;
+    he -- pj;
+    pj -- zg;
+    pj -- start;
+    sl -- zg;
+}

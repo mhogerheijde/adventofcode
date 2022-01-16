@@ -16,6 +16,7 @@ object Common {
 
   def int[_: P]: P[Int] = P(("-".? ~ CharIn("0-9").rep(1)).!.map(_.toInt))
   def coordinate[_: P]: P[Coordinate] = P((int ~ "," ~ " ".rep ~ int).map(t => Coordinate(t._1, t._2)))
+  def coordinates[_:P]: P[Seq[Coordinate]] = P((coordinate ~ "\n").rep)
 }
 
 /**

@@ -2,7 +2,7 @@ package net.hogerheijde.aoc2021
 
 import net.hogerheijde.aoc.common.model.Coordinate
 import net.hogerheijde.aoc.common.model.Grid
-import net.hogerheijde.aoc.common.parser.Grid.grid
+import net.hogerheijde.aoc.common.parser.DigitGrid.digitGrid
 import net.hogerheijde.aoc.text.AnsiHelpers._
 import net.hogerheijde.aoc.util.Day
 import net.hogerheijde.aoc.util.Parser
@@ -102,7 +102,7 @@ object Day11 extends Day[Int, Int] {
     }
   }
 
-  override def parse(input: String): Model = Parser.parse(grid(_))(input).get
+  override def parse(input: String): Model = Parser.parse(digitGrid(_))(input).get
   override def part1(input: Model): Int = input.step(100)._2
   override def part2(input: Model): Int = {
     val x = LazyList

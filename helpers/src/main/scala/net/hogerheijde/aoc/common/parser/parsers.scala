@@ -12,7 +12,6 @@ object Common {
   def number[_: P]: P[Int] = P(CharIn("0-9").rep(1).!).map(_.toInt)
   def alphaLower[_: P]: P[String] = P(CharIn("a-z").rep(1).!)
 
-
   def intSeq[_: P]: P[IndexedSeq[Int]] = P((int ~ ("," | ";").? ~ " ".rep.?).rep).map(_.toIndexedSeq)
 
   def int[_: P]: P[Int] = P(("-".? ~ CharIn("0-9").rep(1)).!.map(_.toInt))
@@ -23,10 +22,10 @@ object Common {
   * Parses a rectangular grid of digits 0-9.
   * All lines must be equal length.
   */
-object Grid {
+object DigitGrid {
   private def digit[_: P]: P[(Int, Byte)] = P(Index ~ CharIn("0-9").!).map { case (column, char) => (column, char.toByte) }
   private def row[_: P]: P[Seq[(Int, Byte)]] = P(digit.rep)
-  def grid[_: P]: P[model.Grid[Byte]] = P((row ~ "\n").rep).map { rows =>
+  def digitGrid[_: P]: P[model.Grid[Byte]] = P((row ~ "\n").rep).map { rows =>
     model.Grid(rows.zipWithIndex.flatMap { case (depths, row) =>
       depths.map { case (column, depth) => Coordinate(column - (row * (depths.size + 1)), row) -> depth }
     }.toMap)

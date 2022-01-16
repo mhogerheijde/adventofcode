@@ -15,3 +15,8 @@ case class Grid[T](values: Map[Coordinate, T]) {
     sb.toString()
   }
 }
+
+object Grid {
+  def apply[T](cells: Iterable[(Coordinate, T)]): Grid[T] = Grid(cells.toMap)
+  def apply[T](cells: (Coordinate, T)*): Grid[T] = Grid(cells.toMap)
+}

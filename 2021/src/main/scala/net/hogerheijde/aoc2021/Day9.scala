@@ -3,37 +3,40 @@ package net.hogerheijde.aoc2021
 import net.hogerheijde.aoc.util.Day
 import fastparse._
 import fastparse.NoWhitespace._
+import net.hogerheijde.aoc.common.model.Coordinate
+import net.hogerheijde.aoc.common.model.Grid
+import net.hogerheijde.aoc.common.parser.DigitGrid
 import net.hogerheijde.aoc.util.Parser
 
 
 object Day9 extends Day[Int, Int]{
-  override type Model = Grid
+  override type Model = Grid[Byte]
 
-  case class Grid(heightmap: Map[Coordinate, Short])
-  case class Coordinate(row: Int, column: Int) {
-    def up = Coordinate(row - 1, column)
-    def down = Coordinate(row + 1, column)
-    def left = Coordinate(row, column - 1)
-    def right = Coordinate(row, column + 1)
-  }
+//  case class Grid(heightmap: Map[Coordinate, Byte])
+//  case class Coordinate(x: Int, y: Int) {
+//    def up = Coordinate(x, y - 1)
+//    def down = Coordinate(x, y + 1)
+//    def left = Coordinate(x - 1, y)
+//    def right = Coordinate(x + 1, y)
+//  }
 
-  def depth[_: P]: P[(Int, Short)] = P(Index ~ CharIn("0-9").!).map { case (column, char) => (column, char.toShort) }
-  def row[_: P]: P[Seq[(Int, Short)]] = P(depth.rep)
-  def grid[_: P]: P[Grid] = P((row ~ "\n").rep).map { rows =>
+  def depth[_: P]: P[(Int, Byte)] = P(Index ~ CharIn("0-9").!).map { case (column, char) => (column, char.toByte) }
+  def row[_: P]: P[Seq[(Int, Byte)]] = P(depth.rep)
+  def grid[_: P]: P[Grid[Byte]] = P((row ~ "\n").rep).map { rows =>
     Grid(rows.zipWithIndex.flatMap { case (depths, row) =>
-      depths.map { case (column, depth) => Coordinate(row, column - (row * (depths.size + 1))) -> depth }
+      depths.map { case (column, depth) => Coordinate(column - (row * (depths.size + 1)), row) -> depth }
     }.toMap)
   }
 
-  override def parse(input: String): Grid = Parser.parse(grid(_))(input).get
+  override def parse(input: String): Model = Parser.parse(DigitGrid.digitGrid(_))(input).get
 
-  override def part1(input: Grid): Int = {
-    input.heightmap.foldLeft(0) { case (result, (coordinate, depth)) =>
+  override def part1(input: Model): Int = {
+    input.values.foldLeft(0) { case (result, (coordinate, depth)) =>
       val adjacent = Seq(
-        input.heightmap.get(coordinate.up),
-        input.heightmap.get(coordinate.down),
-        input.heightmap.get(coordinate.left),
-        input.heightmap.get(coordinate.right),
+        input.values.get(coordinate.transpose.up),
+        input.values.get(coordinate.transpose.down),
+        input.values.get(coordinate.transpose.left),
+        input.values.get(coordinate.transpose.right),
       ).flatten
 
       if (adjacent.exists { d => d < depth }) {
@@ -44,8 +47,8 @@ object Day9 extends Day[Int, Int]{
     }
   }
 
-  override def part2(input: Grid): Int = {
-    val (lowPointLinkedList, lowpoints) = input.heightmap
+  override def part2(input: Model): Int = {
+    val (lowPointLinkedList, lowpoints) = input.values
       .foldLeft(
         (Map.empty[Coordinate, Seq[Coordinate]], Seq.empty[Coordinate])
       ) { case ((basins, lowpoints), (coordinate, depth)) =>
@@ -53,10 +56,10 @@ object Day9 extends Day[Int, Int]{
           (basins, lowpoints)
         } else {
           val adjacent = Seq(
-            input.heightmap.get(coordinate.up).map(coordinate.up -> _),
-            input.heightmap.get(coordinate.down).map(coordinate.down -> _),
-            input.heightmap.get(coordinate.left).map(coordinate.left -> _),
-            input.heightmap.get(coordinate.right).map(coordinate.right -> _),
+            input.values.get(coordinate.transpose.up).map(coordinate.transpose.up -> _),
+            input.values.get(coordinate.transpose.down).map(coordinate.transpose.down -> _),
+            input.values.get(coordinate.transpose.left).map(coordinate.transpose.left -> _),
+            input.values.get(coordinate.transpose.right).map(coordinate.transpose.right -> _),
           ).flatten
 
           adjacent.find { case (_, d) =>

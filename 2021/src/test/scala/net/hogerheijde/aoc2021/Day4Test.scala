@@ -1,19 +1,11 @@
 
 package net.hogerheijde.aoc2021
 
-import fastparse.NoWhitespace._
-import fastparse.CharIn
-import fastparse.P
-import fastparse._
+import net.hogerheijde.aoc.common.model.Coordinate
+import net.hogerheijde.aoc.common.model.Grid
 import net.hogerheijde.aoc.util.Parser
-import net.hogerheijde.aoc2021.Day3
-import net.hogerheijde.aoc2021.Day4
 import net.hogerheijde.aoc2021.Day4.BingoCard
-import net.hogerheijde.aoc2021.Day4.BingoSubsystem
 import net.hogerheijde.aoc2021.Day4.Cell
-import net.hogerheijde.aoc2021.Day4.Coordinate
-import net.hogerheijde.aoc2021.Day4.Grid
-import net.hogerheijde.aoc2021.Day4.bingoCard
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -50,88 +42,100 @@ class Day4Test extends AnyWordSpec with Matchers {
       // TRUE
       BingoCard(Grid(
         Coordinate(0, 0) -> Cell(22, true),
-        Coordinate(0, 1) -> Cell(13, true),
-        Coordinate(1, 0) -> Cell(8),
+        Coordinate(1, 0) -> Cell(13),
+        Coordinate(0, 1) -> Cell(8),
         Coordinate(1, 1) -> Cell(2),
-      )).hasBingo should be(true)
+      ))
+        .mark(13)
+        .hasBingo should be(true)
 
       BingoCard(Grid(
         Coordinate(0, 0) -> Cell(22),
-        Coordinate(0, 1) -> Cell(13),
-        Coordinate(1, 0) -> Cell(8, true),
-        Coordinate(1, 1) -> Cell(2, true),
-      )).hasBingo should be(true)
+        Coordinate(1, 0) -> Cell(13),
+        Coordinate(0, 1) -> Cell(8, true),
+        Coordinate(1, 1) -> Cell(2),
+      ))
+        .mark(2)
+        .hasBingo should be(true)
 
       BingoCard(Grid(
         Coordinate(0, 0) -> Cell(22),
-        Coordinate(0, 1) -> Cell(13, true),
-        Coordinate(1, 0) -> Cell(8),
-        Coordinate(1, 1) -> Cell(2, true),
-      )).hasBingo should be(true)
+        Coordinate(1, 0) -> Cell(13, true),
+        Coordinate(0, 1) -> Cell(8),
+        Coordinate(1, 1) -> Cell(2),
+      ))
+        .mark(2)
+        .hasBingo should be(true)
 
       BingoCard(Grid(
         Coordinate(0, 0) -> Cell(22, true),
-        Coordinate(0, 1) -> Cell(13),
-        Coordinate(1, 0) -> Cell(8, true),
+        Coordinate(1, 0) -> Cell(13),
+        Coordinate(0, 1) -> Cell(8),
         Coordinate(1, 1) -> Cell(2),
-      )).hasBingo should be(true)
+      ))
+        .mark(8)
+        .hasBingo should be(true)
 
       // FALSE
       BingoCard(Grid(
         Coordinate(0, 0) -> Cell(22, true),
-        Coordinate(0, 1) -> Cell(13),
-        Coordinate(1, 0) -> Cell(8),
-        Coordinate(1, 1) -> Cell(2, true),
-      )).hasBingo should be(false)
+        Coordinate(1, 0) -> Cell(13),
+        Coordinate(0, 1) -> Cell(8),
+        Coordinate(1, 1) -> Cell(2),
+      ))
+        .mark(2)
+        .hasBingo should be(false)
 
       BingoCard(Grid(
         Coordinate(0, 0) -> Cell(22),
-        Coordinate(0, 1) -> Cell(13, true),
-        Coordinate(1, 0) -> Cell(8, true),
+        Coordinate(1, 0) -> Cell(13, true),
+        Coordinate(0, 1) -> Cell(8),
         Coordinate(1, 1) -> Cell(2),
-      )).hasBingo should be(false)
+      ))
+        .mark(8)
+        .hasBingo should be(false)
     }
 
     "mark correct number" in {
       BingoCard(Grid(
         Coordinate(0, 0) -> Cell(1),
-        Coordinate(0, 1) -> Cell(2),
-        Coordinate(1, 0) -> Cell(3),
+        Coordinate(1, 0) -> Cell(2),
+        Coordinate(0, 1) -> Cell(3),
         Coordinate(1, 1) -> Cell(4),
       )).mark(1) should be (
         BingoCard(Grid(
           Coordinate(0, 0) -> Cell(1, true),
-          Coordinate(0, 1) -> Cell(2),
-          Coordinate(1, 0) -> Cell(3),
+          Coordinate(1, 0) -> Cell(2),
+          Coordinate(0, 1) -> Cell(3),
           Coordinate(1, 1) -> Cell(4),
         ))
       )
 
       BingoCard(Grid(
         Coordinate(0, 0) -> Cell(1),
-        Coordinate(0, 1) -> Cell(2),
-        Coordinate(1, 0) -> Cell(3),
+        Coordinate(1, 0) -> Cell(2),
+        Coordinate(0, 1) -> Cell(3),
         Coordinate(1, 1) -> Cell(4),
       )).mark(2) should be(
         BingoCard(Grid(
           Coordinate(0, 0) -> Cell(1),
-          Coordinate(0, 1) -> Cell(2, true),
-          Coordinate(1, 0) -> Cell(3),
+          Coordinate(1, 0) -> Cell(2, true),
+          Coordinate(0, 1) -> Cell(3),
           Coordinate(1, 1) -> Cell(4),
         ))
       )
 
       BingoCard(Grid(
         Coordinate(0, 0) -> Cell(1, true),
-        Coordinate(0, 1) -> Cell(2),
-        Coordinate(1, 0) -> Cell(3),
+        Coordinate(1, 0) -> Cell(2),
+        Coordinate(0, 1) -> Cell(3),
         Coordinate(1, 1) -> Cell(4),
       )).mark(2) should be(
         BingoCard(
           Grid(
             Coordinate(0, 0) -> Cell(1, true),
-            Coordinate(0, 1) -> Cell(2, true),
-            Coordinate(1, 0) -> Cell(3),
+            Coordinate(1, 0) -> Cell(2, true),
+            Coordinate(0, 1) -> Cell(3),
             Coordinate(1, 1) -> Cell(4),
           ),
           Some(2)
@@ -140,14 +144,14 @@ class Day4Test extends AnyWordSpec with Matchers {
 
       BingoCard(Grid(
         Coordinate(0, 0) -> Cell(1, true),
-        Coordinate(0, 1) -> Cell(2),
-        Coordinate(1, 0) -> Cell(3),
+        Coordinate(1, 0) -> Cell(2),
+        Coordinate(0, 1) -> Cell(3),
         Coordinate(1, 1) -> Cell(4),
       )).mark(4) should be(
         BingoCard(Grid(
           Coordinate(0, 0) -> Cell(1, true),
-          Coordinate(0, 1) -> Cell(2),
-          Coordinate(1, 0) -> Cell(3),
+          Coordinate(1, 0) -> Cell(2),
+          Coordinate(0, 1) -> Cell(3),
           Coordinate(1, 1) -> Cell(4, true),
         ))
       )
@@ -207,8 +211,8 @@ class Day4Test extends AnyWordSpec with Matchers {
       Parser.parse(Day4.bingoCard(_))(card) should be(Some(
         BingoCard(Grid(
           Coordinate(0, 0) -> Cell(22),
-          Coordinate(0, 1) -> Cell(13),
-          Coordinate(1, 0) -> Cell(8),
+          Coordinate(1, 0) -> Cell(13),
+          Coordinate(0, 1) -> Cell(8),
           Coordinate(1, 1) -> Cell(2),
         ))
       ))
@@ -228,14 +232,14 @@ class Day4Test extends AnyWordSpec with Matchers {
       Parser.parse(Day4.bingoCards(_))(card).get should be(Seq(
         BingoCard(Grid(
           Coordinate(0, 0) -> Cell(22),
-          Coordinate(0, 1) -> Cell(13),
-          Coordinate(1, 0) -> Cell(8),
+          Coordinate(1, 0) -> Cell(13),
+          Coordinate(0, 1) -> Cell(8),
           Coordinate(1, 1) -> Cell(2),
         )),
         BingoCard(Grid(
           Coordinate(0, 0) -> Cell(3),
-          Coordinate(0, 1) -> Cell(15),
-          Coordinate(1, 0) -> Cell(9),
+          Coordinate(1, 0) -> Cell(15),
+          Coordinate(0, 1) -> Cell(9),
           Coordinate(1, 1) -> Cell(18),
         ))
       ))

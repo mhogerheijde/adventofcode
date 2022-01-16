@@ -3,6 +3,8 @@ package net.hogerheijde.aoc2021
 import fastparse.NoWhitespace._
 import fastparse.P
 import fastparse._
+import net.hogerheijde.aoc.common.model.Coordinate
+import net.hogerheijde.aoc.common.model.Grid
 import net.hogerheijde.aoc.common.parser.Common
 import net.hogerheijde.aoc.util.Day
 import net.hogerheijde.aoc.util.Parser
@@ -42,8 +44,6 @@ object Day4 extends Day[Int, Int] {
     }
   }
 
-  case class Coordinate(row: Int, column: Int)
-
   case class Cell(
       value: Int,
       marked: Boolean = false,
@@ -57,18 +57,19 @@ object Day4 extends Day[Int, Int] {
     }
   }
 
-  type Grid = Map[Coordinate, Cell]
-  val Grid = Map
+//  type Grid = Map[Coordinate, Cell]
+//  val Grid = Map
 
   case class BingoCard(
-      cells: Grid,
+      cells: Grid[Cell],
       bingoDraw: Option[Int] = None,
   ) {
     def mark(draw: Int): BingoCard = {
       if (hasBingo) { this
       } else {
-        val card = BingoCard(
-          cells
+        val card = this.copy(cells =
+          Grid(cells
+            .values
             .view
             .mapValues { cells =>
               if (cells.value == draw) {
@@ -77,7 +78,7 @@ object Day4 extends Day[Int, Int] {
                 cells
               }
             }
-            .toMap
+            .toMap)
         )
         if (card.calcBingo && card.bingoDraw.isEmpty) {
           card.copy(bingoDraw = Some(draw))
@@ -88,6 +89,7 @@ object Day4 extends Day[Int, Int] {
     }
 
     val rows: Map[Int, Iterable[Cell]] = cells
+      .values
       .groupBy { case (Coordinate(row, _), _) => row }
       .view
       .mapValues {
@@ -95,6 +97,7 @@ object Day4 extends Day[Int, Int] {
       }
       .toMap
     val columns = cells
+      .values
       .groupBy { case (Coordinate(_, column), _) => column }
       .view
       .mapValues {
@@ -108,7 +111,7 @@ object Day4 extends Day[Int, Int] {
       columns.exists { case (_, column) => column.forall(_.marked) }
 
     def calculate: Int = {
-      bingoDraw.map(_ * cells.values.filterNot(_.marked).map(_.value).sum).getOrElse(0)
+      bingoDraw.map(_ * cells.values.values.filterNot(_.marked).map(_.value).sum).getOrElse(0)
     }
 
     override def toString: String = {
@@ -124,6 +127,10 @@ object Day4 extends Day[Int, Int] {
     }
   }
 
+  object BingoCard {
+    def apply(cells: Map[Coordinate, Cell]): BingoCard = BingoCard(Grid(cells))
+  }
+
   def draw[_: P]: P[IndexedSeq[Int]] = P(Common.intSeq ~ "\n")
 
   def cell[_: P]: P[Cell] = P((CharIn(" 0-9") ~ CharIn("0-9")).!).map { value => Cell(value.trim.toInt) }
@@ -133,7 +140,7 @@ object Day4 extends Day[Int, Int] {
   def bingoCard[_: P]: P[BingoCard] = P(bingoLine.rep(1) ~ "\n").map { q =>
     val z = q.foldLeft((0, Map.empty[Coordinate, Cell])) { case ((row, acc), nextLine) =>
       val rowOfCells = nextLine.zipWithIndex.map { case (cell, column) =>
-        (Coordinate(row, column), cell)
+        (Coordinate(column, row), cell)
       }.toMap
       (row + 1, acc ++ rowOfCells)
     }

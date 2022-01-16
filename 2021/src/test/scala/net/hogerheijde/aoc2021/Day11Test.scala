@@ -34,10 +34,10 @@ class Day11Test extends AnyWordSpec with Matchers {
       val model = Day11.parse(input)
 
       model.step._1 should be (Grid[Byte](Map(
-        Coordinate(0, 0) -> 2,
-        Coordinate(1, 0) -> 3,
-        Coordinate(0, 1) -> 4,
-        Coordinate(1, 1) -> 5,
+        Coordinate(0, 0) -> 2.toByte,
+        Coordinate(1, 0) -> 3.toByte,
+        Coordinate(0, 1) -> 4.toByte,
+        Coordinate(1, 1) -> 5.toByte,
       )))
     }
     "should flash" in {
@@ -48,10 +48,10 @@ class Day11Test extends AnyWordSpec with Matchers {
       val model = Day11.parse(input)
 
       model.step._1 should be(Grid[Byte](Map(
-        Coordinate(0, 0) -> 3,
-        Coordinate(1, 0) -> 4,
-        Coordinate(0, 1) -> 5,
-        Coordinate(1, 1) -> 0,
+        Coordinate(0, 0) -> 3.toByte,
+        Coordinate(1, 0) -> 4.toByte,
+        Coordinate(0, 1) -> 5.toByte,
+        Coordinate(1, 1) -> 0.toByte,
       )))
     }
 

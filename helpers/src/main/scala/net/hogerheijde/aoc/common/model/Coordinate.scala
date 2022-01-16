@@ -2,8 +2,6 @@ package net.hogerheijde.aoc.common.model
 
 import java.lang.Math._
 
-import scala.math.Ordered.orderingToOrdered
-
 case class Coordinate(x: Int, y: Int) extends Ordered[Coordinate] {
   private val √ = sqrt(_)
   def distance(other: Coordinate): Double = √(

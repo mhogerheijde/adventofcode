@@ -1,5 +1,10 @@
 import Dependencies._
 
+ThisBuild / credentials += Credentials(Path.userHome / ".sbt" / ".credentials.build")
+ThisBuild / resolvers ++= Seq(
+  "Nexus @ Hogerheijde" at "https://nexus.hogerheijde.net/repository/hogerheijde/"
+)
+
 lazy val root = (project in file("."))
   .settings(
     inThisBuild(List(
@@ -10,7 +15,7 @@ lazy val root = (project in file("."))
     name := "Advent of Code 2019",
     scalastyleConfig := file("../scalastyle-config.xml"),
     libraryDependencies ++= Seq(
-      "net.hogerheijde.aoc" %% "aoc-helpers" % "2019-SNAPSHOT",
+      "net.hogerheijde.aoc" %% "aoc-helpers" % "2020.0.0-SNAPSHOT",
 
       scalatest % Test,
       scalactic,

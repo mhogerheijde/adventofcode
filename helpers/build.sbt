@@ -2,7 +2,7 @@ import Dependencies._
 
 
 ThisBuild / organization  := "net.hogerheijde.aoc"
-ThisBuild / version       := "2020.0.0-SNAPSHOT"
+ThisBuild / version       := "2020.0.0"
 ThisBuild / scalaVersion  := "2.13.3"
 ThisBuild / versionScheme := Some("semver-spec")
 ThisBuild / libraryDependencies ++= Seq(
@@ -36,5 +36,5 @@ ThisBuild / publishTo := {
 lazy val helpers = project.withId("helpers").in(file("."))
     .settings(
       name := "AoC helpers",
-      mimaPreviousArtifacts := Set ("net.hogerheijde.aoc" %% "aoc-helpers" % "2020"),
+      mimaPreviousArtifacts := Set ("net.hogerheijde.aoc" %% "aoc-helpers" % "2020.0.0"),
     )

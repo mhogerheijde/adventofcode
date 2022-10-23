@@ -1,6 +1,7 @@
 import sbt._
 
 object Dependencies {
-  lazy val scalatest = "org.scalatest" %% "scalatest" % "3.2.2"
-  lazy val scalactic = "org.scalactic" %% "scalactic" % "3.2.2"
+  val fastParse = "com.lihaoyi" %% "fastparse" % "2.2.2"
+  val scalatest = "org.scalatest" %% "scalatest" % "3.2.2"
+  val scalactic = "org.scalactic" %% "scalactic" % "3.2.2"
 }

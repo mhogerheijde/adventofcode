@@ -12,6 +12,11 @@ class CommonTest extends AnyWordSpec with Matchers {
       Parser.parse(Common.int(_))("12") should contain (12)
       Parser.parse(Common.int(_))("123") should contain (123)
       Parser.parse(Common.int(_))("023") should contain (23)
+
+      Parser.parse(Common.int(_))("+1") should contain (1)
+      Parser.parse(Common.int(_))("+12") should contain (12)
+      Parser.parse(Common.int(_))("+123") should contain (123)
+      Parser.parse(Common.int(_))("+023") should contain (23)
     }
 
     "parse negative ints" in {

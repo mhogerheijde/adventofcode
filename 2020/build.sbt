@@ -1,6 +1,10 @@
 import Dependencies._
 
-ThisBuild / resolvers += "Artima Maven Repository" at "https://repo.artima.com/releases"
+ThisBuild / credentials += Credentials(Path.userHome / ".sbt" / ".credentials.build")
+ThisBuild / resolvers ++= Seq(
+  "Artima Maven Repository" at "https://repo.artima.com/releases",
+  "Nexus @ Hogerheijde" at "https://nexus.hogerheijde.net/repository/hogerheijde/",
+)
 
 lazy val root = (project in file("."))
   .settings(
@@ -13,7 +17,7 @@ lazy val root = (project in file("."))
     scalastyleConfig := file("../scalastyle-config.xml"),
 
     libraryDependencies ++= Seq(
-      "net.hogerheijde.aoc" %% "aoc-helpers" % "2020-SNAPSHOT",
+      "net.hogerheijde.aoc" %% "aoc-helpers" % "2020.0.0-SNAPSHOT",
 
       scalatest % Test,
       scalactic,

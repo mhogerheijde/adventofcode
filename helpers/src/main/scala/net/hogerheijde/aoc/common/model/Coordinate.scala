@@ -33,3 +33,15 @@ class CoordinateTranslation(underlaying: Coordinate) {
   def down = Coordinate(underlaying.x + 1, underlaying.y)
   def rightDown = Coordinate(underlaying.x + 1, underlaying.y + 1)
 }
+
+
+/**
+  * [[x]] is horizontal axis, positive to the right
+  * [[y]] is vertical axis, positive down.
+ */
+case class Coordinate2(x: Int, y: Int) {
+  val up = Coordinate2(x, y + 1)
+  val down = Coordinate2(x, y + 1)
+  val left = Coordinate2(x - 1, y)
+  val right = Coordinate2(x + 1, y)
+}

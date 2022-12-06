@@ -3,16 +3,16 @@ import Dependencies._
 
 ThisBuild / organization  := "net.hogerheijde.aoc"
 ThisBuild / version       := "2022.0.0-SNAPSHOT"
-ThisBuild / scalaVersion  := "2.13.3"
+ThisBuild / scalaVersion  := "3.2.1"
 ThisBuild / versionScheme := Some("semver-spec")
 ThisBuild / libraryDependencies ++= Seq(
-  fastParse,
   scalaTest % Test,
 )
 
 ThisBuild / scalacOptions ++= Seq(
-  "-encoding", "utf8", // Option and arguments on same line
-  "-Xfatal-warnings",  // New lines for each options
+  "-encoding", "utf8",
+  "-Xfatal-warnings",
+  "-explain",
   "-deprecation",
   "-unchecked",
   "-language:implicitConversions",
@@ -36,5 +36,5 @@ ThisBuild / publishTo := {
 lazy val helpers = project.withId("helpers").in(file("."))
     .settings(
       name := "AoC helpers",
-      mimaPreviousArtifacts := Set ("net.hogerheijde.aoc" %% "aoc-helpers" % "2020.0.0"),
+//      mimaPreviousArtifacts := Set ("net.hogerheijde.aoc" %% "aoc-helpers" % "2022.0.0"),
     )

@@ -9,7 +9,6 @@ object Day3 extends Day[Int, Int] {
 
   override type Model = Seq[Rucksack]
 
-
   type Item = Char
   case class Rucksack(items: Seq[Item]){
     require(items.forall(allowed(_)))

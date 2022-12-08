@@ -3,6 +3,7 @@ package net.hogerheijde.aoc2022
 import scala.util.Try
 
 import net.hogerheijde.aoc.util.Day
+import net.hogerheijde.aoc.common.parser.IsInteger
 
 object Day1 extends Day[Int, Int] {
 
@@ -23,12 +24,4 @@ object Day1 extends Day[Int, Int] {
   override def part1(input: Model): Int = input.map { _.sum }.max
 
   override def part2(input: Model): Int = input.map { _.sum }.sorted(Ordering[Int].reverse).take(3).sum
-
-  object IsInteger {
-    def unapply(s: String): Option[Int] = Try { Integer.parseInt(s, 10) }.toOption
-  }
-
-//  implicit class NumberHelper(s: String) {
-//    def isInteger = Try { Integer.parseInt(s, 10) }.isSuccess
-//  }
 }

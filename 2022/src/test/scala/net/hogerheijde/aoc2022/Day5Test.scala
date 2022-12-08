@@ -1,6 +1,5 @@
 package net.hogerheijde.aoc2022
 
-import net.hogerheijde.aoc.util.Parser
 import net.hogerheijde.aoc2022.Day5._
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -99,9 +98,9 @@ class Day5Test extends AnyWordSpec with Matchers {
 //      Parser.parse(moves(_))(in).get should be(exampleMoves)
 //    }
 //
-    "parse" in {
-      Day5.parse(exampleInput) should be(exampleModel)
-    }
+//    "parse" in {
+//      Day5.parse(exampleInput) should be(exampleModel)
+//    }
 
   }
 

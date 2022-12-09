@@ -81,6 +81,9 @@ class Day7Test extends AnyWordSpec with Matchers {
     "solve part 1" in  {
       Day7.part1(exampleFilesystem) should be (95437)
     }
+    "solve part 2" in  {
+      Day7.part2(exampleFilesystem) should be (24933642)
+    }
 
   }
 
@@ -113,6 +116,12 @@ class Day7Test extends AnyWordSpec with Matchers {
       exampleFilesystem(Path("/d")).size(exampleFilesystem) should be (24933642)
       exampleFilesystem(Path("/")).size(exampleFilesystem) should be (48381165)
     }
+
+    "calc free" in {
+      exampleFilesystem.free should be(21618835)
+    }
+
+
   }
 
   "Folder" should {

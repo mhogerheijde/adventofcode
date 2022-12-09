@@ -9,6 +9,7 @@ import scala.util.Try
 import net.hogerheijde.aoc.util.Day
 import net.hogerheijde.aoc.common.parser.IsInteger
 import net.hogerheijde.aoc2022.Day7.Filesystem
+import net.hogerheijde.aoc2022.Day7.Filesystem.VOLUME
 import net.hogerheijde.aoc2022.Day7.Path.ROOT
 
 object Day7 extends Day[Int, Int] {
@@ -43,7 +44,20 @@ object Day7 extends Day[Int, Int] {
     }.filter(_ <= 100000).sum
   }
 
-  override def part2(input: Model): Int = ???
+  override def part2(input: Model): Int = {
+    val needFree = 30000000
+    val toClean = needFree - input.free
+    input.items.values
+      .collect {
+        case folder: Folder => folder.size(input)
+        case _ => 0
+      }
+      .toSeq
+      .filter(_ != 0)
+      .sorted
+      .find(_ >= toClean)
+      .get
+  }
 
   case class Path private(
       parts: Seq[String],
@@ -105,6 +119,11 @@ object Day7 extends Day[Int, Int] {
     }
     def ls(path: Path = ROOT, orderBy: Filesystem => Ordering[Path] = _ => NoChange): String =
       items(path).listing(filesystem = this, orderBy = orderBy(this))
+
+    lazy val free = VOLUME - items(ROOT).size(this)
+  }
+  object Filesystem {
+    val VOLUME = 70000000
   }
 
 

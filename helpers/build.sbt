@@ -1,8 +1,7 @@
 import Dependencies._
 
-
 ThisBuild / organization  := "net.hogerheijde.aoc"
-ThisBuild / version       := "2022.0.1-SNAPSHOT"
+ThisBuild / version       := "2022.0.2-SNAPSHOT"
 ThisBuild / scalaVersion  := "3.2.1"
 ThisBuild / versionScheme := Some("semver-spec")
 ThisBuild / libraryDependencies ++= Seq(
@@ -32,6 +31,8 @@ ThisBuild / publishTo := {
   else
     Some("releases" at "https://nexus.hogerheijde.net/repository/hogerheijde-releases/")
 }
+//ThisBuild / overridePublishSettings := true
+
 
 lazy val helpers = project.withId("helpers").in(file("."))
     .settings(

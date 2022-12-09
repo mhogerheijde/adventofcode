@@ -6,10 +6,10 @@ case class Line(
     start: Coordinate,
     end: Coordinate,
 ) {
-  val minX = Math.min(start.x, end.x)
-  val minY = Math.min(start.y, end.y)
-  val maxX = Math.max(start.x, end.x)
-  val maxY = Math.max(start.y, end.y)
+  val minX = Math.min(start.vertical, end.vertical)
+  val minY = Math.min(start.horizontal, end.horizontal)
+  val maxX = Math.max(start.vertical, end.vertical)
+  val maxY = Math.max(start.horizontal, end.horizontal)
 
   def collision(point: Coordinate): Boolean = {
     // Point P is on line AB if |AP| + |PB| == |AB|

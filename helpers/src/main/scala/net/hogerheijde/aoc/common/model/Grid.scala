@@ -2,13 +2,13 @@ package net.hogerheijde.aoc.common.model
 
 case class Grid[T](values: Map[Coordinate, T]) {
   override def toString: String = {
-    val sorted = values.toSeq.sortBy { case (c, _) => (c.y, c.x) }
+    val sorted = values.toSeq.sortBy { case (c, _) => (c.horizontal, c.vertical) }
     val sb = new StringBuilder
-    var lastY = sorted.headOption.map(_._1.y).getOrElse(0)
+    var lastY = sorted.headOption.map(_._1.horizontal).getOrElse(0)
     sorted.foreach { case (c, v) =>
-      if (c.y != lastY) {
+      if (c.horizontal != lastY) {
         sb.append("\n")
-        lastY = c.y
+        lastY = c.horizontal
       }
       sb.append("%X".format(v))
     }

@@ -31,5 +31,35 @@ class CoordinateTest extends AnyWordSpec with Matchers {
 
   }
 
+  "Coordinate range" should {
+    "expand" in {
+      Coordinate.range(Coordinate(0, 0), Coordinate(4, 5)) should be (Seq(
+        Coordinate(0, 0),
+        Coordinate(0, 1),
+        Coordinate(0, 2),
+        Coordinate(0, 3),
+        Coordinate(0, 4),
+        Coordinate(1, 0),
+        Coordinate(1, 1),
+        Coordinate(1, 2),
+        Coordinate(1, 3),
+        Coordinate(1, 4),
+        Coordinate(2, 0),
+        Coordinate(2, 1),
+        Coordinate(2, 2),
+        Coordinate(2, 3),
+        Coordinate(2, 4),
+        Coordinate(3, 0),
+        Coordinate(3, 1),
+        Coordinate(3, 2),
+        Coordinate(3, 3),
+        Coordinate(3, 4),
+      ))
+
+
+
+    }
+  }
+
 
 }

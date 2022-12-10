@@ -1,7 +1,7 @@
 import Dependencies._
 
 ThisBuild / organization  := "net.hogerheijde.aoc"
-ThisBuild / version       := "2022.0.2-SNAPSHOT"
+ThisBuild / version       := "2022.0.3-SNAPSHOT"
 ThisBuild / scalaVersion  := "3.2.1"
 ThisBuild / versionScheme := Some("semver-spec")
 ThisBuild / libraryDependencies ++= Seq(

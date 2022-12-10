@@ -18,7 +18,7 @@ lazy val root = (project in file("."))
     scalastyleConfig := file("../scalastyle-config.xml"),
 
     libraryDependencies ++= Seq(
-      "net.hogerheijde.aoc" %% "aoc-helpers" % "2022.0.2-SNAPSHOT" changing(),
+      "net.hogerheijde.aoc" %% "aoc-helpers" % "2022.0.3-SNAPSHOT" changing(),
       scalatest % Test,
       scalactic,
     )

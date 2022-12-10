@@ -33,7 +33,7 @@ class CoordinateTest extends AnyWordSpec with Matchers {
 
   "Coordinate range" should {
     "expand" in {
-      Coordinate.range(Coordinate(0, 0), Coordinate(4, 5)) should be (Seq(
+      Coordinate.range(Coordinate(0, 0), Coordinate(4, 5)).iterable should be (Seq(
         Coordinate(0, 0),
         Coordinate(0, 1),
         Coordinate(0, 2),
@@ -55,11 +55,14 @@ class CoordinateTest extends AnyWordSpec with Matchers {
         Coordinate(3, 3),
         Coordinate(3, 4),
       ))
+    }
 
-
-
+    "count" in {
+      val range = Coordinate.range(Coordinate(0, 0), Coordinate(4, 5))
+      range.count(_.v == 0) should be (5)
+      range.count(_.v == 1) should be (5)
+      range.count(_.h == 1) should be (4)
+      range.count(c => c.h == 1 && c.v == 1) should be (1)
     }
   }
-
-
 }

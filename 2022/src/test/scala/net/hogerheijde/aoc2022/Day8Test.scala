@@ -42,6 +42,9 @@ class Day8Test extends AnyWordSpec with Matchers {
     "solve part 1" in {
       Day8.part1(exampleGrid) should be(21)
     }
+    "solve part 2" in {
+      Day8.part2(exampleGrid) should be(8)
+    }
   }
 
   "Trees" should {
@@ -51,7 +54,7 @@ class Day8Test extends AnyWordSpec with Matchers {
         (1, 0), (2, 0), (3, 0), // left
         (1, 4), (2, 4), (3, 4), // right
         (4, 0), (4, 1), (4, 2), (4, 3), (4, 4), // bottom row
-      ).map(Coordinate)
+      ).map(Coordinate.apply)
 
       rim.foreach { tree =>
         val x = exampleGrid.isVisible(tree)
@@ -82,7 +85,7 @@ class Day8Test extends AnyWordSpec with Matchers {
           (2, 0), (2, 1), (2, 2), (2, 3), (2, 4),
           (3, 0), (3, 1), (3, 2), (3, 3), (3, 4),
           (4, 0), (4, 1), (4, 2), (4, 3), (4, 4),
-        ).map(Coordinate)
+        ).map(Coordinate.apply)
       )
     }
 

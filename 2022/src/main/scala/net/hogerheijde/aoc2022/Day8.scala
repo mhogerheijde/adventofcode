@@ -5,8 +5,6 @@ import net.hogerheijde.aoc.common.model.Grid
 import net.hogerheijde.aoc.util.Day
 
 object Day8 extends Day[Int, Int] {
-
-
   override type Model = Trees
 
   case class LineOfSight(
@@ -22,8 +20,6 @@ object Day8 extends Day[Int, Int] {
       rows: IndexedSeq[IndexedSeq[Int]],
       columns: IndexedSeq[IndexedSeq[Int]],
   ) {
-
-
 
     private def lineOfSight(c: Coordinate): LineOfSight = {
       val verticalSplit = columns(c.h).splitAt(c.v)

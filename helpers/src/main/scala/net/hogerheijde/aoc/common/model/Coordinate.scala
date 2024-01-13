@@ -6,6 +6,9 @@ import java.lang.Math.sqrt
 import scala.collection.IterableOnceOps
 
 case class Coordinate(vertical: Int, horizontal: Int) extends Ordered[Coordinate] {
+  @deprecated val x = horizontal
+  @deprecated val y = vertical
+
   val v = vertical
   val h = horizontal
 
@@ -17,7 +20,9 @@ case class Coordinate(vertical: Int, horizontal: Int) extends Ordered[Coordinate
 
   val transpose = new CoordinateTranslation(this)
 
-//  def ->:
+  infix def diff(other: Coordinate): (Int, Int) = (other.v - this.v, other.h - this.h)
+  infix def add(vector: (Int, Int)) = this.copy(vertical = this.v + vector._1, horizontal = this.h + vector._2)
+  infix def add(coordinate: Coordinate) = this.copy(vertical = this.v + coordinate.v, horizontal = this.h + coordinate.h)
 
   override def toString: String = s"$vertical,$horizontal"
   override def compare(c: Coordinate): Int = Coordinate.ordering.compare(this, c)
@@ -31,7 +36,6 @@ object Coordinate {
 }
 
 class CoordinateTranslation(underlaying: Coordinate) {
-
   def leftUp = Coordinate(underlaying.v - 1, underlaying.h - 1)
   def up = Coordinate(underlaying.v - 1, underlaying.h)
   def rightUp = Coordinate(underlaying.v - 1, underlaying.h + 1)

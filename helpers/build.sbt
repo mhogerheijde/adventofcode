@@ -1,10 +1,11 @@
-import Dependencies._
+import Dependencies.*
 
 ThisBuild / organization  := "net.hogerheijde.aoc"
-ThisBuild / version       := "2023.0.0"
+ThisBuild / version       := "2023.0.1-SNAPSHOT"
 ThisBuild / scalaVersion  := "3.2.1"
 ThisBuild / versionScheme := Some("semver-spec")
 ThisBuild / libraryDependencies ++= Seq(
+  "com.lihaoyi" %% "fastparse" % "3.0.2",
   scalaTest % Test,
 )
 

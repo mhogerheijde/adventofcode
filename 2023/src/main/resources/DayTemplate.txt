@@ -1,0 +1,16 @@
+package net.hogerheijde.aoc2023
+
+import net.hogerheijde.aoc.common.parser.IsInteger
+import net.hogerheijde.aoc.util.Day
+
+import scala.util.Try
+
+object Day_ extends Day[Int, Int]:
+
+  type Model = String
+
+  override def parse(input: String): Model = input
+
+  override def part1(input: Model): Int = 0
+
+  override def part2(input: Model): Int = 0

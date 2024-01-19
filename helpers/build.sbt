@@ -22,8 +22,10 @@ ThisBuild / scalacOptions ++= Seq(
 )
 
 ThisBuild / resolvers ++= Seq(
-  "Nexus @ Hogerheijde" at "https://nexus.hogerheijde.net/repository/hogerheijde/"
+  "Snapshots @ Hogerheijde" at "https://nexus.hogerheijde.net/repository/hogerheijde-snapshots/",
+  "Releases @ Hogerheijde" at "https://nexus.hogerheijde.net/repository/hogerheijde-releases/",
 )
+
 ThisBuild / credentials += Credentials(Path.userHome / ".sbt" / ".credentials.deploy")
 ThisBuild / publishMavenStyle := true
 ThisBuild / publishTo := {
@@ -32,11 +34,11 @@ ThisBuild / publishTo := {
   else
     Some("releases" at "https://nexus.hogerheijde.net/repository/hogerheijde-releases/")
 }
-//ThisBuild / overridePublishSettings := true
-
 
 lazy val helpers = project.withId("helpers").in(file("."))
     .settings(
       name := "AoC helpers",
-      mimaPreviousArtifacts := Set ("net.hogerheijde.aoc" %% "aoc-helpers" % "2022.0.0-SNAPSHOT"),
+      mimaPreviousArtifacts := Set (
+        "net.hogerheijde.aoc" %% "aoc-helpers" % "2023.0.0",
+      ),
     )

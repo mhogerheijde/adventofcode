@@ -9,9 +9,10 @@ import net.hogerheijde.aoc.common.model
 
 object Common:
   def digit[$: P]: P[Int] = P(CharIn("0-9").rep(1).!).map(_.toInt)
-  def alphaLower[$: P]: P[String] = P(CharIn("a-z").rep(1).!)
+  def alphaLower[$: P]: P[String] = P(CharIn("a-z").rep(min = 1).!)
   def intSeq[$: P]: P[IndexedSeq[Int]] = P((int ~ ("," | ";").? ~ " ".rep.?).rep).map(_.toIndexedSeq)
-  def int[$: P]: P[Int] = P(("-".? ~ CharIn("0-9").rep(1)).!.map(_.toInt))
+  def int[$: P]: P[Int] = P("-".? ~ uint).map(_.toInt)
+  def uint[$: P]: P[Int] = P(CharIn("0-9").rep(min = 1).!).map(_.toInt)
   def coordinate[$: P]: P[Coordinate] = P((int ~ "," ~ " ".rep ~ int).map(t => Coordinate(t._1, t._2)))
   def coordinates[$: P]: P[Seq[Coordinate]] = P((coordinate ~ "\n").rep)
 

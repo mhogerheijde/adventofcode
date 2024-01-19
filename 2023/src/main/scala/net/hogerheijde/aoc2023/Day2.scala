@@ -1,11 +1,11 @@
 package net.hogerheijde.aoc2023
 
-import net.hogerheijde.aoc.common.parser.IsInteger
-import net.hogerheijde.aoc.util.Day
 import fastparse.*
-import NoWhitespace.*
+import fastparse.NoWhitespace.*
 import net.hogerheijde.aoc.common.parser.Common
 import net.hogerheijde.aoc.common.parser.Common.int
+import net.hogerheijde.aoc.common.parser.IsInteger
+import net.hogerheijde.aoc.util.Day
 import net.hogerheijde.aoc.util.Parser
 
 import scala.util.Try

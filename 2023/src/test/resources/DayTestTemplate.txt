@@ -1,0 +1,35 @@
+package net.hogerheijde.aoc2023
+
+import fastparse.*
+import net.hogerheijde.aoc.util.Parser
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+
+class Day3Test extends AnyWordSpec with Matchers {
+
+  val exampleInput: String =
+    """
+      |""".stripMargin
+
+
+  "Day _ parser" should {
+    "parse" in {
+      // Parser.parse(...)("...") should be ("")
+    }
+  }
+
+  "Day _" should {
+
+    "parse input" in {
+      Day_.parse(exampleInput) should be("")
+    }
+
+    "Part1: example answer" in {
+      Day_.part1(Day_.parse(exampleInput)) should be(0)
+    }
+
+    "Part2: example answer" in {
+      Day_.part2(Day_.parse(exampleInput)) should be(0)
+    }
+  }
+}

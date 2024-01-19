@@ -7,9 +7,9 @@ import net.hogerheijde.aoc2023.Day2.Draw
 import net.hogerheijde.aoc.util.Parser
 import net.hogerheijde.aoc2023.Day2.Game
 
-class Day2Test extends AnyWordSpec with Matchers {
+class Day2Test extends AnyWordSpec with Matchers:
 
-  val exampleInput =
+  val exampleInput: String =
     """Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
       |Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
       |Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
@@ -57,4 +57,3 @@ class Day2Test extends AnyWordSpec with Matchers {
       Day2.part2(Day2.parse(exampleInput)) should be(2286)
     }
   }
-}

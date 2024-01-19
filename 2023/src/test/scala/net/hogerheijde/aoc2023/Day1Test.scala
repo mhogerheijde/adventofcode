@@ -3,15 +3,15 @@ package net.hogerheijde.aoc2023
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-class Day1Test extends AnyWordSpec with Matchers {
+class Day1Test extends AnyWordSpec with Matchers:
 
-  val exampleInput =
+  val exampleInput: String =
     """1abc2
       |pqr3stu8vwx
       |a1b2c3d4e5f
       |treb7uchet""".stripMargin
 
-  val example2Input =
+  val example2Input: String =
     """two1nine
       |eightwothree
       |abcone2threexyz
@@ -47,4 +47,3 @@ class Day1Test extends AnyWordSpec with Matchers {
       ) should be(281)
     }
   }
-}

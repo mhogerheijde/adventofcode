@@ -46,29 +46,27 @@ trait Day[Result1, Result2] extends Runnable {
   def part2(input: Model): Result2
 
   final def main(args: Array[String]): Unit = run
-  final def run: Unit = {
-    val input = {
-      val resourceName = s"net/hogerheijde/$year/${name.toLowerCase.replace(" ", "")}.input"
-      Try {
-        val source = Source.fromResource(resourceName)
-        source.mkString
-      } match {
-        case Success(string) => string
-        case Failure(t) => throw new RuntimeException(s"Did you forget to place the puzzle input in the resources folder? Trying to read $resourceName", t)
-      }
-    }
-
+  final def run: Unit =
     printHeader()
-    val TimedResult(parsedInput, parseTime) = Timer(parse(input))
+    val TimedResult(parsedInput, parseTime) = Timer(parse(rawInput))
     println(s"Parsing: $parseTime")
 
     val result1 = Timer(part1(parsedInput))
     println(s" - part 1: $result1")
     val result2 = Timer(part2(parsedInput))
     println(s" - part 2: $result2")
-  }
 
-  def printHeader(): Unit = {
+  final lazy val rawInput: String =
+    val resourceName = s"net/hogerheijde/$year/${name.toLowerCase.replace(" ", "")}.input"
+    Try {
+      val source = Source.fromResource(resourceName)
+      source.mkString
+    } match {
+      case Success(string) => string
+      case Failure(t) => throw new RuntimeException(s"Did you forget to place the puzzle input in the resources folder? Trying to read $resourceName", t)
+    }
+
+  def printHeader(): Unit =
     val header = """
       |   __    ____  _  _  ____  _  _  ____    _____  ____     ___  _____  ____  ____
       |  /__\  (  _ \( \/ )( ___)( \( )(_  _)  (  _  )( ___)   / __)(  _  )(  _ \( ___)
@@ -79,6 +77,5 @@ trait Day[Result1, Result2] extends Runnable {
     println(header)
     println(s" $year - $name")
     println()
-  }
 
 }

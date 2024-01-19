@@ -5,9 +5,12 @@ import java.lang.Math.sqrt
 
 import scala.collection.IterableOnceOps
 
-case class Coordinate(vertical: Int, horizontal: Int) extends Ordered[Coordinate] {
+case class Coordinate(vertical: Int, horizontal: Int) extends Ordered[Coordinate]:
   @deprecated val x = horizontal
   @deprecated val y = vertical
+
+  val row = vertical
+  val column = horizontal
 
   val v = vertical
   val h = horizontal
@@ -24,16 +27,14 @@ case class Coordinate(vertical: Int, horizontal: Int) extends Ordered[Coordinate
   infix def add(vector: (Int, Int)) = this.copy(vertical = this.v + vector._1, horizontal = this.h + vector._2)
   infix def add(coordinate: Coordinate) = this.copy(vertical = this.v + coordinate.v, horizontal = this.h + coordinate.h)
 
-  override def toString: String = s"$vertical,$horizontal"
-  override def compare(c: Coordinate): Int = Coordinate.ordering.compare(this, c)
-}
-object Coordinate {
+  override def toString: String = f"[$vertical%3s,$horizontal%3s]"
+  override def compare(c: Coordinate): Int = Coordinate.rowsFirst.compare(this, c)
+
+object Coordinate:
+  private val rowsFirst = Ordering.by[Coordinate, Int](_.row).orElseBy(_.column)
+
   def apply(t: (Int, Int)): Coordinate = Coordinate(t._1, t._2)
-
   def range(c1: Coordinate, c2: Coordinate): CoordinateRange = CoordinateRange(c1, c2)
-
-  private val ordering = Ordering.by[Coordinate, Int](_.h).orElseBy(_.v)
-}
 
 class CoordinateTranslation(underlaying: Coordinate) {
   def leftUp = Coordinate(underlaying.v - 1, underlaying.h - 1)
@@ -47,6 +48,8 @@ class CoordinateTranslation(underlaying: Coordinate) {
   def leftDown = Coordinate(underlaying.v + 1, underlaying.h - 1)
   def down = Coordinate(underlaying.v + 1, underlaying.h)
   def rightDown = Coordinate(underlaying.v + 1, underlaying.h + 1)
+
+  def crlf = Coordinate(underlaying.v + 1, 0)
 }
 
 class CoordinateRange(start: Coordinate, end: Coordinate):

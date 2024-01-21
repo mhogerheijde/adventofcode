@@ -167,12 +167,12 @@ class Day5Test extends AnyWordSpec with Matchers {
 
       // Manually check all chain in example 1
       Day5.find(exampleSeeds.mappings)(79, "seed") should be((81, "soil"))
-      Day5.find(exampleSeeds.mappings)((81, "soil")) should be((81, "fertilizer"))
-      Day5.find(exampleSeeds.mappings)((81, "fertilizer")) should be((81, "water"))
-      Day5.find(exampleSeeds.mappings)((81, "water")) should be((74, "light"))
-      Day5.find(exampleSeeds.mappings)((74, "light")) should be((78, "temperature"))
-      Day5.find(exampleSeeds.mappings)((78, "temperature")) should be((78, "humidity"))
-      Day5.find(exampleSeeds.mappings)((78, "humidity")) should be((82, "location"))
+      Day5.find(exampleSeeds.mappings)(81, "soil") should be((81, "fertilizer"))
+      Day5.find(exampleSeeds.mappings)(81, "fertilizer") should be((81, "water"))
+      Day5.find(exampleSeeds.mappings)(81, "water") should be((74, "light"))
+      Day5.find(exampleSeeds.mappings)(74, "light") should be((78, "temperature"))
+      Day5.find(exampleSeeds.mappings)(78, "temperature") should be((78, "humidity"))
+      Day5.find(exampleSeeds.mappings)(78, "humidity") should be((82, "location"))
     }
 
     "resolve chain" in {

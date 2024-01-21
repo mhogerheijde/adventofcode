@@ -5,42 +5,64 @@ import fastparse.NoWhitespace.*
 import net.hogerheijde.aoc.common.parser.Common.long
 import net.hogerheijde.aoc.util.Day
 import net.hogerheijde.aoc.util.Parser
+import net.hogerheijde.aoc.util.memoize
 
+import java.lang.System.nanoTime
+import java.time.Duration
 import scala.annotation.tailrec
+import scala.collection.parallel.CollectionConverters.*
+import scala.io.Source
+import scala.util.Failure
+import scala.util.Success
 import scala.util.Try
 
 object Day5 extends Day[Long, Long]:
 
-  type Model = Rules // (Seq[Long], Map[Ingredient, Mapping])
+  type Model = Rules
   type Ingredient = String
+  type Needle = (Long, Ingredient)
 
-  override def parse(input: String): Model = Parser.parse(field(_))(input).get
+  def parse(input: String): Model = Parser.parse(field(_))(input).get
 
-  override def part1(input: Model): Long =
+  def part1(input: Model): Long =
     input.seeds
       .map(seed => resolve(input.mappings, "location")((seed, "seed")))
       .map(_._1)
       .min
 
-  override def part2(input: Model): Long =
-    input.seeds.sliding(2, 2)
-      .flatMap(pair => pair.head until pair.head + pair(1))
+  // This will take about 100 minutes to finish 😨.
+  def part2(input: Model): Long =
+    val space = input.seeds.sliding(2, 2).map { case Seq(_, b) => b }.sum.toInt
+    println(s"Looking for $space seeds")
+    val start = nanoTime
+    input.seeds
+      .sliding(2, 2)
+      .flatMap { case Seq(start, range) => start until start + range }
       .map(seed => resolve(input.mappings, "location")((seed, "seed")))
-      .map(_._1)
-      .min
-
-
-
+      .zipWithIndex
+      .foldLeft(Long.MaxValue) { case (min, ((next, _), index)) =>
+        if (index % 1000 == 0) {
+          val percentage = Math.round((index.toDouble / space) * 10000) / 100.0
+          val d = Duration.ofNanos(nanoTime - start)
+          print(f"\r$index%10s // $percentage%% // $d // $min%10s // $next%10s")
+          System.out.flush()
+        }
+        Math.min(min, next)
+      }
 
   @tailrec
-  def resolve(mappings: Map[Ingredient, Mapping], target: Ingredient)(start: (Long, Ingredient)): (Long, Ingredient) =
+  def resolve(mappings: Map[Ingredient, Mapping], target: Ingredient)(start: Needle): Needle =
     start._2 match
       case `target` => start
       case _ => resolve(mappings, target)(find(mappings)(start))
 
-  def find(mappings: Map[Ingredient, Mapping])(needle: (Long, Ingredient)): (Long, Ingredient) =
-    find(mappings)(needle._1, needle._2)
-  def find(mappings: Map[Ingredient, Mapping])(source: Long, from: Ingredient): (Long, Ingredient) =
+  def find(mappings: Map[Ingredient, Mapping])(needle: Needle): Needle =
+    val f: Needle => Needle = memoize { case (source, ingredient) =>
+      find(mappings)(source, ingredient)
+    }
+    f(needle)
+
+  private def find(mappings: Map[Ingredient, Mapping])(source: Long, from: Ingredient): Needle =
     mappings.get(from) match
       case None => throw IllegalArgumentException(s"Can't find mapping for ingredient $from")
       case Some(mapping) => (mapping.map(source), mapping.to)
@@ -59,7 +81,11 @@ object Day5 extends Day[Long, Long]:
   case class Rules(
     seeds: Seq[Long],
     mappings: Map[Ingredient, Mapping],
+    reverseMappings: Map[Ingredient, Mapping],
   )
+  object Rules:
+    def apply(seeds: Seq[Long], mappings: Map[Ingredient, Mapping]): Rules =
+      Rules(seeds, mappings, mappings.values.map(m => (m.to, m)).toMap)
 
   case class Range(source: Long, dest: Long, size: Long):
     private val offset = dest - source
@@ -76,13 +102,3 @@ object Day5 extends Day[Long, Long]:
     ranges: Seq[Range],
   ):
     def map(input: Long): Long = ranges.map(_.map(input)).find(i => i.isDefined).getOrElse(Some(input)).get
-
-//  object Mapping:
-//    def apply(from: String, to: String, ranges: Seq[Range]): Mapping = Mapping(
-//      from: Ingredient,
-//      to: Ingredient,
-//      ranges,
-//    )
-//
-//  object Ingredient:
-//    def apply(i: String): Ingredient = i

@@ -8,6 +8,8 @@ import net.hogerheijde.aoc2023.Day7.Card.Q
 import net.hogerheijde.aoc2023.Day7.Card.J
 import net.hogerheijde.aoc2023.Day7.Card.K
 import net.hogerheijde.aoc2023.Day7.Card.K
+import net.hogerheijde.aoc2023.Day7.Card.K
+import net.hogerheijde.aoc2023.Day7.Card.T
 import net.hogerheijde.aoc2023.Day7.Card.T
 import net.hogerheijde.aoc2023.Day7.Card.T
 import net.hogerheijde.aoc2023.Day7.Card._9
@@ -18,6 +20,13 @@ import net.hogerheijde.aoc2023.Day7.Card._5
 import net.hogerheijde.aoc2023.Day7.Card._4
 import net.hogerheijde.aoc2023.Day7.Card._3
 import net.hogerheijde.aoc2023.Day7.Card._2
+import net.hogerheijde.aoc2023.Day7.Card._3
+import net.hogerheijde.aoc2023.Day7.Card._4
+import net.hogerheijde.aoc2023.Day7.Card._5
+import net.hogerheijde.aoc2023.Day7.Card._6
+import net.hogerheijde.aoc2023.Day7.Card._7
+import net.hogerheijde.aoc2023.Day7.Card._8
+import net.hogerheijde.aoc2023.Day7.Card._9
 import net.hogerheijde.aoc2023.Day7.Hand
 import net.hogerheijde.aoc2023.Day7.Type.FiveOfAKind
 import net.hogerheijde.aoc2023.Day7.Type.FiveOfAKind
@@ -30,6 +39,7 @@ import net.hogerheijde.aoc2023.Day7.Type.HighCard
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
+import scala.collection.immutable.Seq
 import scala.util.Random
 
 class Day7Test extends AnyWordSpec with Matchers {
@@ -59,8 +69,17 @@ class Day7Test extends AnyWordSpec with Matchers {
   "Cards" should {
     "have order" in {
       val ordered = Seq(_2, _3, _4, _5, _6, _7, _8, _9, T, J, Q, K, A)
+      val o: Ordering[Day7.Card] = (l, r) => l.comparePartOne(r)
       (1 to 100).foreach { _ =>
-        Random.shuffle(ordered).sorted should be(ordered)
+        Random.shuffle(ordered).sorted(o) should be(ordered)
+      }
+    }
+
+    "have part 2order" in {
+      val ordered = Seq(J, _2, _3, _4, _5, _6, _7, _8, _9, T, Q, K, A)
+      val o: Ordering[Day7.Card] = (l, r) => l.comparePartTwo(r)
+      (1 to 100).foreach { _ =>
+        Random.shuffle(ordered).sorted(o) should be(ordered)
       }
     }
   }
@@ -94,6 +113,43 @@ class Day7Test extends AnyWordSpec with Matchers {
       Hand(Seq(A, K, Q, J, T)).`type` should be(HighCard)
     }
 
+    "recognise its type2" in {
+      Hand(Seq(A, A, A, A, A)).type2 should be(FiveOfAKind)
+      Hand(Seq(A, A, A, A, J)).type2 should be(FiveOfAKind)
+      Hand(Seq(A, A, A, J, J)).type2 should be(FiveOfAKind)
+      Hand(Seq(A, A, J, J, J)).type2 should be(FiveOfAKind)
+      Hand(Seq(A, J, J, J, J)).type2 should be(FiveOfAKind)
+
+
+      Hand(Seq(A, A, A, A, K)).type2 should be(FourOfAKind)
+      Hand(Seq(A, A, A, J, K)).type2 should be(FourOfAKind)
+      Hand(Seq(A, A, J, J, K)).type2 should be(FourOfAKind)
+      Hand(Seq(A, J, J, J, K)).type2 should be(FourOfAKind)
+      Hand(Seq(J, J, J, J, K)).type2 should be(FiveOfAKind)
+
+
+      Hand(Seq(A, A, A, K, K)).type2 should be(FullHouse)
+      Hand(Seq(A, A, J, K, K)).type2 should be(FullHouse)
+      Hand(Seq(A, A, A, J, K)).type2 should be(FourOfAKind)
+      Hand(Seq(A, J, J, K, K)).type2 should be(FourOfAKind)
+      Hand(Seq(A, A, J, J, K)).type2 should be(FourOfAKind)
+
+      Hand(Seq(A, A, A, K, T)).type2 should be(ThreeOfAKind)
+      Hand(Seq(A, A, J, K, T)).type2 should be(ThreeOfAKind)
+      Hand(Seq(A, J, J, K, T)).type2 should be(ThreeOfAKind)
+      Hand(Seq(J, J, J, K, T)).type2 should be(FourOfAKind)
+
+      Hand(Seq(A, A, K, K, T)).type2 should be(TwoPair)
+      Hand(Seq(A, A, K, J, T)).type2 should be(ThreeOfAKind)
+
+
+      Hand(Seq(A, A, K, Q, T)).type2 should be(OnePair)
+      Hand(Seq(A, J, K, Q, T)).type2 should be(OnePair)
+
+      Hand(Seq(A, K, Q, T, _9)).type2 should be(HighCard)
+      Hand(Seq(A, K, J, T, _9)).type2 should be(OnePair)
+    }
+
     "have order" in {
       val ordered = Seq(
         (Hand(Seq(_3, _2, T, _3, K)), 765),
@@ -105,6 +161,19 @@ class Day7Test extends AnyWordSpec with Matchers {
 
       exampleModel.sortBy(_._1)(Day7.part1Ordering) should be (ordered)
     }
+
+    "have part 2 order" in {
+      val ordered = Seq(
+        (Hand(Seq(_3, _2, T, _3, K)), 765),
+        (Hand(Seq(K, K, _6, _7, _7)), 28),
+        (Hand(Seq(T, _5, _5, J, _5)), 684),
+        (Hand(Seq(Q, Q, Q, J, A)), 483),
+        (Hand(Seq(K, T, J, J, T)), 220),
+      )
+
+      exampleModel.sortBy(_._1)(Day7.part2Ordering) should be(ordered)
+    }
+
 
   }
 
@@ -119,7 +188,7 @@ class Day7Test extends AnyWordSpec with Matchers {
     }
 
     "Part2: example answer" in {
-      Day7.part2(Day7.parse(exampleInput)) should be(0)
+      Day7.part2(Day7.parse(exampleInput)) should be(5905)
     }
   }
 }

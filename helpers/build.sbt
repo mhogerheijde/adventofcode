@@ -1,4 +1,6 @@
 import Dependencies.*
+import com.typesafe.tools.mima.core.ProblemFilters
+import com.typesafe.tools.mima.core.ReversedMissingMethodProblem
 
 ThisBuild / organization  := "net.hogerheijde.aoc"
 ThisBuild / version       := "2023.0.1-SNAPSHOT"
@@ -42,3 +44,13 @@ lazy val helpers = project.withId("helpers").in(file("."))
         "net.hogerheijde.aoc" %% "aoc-helpers" % "2023.0.0",
       ),
     )
+
+
+ThisBuild / mimaBinaryIssueFilters ++= {
+  // These things are Ops classes that shouldn't have the `value` exposed. These should have never been public because they don't
+  // provide any value. Making them private because of issues like #2514 and #2613.
+  Seq(
+    ProblemFilters.exclude[ReversedMissingMethodProblem]("net.hogerheijde.aoc.util.CircularBuffer.headOption"),
+    ProblemFilters.exclude[ReversedMissingMethodProblem]("net.hogerheijde.aoc.util.CircularBuffer.rotate"),
+  )
+}

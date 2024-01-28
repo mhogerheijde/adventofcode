@@ -9,16 +9,17 @@ case class Grid[T](values: Map[Coordinate, T]) {
         .map { case (c, v) => s"$c :: $v" }
         .mkString("\n")
 
-  def pretty: String = {
-    val sorted = values.toSeq.sortBy { case (c, _) => (c.horizontal, c.vertical) }
+  def pretty: String = pretty(v => v.toString)
+  def pretty(toString: T => String): String = {
+    val sorted = values.toSeq.sortBy { case (c, _) => (c.row, c.column) }
     val sb = new StringBuilder
-    var lastY = sorted.headOption.map(_._1.horizontal).getOrElse(0)
+    var lastRow = sorted.headOption.map(_._1.row).getOrElse(0)
     sorted.foreach { case (c, v) =>
-      if (c.horizontal != lastY) {
+      if (c.row != lastRow) {
         sb.append("\n")
-        lastY = c.horizontal
+        lastRow = c.row
       }
-      sb.append(v.toString)
+      sb.append(toString(v))
     }
     sb.toString()
   }
@@ -30,4 +31,7 @@ object Grid {
   def apply[T](cells: Iterable[(Coordinate, T)]): Grid[T] = Grid(cells.toMap)
   def apply[T](cells: (Coordinate, T)*): Grid[T] = Grid(cells.toMap)
   def empty[T] = Grid(Map.empty[Coordinate, T])
+
+  given tupleToCoordinate[T]: Conversion[((Int, Int), T), (Coordinate, T)] =
+    case ((x: Int, y: Int), t: T) => Coordinate(x, y) -> t
 }

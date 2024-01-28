@@ -14,7 +14,7 @@ class Day_Test extends AnyWordSpec with Matchers {
 
   "Day _ parser" should {
     "parse" in {
-      // Parser.parse(...)("...") should be ("")
+      // Parser.parse(...)("...").get should be ("")
     }
   }
 

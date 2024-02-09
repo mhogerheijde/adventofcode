@@ -47,6 +47,31 @@ class Day10Test extends AnyWordSpec with Matchers {
       |LJ.LJ
       |""".stripMargin
 
+  val exampleInput_pt2_1: String =
+    """.............
+      |.S---------7.
+      |.|.F-----7.|.
+      |.|.|.....|.|.
+      |.|.|.....|.|.
+      |.|.L-7.F-J.|.
+      |.|...|.|...|.
+      |.L---J.L---J.
+      |.............
+      |""".stripMargin
+
+  val exampleInput_pt2_2: String =
+    """.F----7F7F7F7F-7....
+      |.|F--7||||||||FJ....
+      |.||.FJ||||||||L7....
+      |FJL7L7LJLJ||LJ.L-7..
+      |L--J.L7...LJS7F-7L7.
+      |....F-J..F7FJ|L7L7L7
+      |....L7.F7||L7|.L7L7|
+      |.....|FJLJ|FJ|F7|.LJ
+      |....FJL-7.||.||||...
+      |....L---J.LJ.LJLJ...
+      |""".stripMargin
+
   val exampleGrid1: Grid[Tile] = Grid(
     (0, 0) -> G,
     (0, 1) -> G,
@@ -175,7 +200,8 @@ class Day10Test extends AnyWordSpec with Matchers {
     }
 
     "Part2: example answer" in {
-      Day10.part2(Day10.parse(exampleInput1)) should be(0)
+      Day10.part2(Day10.parse(exampleInput_pt2_1)) should be(0)
+      Day10.part2(Day10.parse(exampleInput_pt2_2)) should be(0)
     }
   }
 }

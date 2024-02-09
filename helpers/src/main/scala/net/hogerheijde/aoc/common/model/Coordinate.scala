@@ -1,5 +1,6 @@
 package net.hogerheijde.aoc.common.model
 
+import java.lang.Math.abs
 import java.lang.Math.pow
 import java.lang.Math.sqrt
 
@@ -17,9 +18,8 @@ case class Coordinate(vertical: Int, horizontal: Int) extends Ordered[Coordinate
 
   private val √ = sqrt
 
-  def distance(other: Coordinate): Double = √(
-    pow(vertical - other.vertical, 2.0) + pow(horizontal - other.horizontal, 2.0)
-  )
+  def distance(other: Coordinate): Double = √(pow(v - other.v, 2.0) + pow(h - other.h, 2.0))
+  def manhattan(o: Coordinate): Int = abs(v - o.v) + abs(h - o.h)
 
   val transpose = new CoordinateTranslation(this)
 

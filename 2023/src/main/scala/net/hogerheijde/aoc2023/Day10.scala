@@ -44,7 +44,9 @@ object Day10 extends Day[Int, Int]:
     Math.ceil(count(start(input)) / 2.0).toInt
 
 
-  override def part2(input: Model): Int = 0
+  override def part2(input: Model): Int =
+    println(input.pretty(_.display))
+    0
 
   def start(input: Model): Coordinate = input.values.find((_, t) => t == Start).get._1
 

@@ -3,7 +3,7 @@ import com.typesafe.tools.mima.core.ProblemFilters
 import com.typesafe.tools.mima.core.ReversedMissingMethodProblem
 
 ThisBuild / organization  := "net.hogerheijde.aoc"
-ThisBuild / version       := "2023.0.1-SNAPSHOT"
+ThisBuild / version       := "2024.0.0-SNAPSHOT"
 ThisBuild / scalaVersion  := "3.2.1"
 ThisBuild / versionScheme := Some("semver-spec")
 ThisBuild / libraryDependencies ++= Seq(

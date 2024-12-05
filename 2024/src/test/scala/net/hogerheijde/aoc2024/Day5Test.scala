@@ -92,24 +92,32 @@ class Day5Test extends AnyWordSpec with Matchers {
     }
   }
 
+  "RuleSet" should {
+    "order Edits" in {
+      Edits(IndexedSeq(75, 97, 47, 61, 53)).sorted(examplePrinterInstructions.ruleSet) should be (
+        Edits(IndexedSeq(97, 75, 47, 61, 53))
+      )
+    }
+  }
+
   "Edit" should {
     "determine validity" in {
-      Edit(75, Set(), Set(47, 61, 53, 29)).isValid(examplePrinterInstructions.rules) should be(true)
-      Edit(47, Set(75), Set(61, 53, 29)).isValid(examplePrinterInstructions.rules) should be(true)
-      Edit(61, Set(75, 47), Set(53, 29)).isValid(examplePrinterInstructions.rules) should be(true)
-      Edit(53, Set(75, 47, 61), Set(29)).isValid(examplePrinterInstructions.rules) should be(true)
-      Edit(29, Set(75, 47, 61, 53), Set()).isValid(examplePrinterInstructions.rules) should be(true)
+      Edit(75, Set(), Set(47, 61, 53, 29)).isValid(examplePrinterInstructions.ruleSet) should be(true)
+      Edit(47, Set(75), Set(61, 53, 29)).isValid(examplePrinterInstructions.ruleSet) should be(true)
+      Edit(61, Set(75, 47), Set(53, 29)).isValid(examplePrinterInstructions.ruleSet) should be(true)
+      Edit(53, Set(75, 47, 61), Set(29)).isValid(examplePrinterInstructions.ruleSet) should be(true)
+      Edit(29, Set(75, 47, 61, 53), Set()).isValid(examplePrinterInstructions.ruleSet) should be(true)
     }
 
     "determine invalidity" in {
-      Edit(75, Set(), Set(97, 47, 61, 53)).isValid(examplePrinterInstructions.rules) should be(false)
-      Edit(97, Set(75), Set(47, 61, 53)).isValid(examplePrinterInstructions.rules) should be(false)
-      Edit(47, Set(97, 75), Set(61, 53)).isValid(examplePrinterInstructions.rules) should be(true)
-      Edit(61, Set(47, 97, 75), Set(53)).isValid(examplePrinterInstructions.rules) should be(true)
-      Edit(53, Set(61, 47, 97, 75), Set()).isValid(examplePrinterInstructions.rules) should be(true)
+      Edit(75, Set(), Set(97, 47, 61, 53)).isValid(examplePrinterInstructions.ruleSet) should be(false)
+      Edit(97, Set(75), Set(47, 61, 53)).isValid(examplePrinterInstructions.ruleSet) should be(false)
+      Edit(47, Set(97, 75), Set(61, 53)).isValid(examplePrinterInstructions.ruleSet) should be(true)
+      Edit(61, Set(47, 97, 75), Set(53)).isValid(examplePrinterInstructions.ruleSet) should be(true)
+      Edit(53, Set(61, 47, 97, 75), Set()).isValid(examplePrinterInstructions.ruleSet) should be(true)
     }
   }
-  
+
   "Edits" should {
     "break up into seq of Edit" in {
       Edits(IndexedSeq(75, 47, 61, 53, 29))._edits should be (Seq(
@@ -134,7 +142,7 @@ class Day5Test extends AnyWordSpec with Matchers {
     }
 
     "Part2: example answer" in {
-      Day5.part2(Day5.parse(exampleInput)) should be(0)
+      Day5.part2(Day5.parse(exampleInput)) should be(123)
     }
   }
 }

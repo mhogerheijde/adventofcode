@@ -17,17 +17,30 @@ object Day5 extends Day[Int, Int]:
   override def parse(input: String): Model = Parser.parse(printerRules(_))(input).get
 
   override def part1(input: Model): Int =
-    input.edits.filter(_.isValid(input.rules)).map(_.middle).sum
+    input.edits.filter(_.isValid(input.ruleSet)).map(_.middle).sum
 
-  override def part2(input: Model): Int = 0
+  override def part2(input: Model): Int =
+    input.edits.filterNot(_.isValid(input.ruleSet)).map(_.sorted(input.ruleSet).middle).sum
 
-  case class PrinterInstructions(rules: RuleSet, edits: Seq[Edits])
+  case class PrinterInstructions(ruleSet: RuleSet, edits: Seq[Edits])
   case class Rule(before: Int, after: Int)
-  case class RuleSet(rules: Seq[Rule]):
+  case class RuleSet(rules: Seq[Rule]) extends Ordering[Int]:
     val mustComeAfter: Map[Int, Set[Int]] =
       rules.groupMap( _.before)( _.after).map { case (k, v) => (k, v.toSet) }.withDefaultValue(Set.empty[Int])
     val mustComeBefore: Map[Int, Set[Int]] =
       rules.groupMap( _.after)( _.before).map { case (k, v) => (k, v.toSet)}.withDefaultValue(Set.empty[Int])
+
+    override def compare(x: Int, y: Int): Int =
+      if (x == y)
+        0
+      else
+        if (mustComeAfter(x).contains(y))
+          -1
+        else if (mustComeBefore(x).contains(y))
+          1
+        else
+          throw RuntimeException(s"Cannot determine order of $x and $y")
+
 
 
   case class Edit(page: Int, before: Set[Int], after: Set[Int]):
@@ -43,6 +56,7 @@ object Day5 extends Day[Int, Int]:
       Edit(edit, edits.take(index).toSet, edits.drop(index + 1).toSet)
     }
     def isValid(rules: RuleSet): Boolean = _edits.forall(_.isValid(rules))
+    def sorted(implicit ord: Ordering[Int]) = Edits(edits.sorted(ord))
 
   def printerRules[$: P] = P(rules ~ "\n" ~ edits).map(PrinterInstructions(_, _))
 

@@ -25,6 +25,9 @@ case class Grid[T](values: Map[Coordinate, T]) {
   }
 
   def add(c: Coordinate, value: T): Grid[T] = Grid(values.updated(c, value))
+
+  def map[R](f: (Coordinate, T) => R): Grid[R] =
+    Grid(values.map{ case (coordinate, t) => (coordinate, f(coordinate, t)) })
 }
 
 object Grid {

@@ -6,6 +6,15 @@ import java.lang.Math.sqrt
 
 import scala.collection.IterableOnceOps
 
+import net.hogerheijde.aoc.common.model.Direction.East
+import net.hogerheijde.aoc.common.model.Direction.North
+import net.hogerheijde.aoc.common.model.Direction.NorthEast
+import net.hogerheijde.aoc.common.model.Direction.NorthWest
+import net.hogerheijde.aoc.common.model.Direction.South
+import net.hogerheijde.aoc.common.model.Direction.SouthEast
+import net.hogerheijde.aoc.common.model.Direction.SouthWest
+import net.hogerheijde.aoc.common.model.Direction.West
+
 case class Coordinate(vertical: Int, horizontal: Int) extends Ordered[Coordinate]:
   @deprecated val x = horizontal
   @deprecated val y = vertical
@@ -37,6 +46,17 @@ object Coordinate:
   def range(c1: Coordinate, c2: Coordinate): CoordinateRange = CoordinateRange(c1, c2)
 
 class CoordinateTranslation(underlaying: Coordinate) {
+  def directionOf(d: Direction): Coordinate =
+    d match
+      case North => up
+      case NorthEast => rightUp
+      case East => right
+      case SouthEast => rightDown
+      case South => down
+      case SouthWest => leftDown
+      case West => left
+      case NorthWest => leftUp
+
   def leftUp = Coordinate(underlaying.v - 1, underlaying.h - 1)
   def up = Coordinate(underlaying.v - 1, underlaying.h)
   def rightUp = Coordinate(underlaying.v - 1, underlaying.h + 1)

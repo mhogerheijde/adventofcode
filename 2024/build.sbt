@@ -2,11 +2,12 @@ import Dependencies.*
 
 ThisBuild / organization := "net.hogerheijde.aoc"
 ThisBuild / version := "2024-SNAPSHOT"
-ThisBuild / scalaVersion := "3.2.1"
+ThisBuild / scalaVersion := "3.2.2"
 
 ThisBuild / credentials += Credentials(Path.userHome / ".sbt" / ".credentials.build")
 ThisBuild / resolvers ++= Seq(
-  "Nexus @ Hogerheijde" at "https://nexus.hogerheijde.net/repository/hogerheijde/"
+  "Nexus @ Hogerheijde" at "https://nexus.hogerheijde.net/repository/hogerheijde/",
+  "Snapshots @ Hogerheijde" at "https://nexus.hogerheijde.net/repository/hogerheijde-snapshots/",
 )
 
 ThisBuild / scalacOptions ++= Seq( // use ++= to add to existing options

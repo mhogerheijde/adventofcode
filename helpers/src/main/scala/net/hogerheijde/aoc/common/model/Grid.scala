@@ -2,6 +2,14 @@ package net.hogerheijde.aoc.common.model
 
 case class Grid[T](values: Map[Coordinate, T]) {
 
+  lazy val minRow: Int = values.minBy(_._1.row)._1.row
+  lazy val minColumn: Int = values.minBy(_._1.column)._1.column
+  lazy val maxRow: Int = values.maxBy(_._1.row)._1.row
+  lazy val maxColumn: Int = values.maxBy(_._1.column)._1.column
+
+  def inBounds(c: Coordinate): Boolean =
+    c.row >= minRow && c.row <= maxRow && c.column >= minColumn && c.column <= maxColumn
+
   override def toString: String =
     values
         .toSeq
@@ -28,6 +36,9 @@ case class Grid[T](values: Map[Coordinate, T]) {
 
   def map[R](f: (Coordinate, T) => R): Grid[R] =
     Grid(values.map{ case (coordinate, t) => (coordinate, f(coordinate, t)) })
+
+  def count(p: (Coordinate, T) => Boolean) =
+    values.count { case (coordinate, t) => p(coordinate, t) }
 }
 
 object Grid {

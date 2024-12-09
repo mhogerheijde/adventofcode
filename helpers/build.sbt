@@ -23,9 +23,22 @@ ThisBuild / scalacOptions ++= Seq(
   "-language:postfixOps"
 )
 
+initialize := {
+  // Ensure previous initializations are run
+  val _ = initialize.value
+
+  // Retrieve the JVM's class version and specification version
+  val classVersion = sys.props("java.class.version")
+  val specVersion = sys.props("java.specification.version")
+
+  // Assert that the JVM meets the minimum required version, for example, Java 17
+  assert(specVersion.toDouble == 17, "Java 17 is required to build this project.")
+}
+
 ThisBuild / resolvers ++= Seq(
-  "Snapshots @ Hogerheijde" at "https://nexus.hogerheijde.net/repository/hogerheijde-snapshots/",
-  "Releases @ Hogerheijde" at "https://nexus.hogerheijde.net/repository/hogerheijde-releases/",
+//  "Snapshots @ Hogerheijde" at "https://nexus.hogerheijde.net/repository/hogerheijde-snapshots/",
+//  "Releases @ Hogerheijde" at "https://nexus.hogerheijde.net/repository/hogerheijde-releases/",
+  "Mirror @ Hogerheijde" at "https://nexus.hogerheijde.net/repository/mirror/",
 )
 
 ThisBuild / credentials += Credentials(Path.userHome / ".sbt" / ".credentials.deploy")
@@ -40,8 +53,10 @@ ThisBuild / publishTo := {
 lazy val helpers = project.withId("helpers").in(file("."))
     .settings(
       name := "AoC helpers",
+      libraryDependencies += "org.rogach" %% "scallop" % "5.1.0",
       mimaPreviousArtifacts := Set (
         "net.hogerheijde.aoc" %% "aoc-helpers" % "2023.0.0",
+        "net.hogerheijde.aoc" %% "aoc-helpers" % "2024.0.0",
       ),
     )
 

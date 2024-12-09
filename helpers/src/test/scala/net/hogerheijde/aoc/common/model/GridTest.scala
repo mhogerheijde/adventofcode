@@ -6,6 +6,11 @@ import org.scalatest.wordspec.AnyWordSpec
 class GridTest extends AnyWordSpec with Matchers {
 
   "Grid" should {
+
+    "not fail when empty" in {
+      noException should be thrownBy Grid.empty[Int]
+    }
+
     "pretty print" in {
       Grid(
         Coordinate(0, 0) -> "a",
@@ -52,8 +57,23 @@ class GridTest extends AnyWordSpec with Matchers {
           |z....""".stripMargin
       )
 
+    }
+    "check bounds" in {
+      val testgrid = Grid(
+        Coordinate(-4, -5) -> "a",
+        Coordinate(5, 4) -> ".",
+      )
+      for {
+        x <- Range.inclusive(-4, 5)
+        y <- Range.inclusive(-5, 4)
+      } yield {
+        testgrid.inBounds(Coordinate(x, y)) should be(true)
+      }
 
-
+      testgrid.inBounds(Coordinate(-5 ,-5)) should be(false)
+      testgrid.inBounds(Coordinate(-4 ,-6)) should be(false)
+      testgrid.inBounds(Coordinate(5 ,5)) should be(false)
+      testgrid.inBounds(Coordinate(6 ,4)) should be(false)
     }
   }
 }

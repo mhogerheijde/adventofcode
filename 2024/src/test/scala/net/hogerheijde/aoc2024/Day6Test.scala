@@ -268,7 +268,7 @@ class Day6Test extends AnyWordSpec with Matchers {
     }
 
     "count visited tiles" in {
-      exampleField.step.g.count { case (_, t) => t.isInstanceOf[Path.type]} should be(5)
+      exampleField.step.grid.count { case (_, t) => t.isInstanceOf[Path.type]} should be(5)
     }
 
   }

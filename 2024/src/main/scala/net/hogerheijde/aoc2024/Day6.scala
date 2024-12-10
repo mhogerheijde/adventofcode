@@ -26,6 +26,7 @@ import net.hogerheijde.aoc2024.Day6.Tile.Path
 import net.hogerheijde.aoc2024.Day6.Tile.Space
 
 import scala.annotation.tailrec
+import scala.collection.parallel.CollectionConverters.*
 import scala.util.Try
 
 object Day6 extends Day[Int, Int]:
@@ -36,13 +37,30 @@ object Day6 extends Day[Int, Int]:
 
   override def part1(input: Model): Int =
     val solved = solvePt1(input)
-    solved.g.count { case (_, t) => t.isInstanceOf[Path.type]}
+    solved.pathCount
 
   @tailrec
   def solvePt1(field: Field): Field =
     if (field.isDone) field else solvePt1(field.step)
 
-  override def part2(input: Model): Int = 0
+  override def part2(input: Model): Int =
+    val originalSolution = solvePt1(input)
+    val pathLocations: Seq[Coordinate] = originalSolution
+      .grid.values
+      .collect { case (x, y: Path.type) => (x, y) }
+      .keys.toSeq
+
+    pathLocations.zipWithIndex
+      .par
+      .map { case (nextLoc, i) =>
+      val modifiedField = input.copy(grid = input.grid.copy(values = input.grid.values.updated(nextLoc, Obstacle)))
+      val result = solvePt1(modifiedField).isLooping
+//      if (result) System.out.print("x") else System.out.print(".")
+//      if (i % 100 == 0) println()
+//      System.out.flush()
+      if (result) 1 else 0
+    }.sum
+
 
   def tile[$: P]: P[IndexedToken[Tile]] = P((guard | path | space | obstacle))
   def obstacle[$: P]: P[IndexedToken[Obstacle.type]] = P(Index ~ "#").map((_, Obstacle))
@@ -64,26 +82,28 @@ object Day6 extends Day[Int, Int]:
     )
   }
 
-  case class Field(guard: Guard, g: Grid[Tile], guardHistory: Set[Guard] = Set(), currentStep: Int = 0):
-    val isDone: Boolean = !g.inBounds(guard.location) || guardHistory.contains(guard)
-    val pathCount: Int = g.count { case (_, t) => t.isInstanceOf[Path.type] }
+  case class Field(guard: Guard, grid: Grid[Tile], guardHistory: Set[Guard] = Set(), currentStep: Int = 0):
+    val isOutOfBounds: Boolean = !grid.inBounds(guard.location)
+    val isLooping: Boolean = guardHistory.contains(guard)
+    val isDone: Boolean = isOutOfBounds || isLooping
+    val pathCount: Int = grid.count { case (_, t) =>t.isInstanceOf[Path.type] }
 
-    def terse: Field = copy(guard, Grid(g.values.filterNot { case (_, t) => t == Space }))
+    def terse: Field = copy(guard, Grid(grid.values.filterNot { case (_, t) => t == Space }))
 
     def pretty: String =
       if (isDone)
-        Grid(g.values).pretty + s"\nDone. (${if (g.inBounds(guard.location)) "Loop" else "out-of-bounds" })"
+        Grid(grid.values).pretty + s"\nDone. (${if (grid.inBounds(guard.location)) "Loop" else "out-of-bounds" })"
       else
-        Grid(g.values + (guard.location -> GuardTile(guard.direction))).pretty
+        Grid(grid.values + (guard.location -> GuardTile(guard.direction))).pretty
 
     def step(number: Int): Field = Range(0, number).foldLeft(this) { case (acc, _) => acc.step }
     def step: Field =
       if (isDone) return this
 
-      val verticalObstacles = g.values.toList.collect {
+      val verticalObstacles = grid.values.toList.collect {
         case (c, _: Obstacle.type) if c.column == guard.location.column => c
       }
-      val horizontalObstacles = g.values.toList.collect {
+      val horizontalObstacles = grid.values.toList.collect {
         case (c, _: Obstacle.type) if c.row == guard.location.row => c
       }
       val (newGuardLocation, newPathTiles) = guard.direction match
@@ -91,7 +111,7 @@ object Day6 extends Day[Int, Int]:
           val newLocation = verticalObstacles.filter(_.row < guard.location.row)
             .maxByOption(_.row)
             .map(_.transpose.down)
-            .getOrElse(Coordinate(g.minRow - 1, guard.location.column))
+            .getOrElse(Coordinate(grid.minRow - 1, guard.location.column))
 
           val pathsToAdd = Range(guard.location.row, newLocation.row, step = -1)
             .map(row => Coordinate(horizontal = guard.location.column, vertical = row))
@@ -102,7 +122,7 @@ object Day6 extends Day[Int, Int]:
           val newLocation = verticalObstacles.filter(_.row > guard.location.row)
             .minByOption(_.row)
             .map(_.transpose.up)
-            .getOrElse(Coordinate(g.maxRow + 1, guard.location.column))
+            .getOrElse(Coordinate(grid.maxRow + 1, guard.location.column))
 
           val pathsToAdd = Range(guard.location.row, newLocation.row)
             .map(row => Coordinate(horizontal = guard.location.column, vertical = row))
@@ -112,7 +132,7 @@ object Day6 extends Day[Int, Int]:
           val newLocation = horizontalObstacles.filter(_.column < guard.location.column)
             .maxByOption(_.column)
             .map(_.transpose.right)
-            .getOrElse(Coordinate(guard.location.row, g.minColumn - 1))
+            .getOrElse(Coordinate(guard.location.row, grid.minColumn - 1))
 
           val pathsToAdd = Range(guard.location.column, newLocation.column, step = -1)
             .map(col => Coordinate(horizontal = col, vertical = guard.location.row))
@@ -123,7 +143,7 @@ object Day6 extends Day[Int, Int]:
           val newLocation = horizontalObstacles.filter(_.column > guard.location.column)
             .minByOption(_.column)
             .map(_.transpose.left)
-            .getOrElse(Coordinate(guard.location.row, g.maxColumn + 1))
+            .getOrElse(Coordinate(guard.location.row, grid.maxColumn + 1))
 
           val pathsToAdd = Range(guard.location.column, newLocation.column)
             .map(col => Coordinate(horizontal = col, vertical = guard.location.row))
@@ -134,7 +154,7 @@ object Day6 extends Day[Int, Int]:
 
       Field(
         guard.copy(location = newGuardLocation).turn,
-        Grid(g.values ++ newPathTiles.map(x => (x, Path))),
+        Grid(grid.values ++ newPathTiles.map(x => (x, Path))),
         guardHistory + guard,
         currentStep + 1,
       )

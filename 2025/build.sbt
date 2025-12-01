@@ -2,7 +2,7 @@ import Dependencies.*
 
 ThisBuild / organization := "net.hogerheijde.aoc"
 ThisBuild / version := "2025-SNAPSHOT"
-ThisBuild / scalaVersion := "3.2.2"
+ThisBuild / scalaVersion := "3.3.7"
 
 ThisBuild / credentials += Credentials(Path.userHome / ".sbt" / ".credentials.build")
 ThisBuild / resolvers ++= Seq(
@@ -23,8 +23,8 @@ lazy val root = (project in file("."))
 
     libraryDependencies ++= Seq(
       "net.hogerheijde.aoc" %% "aoc-helpers" % "2024.0.0-SNAPSHOT" changing(),
-      "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4",
-      "com.lihaoyi" %% "fastparse" % "3.0.2",
+      "org.scala-lang.modules" %% "scala-parallel-collections" % "1.2.0",
+      "com.lihaoyi" %% "fastparse" % "3.1.1",
       scalatest % Test,
     )
   )

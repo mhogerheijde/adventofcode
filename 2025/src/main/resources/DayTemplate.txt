@@ -1,6 +1,5 @@
 package net.hogerheijde.aoc2025
 
-import net.hogerheijde.aoc.common.parser.IsInteger
 import net.hogerheijde.aoc.util.Day
 
 import scala.util.Try

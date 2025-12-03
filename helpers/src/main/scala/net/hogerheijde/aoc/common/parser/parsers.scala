@@ -9,7 +9,7 @@ import net.hogerheijde.aoc.common.model
 import net.hogerheijde.aoc.common.model.Grid
 
 object Common:
-  def digit[$: P]: P[Int] = P(CharIn("0-9").rep(1).!).map(_.toInt)
+  def digit[$: P]: P[Int] = P(CharIn("0-9").rep(exactly = 1).!).map(_.toInt)
   def alphaLower[$: P]: P[String] = P(CharIn("a-z").rep(min = 1).!)
   def intSeq[$: P]: P[IndexedSeq[Int]] = P((int ~ ("," | ";").? ~ " ".rep.?).rep).map(_.toIndexedSeq)
 
